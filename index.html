@@ -65,6 +65,53 @@
         .automation-card a:hover {
             background-color: #4338ca; /* Darker indigo */
         }
+        .insights-summary-section { 
+            background-color: #fffbeb; 
+            border: 1px solid #fde68a; 
+            color: #78350f; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .insights-summary-section h3 {
+            color: #713f12; 
+            font-size: 1.5rem; 
+        }
+        .insights-summary-section h4 {
+            font-weight: 600;
+            margin-top: 1rem;
+            color: #78350f;
+            font-size: 1.125rem;
+        }
+        .insights-summary-section ul {
+            list-style-type: disc;
+            padding-left: 1.5rem; 
+        }
+        .insights-summary-section li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Scroll-to-top button styles */
+        #scrollToTopBtn {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed/sticky position */
+            bottom: 30px; /* Place at the bottom of the page */
+            right: 30px; /* Place on the right side */
+            z-index: 99; /* Make sure it does not overlap other items */
+            border: none; /* Remove borders */
+            outline: none; /* Remove outline */
+            background-color: #4f46e5; /* Button background color (Indigo) */
+            color: white; /* Text color */
+            cursor: pointer; /* Add a mouse pointer on hover */
+            padding: 12px 15px; /* Some padding */
+            border-radius: 50%; /* Circular button */
+            font-size: 18px; /* Increase font size */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #4338ca; /* Darker indigo on hover */
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -117,27 +164,110 @@
                 </div>
             </div>
 
-            </div>
-
-        <div class="mt-12 p-6 bg-blue-50 border border-blue-200 rounded-lg text-blue-700">
-            <h3 class="font-semibold text-lg mb-2">How to Add More Automations:</h3>
-            <p>To add a new automation to this library:</p>
-            <ol class="list-decimal list-inside mt-2 space-y-1">
-                <li>Create the HTML visualization for your new automation.</li>
-                <li>Save the HTML file (e.g., `new_automation_name.html`) in the same directory as this library page, or in a designated subfolder (update link accordingly).</li>
-                <li>Copy one of the "Automation Card" `<div>` blocks in this file's source code.</li>
-                <li>Paste it within the `<div class="grid ...">` section.</li>
-                <li>Update the `<h2>` (title), `<p>` (description), and `<a>` tag's `href` attribute to point to your new HTML file and reflect its content.</li>
-            </ol>
         </div>
-    </main>
 
-    <footer class="text-center py-8"> <p class="text-gray-500 text-sm">&copy; <span id="currentYear"></span> JP Automations. All rights reserved.</p>
+        <div class="mt-12 p-6 rounded-lg insights-summary-section">
+            <h3 class="font-semibold text-xl mb-4 text-center">Key Customer Insights & Recommendations Summary</h3>
+            <p class="mb-4 text-center text-sm italic">Derived from the Siena Memory Insights Report (May 17 - May 20, 2025)</p>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h4>Overall Customer Sentiment:</h4>
+                    <p class="mb-3">Analysis of 146 customer interactions reveals strong product enthusiasm for H2Tab products. However, this positive sentiment is often tempered by significant operational challenges. Addressing these friction points in ordering, subscription management, delivery, and customer service responsiveness is a substantial opportunity to improve retention and capitalize on the product's positive reception.</p>
+                    
+                    <h4>Key Recommendations:</h4>
+                    <ul class="list-disc list-inside mb-3 space-y-1">
+                        <li>Overhaul the shipping and delivery system to address widespread delays and tracking issues.</li>
+                        <li>Fix technical issues with the subscription service, particularly focusing on discount application at checkout and account management functionality.</li>
+                        <li>Develop a dextrose-free formula option to address health-conscious customers' concerns about sweeteners.</li>
+                        <li>Implement a more responsive customer service protocol with clear SLAs for email response times and order issue resolution.</li>
+                        <li>Expand international shipping capabilities with transparent delivery timeframes to capitalize on global demand.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Primary Areas for Improvement Identified:</h4>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>
+                            <strong>Shipping and Delivery System:</strong>
+                            <ul class="list-disc list-inside pl-4 text-sm">
+                                <li>Extended domestic delivery times (2-4 weeks vs. 3-5 days expected).</li>
+                                <li>Tracking information frequently unavailable, inaccurate, or not updated.</li>
+                                <li>Partial orders received (especially missing hydrogen tablets).</li>
+                                <li>Most commonly cited reason for cancellations/not repurchasing.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Subscription Service Technical Issues:</strong>
+                            <ul class="list-disc list-inside pl-4 text-sm">
+                                <li>Subscription discounts (e.g., 10%) not applying at checkout.</li>
+                                <li>Customers unable to access or modify their subscriptions online.</li>
+                                <li>Difficulties logging into accounts.</li>
+                                <li>Duplicate charges or incorrect pricing.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Product Formulation (Dextrose):</strong>
+                            <ul class="list-disc list-inside pl-4 text-sm">
+                                <li>Consistent concerns from health-conscious customers about dextrose, especially in unflavored versions.</li>
+                                <li>Suggestions for alternatives like stevia.</li>
+                                <li>Some report film/residue after dissolving tablets.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Customer Service Responsiveness:</strong>
+                            <ul class="list-disc list-inside pl-4 text-sm">
+                                <li>Multiple unanswered emails.</li>
+                                <li>Frustration with needing to follow up repeatedly.</li>
+                                <li>Inconsistent issue resolution.</li>
+                                <li>Positive service experiences rarely mentioned.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>International Market Expansion:</strong>
+                            <ul class="list-disc list-inside pl-4 text-sm">
+                                <li>Clear international demand (Australia, EU, UAE, UK noted).</li>
+                                <li>Current shipping capabilities appear limited and lack transparency.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <p class="mt-4 text-sm text-center">Prioritizing automations that address these specific pain points can significantly enhance customer satisfaction and operational efficiency.</p>
+        </div>
+        </main>
+
+    <footer class="text-center py-8"> 
+        <p class="text-gray-500 text-sm">&copy; <span id="currentYear"></span> JP Automations. All rights reserved.</p>
     </footer>
+
+    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+            <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" />
+        </svg>
+    </button>
 
     <script>
         // Simple script to set the current year in the footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Get the scroll-to-top button
+        var scrollToTopButton = document.getElementById("scrollToTopBtn");
+
+        // When the user scrolls down 300px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollToTopButton.style.display = "block";
+            } else {
+                scrollToTopButton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document smoothly
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
     </script>
 
 </body>
