@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Cancellation Request Workflow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb; /* Lighter gray background */
+        }
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+        }
+        .content-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937; /* Dark gray */
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+        }
+        .step-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        .step-header {
+            background-color: #059669; /* Emerald/Green for this workflow */
+            color: white;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .step-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .step-content {
+            padding: 1.5rem;
+        }
+        .scenario-card, .action-card, .condition-card, .escalation-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+            background-color: #f9fafb;
+        }
+        .scenario-card h4, .action-card h4, .condition-card h4, .escalation-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        .escalation-card { /* Re-using escalation style */
+            border-left: 4px solid #8b5cf6; /* Violet for escalations */
+            background-color: #f5f3ff;
+        }
+        .connector {
+            text-align: center;
+            margin: 1rem 0;
+            font-size: 1.5rem;
+            color: #9ca3af;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .badge { /* For potential future use, not explicitly in this workflow's text */
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-left: 0.5rem;
+        }
+        .badge-red { background-color: #fee2e2; color: #991b1b; }
+        .badge-yellow { background-color: #fef3c7; color: #92400e; }
+        .badge-purple { background-color: #ede9fe; color: #5b21b6; }
+
+
+        .flow-element {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .flow-element:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -20px;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px;
+            background-color: #cbd5e1;
+            z-index: -1;
+        }
+         @media print { /* Basic print optimizations */
+            body { background-color: white; font-size: 10pt; }
+            .content-section, .step-card, .scenario-card, .action-card, .condition-card, .escalation-card {
+                box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid;
+            }
+            .step-header { background-color: #d1fae5 !important; color: #047857 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; border: 1px solid #ccc; }
+            .connector, .flow-element::after { display: none; }
+        }
+    </style>
+</head>
+<body class="p-6 md:p-10">
+
+        <div class="back-button-container mb-6 px-4 md:px-0 max-w-4xl mx-auto"> 
+        <a href="index.html" 
+           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+            <svg class="mr-2 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Back to Automation Library
+        </a>
+    </div>
+
+    <header class="text-center mb-10">
+        <h1 class="text-3xl font-bold text-gray-800">Order Cancellation Request Workflow</h1>
+        <p class="text-lg text-gray-600">Visualized Logic for Handling Customer Cancellation Requests</p>
+    </header>
+
+    <div class="max-w-4xl mx-auto">
+
+        <div class="content-section flow-element">
+            <h2>Context</h2>
+            <p>Customers will reach out to request for order cancellation. Your job is to look up their order details and assist them by providing information. If the order has been fulfilled, ask question why they want to cancel it.</p>
+        </div>
+
+        <div class="connector">▼</div>
+
+        <div class="step-card flow-element">
+            <div class="step-header">
+                <h3>Step 1: Determine the order that the customer is referring to</h3>
+            </div>
+            <div class="step-content">
+                <div class="scenario-card">
+                    <h4>Order Identification Methods:</h4>
+                    <ul class="list-disc pl-5 mt-1 space-y-2">
+                        <li>
+                            <strong>Customer provides an order number:</strong>
+                            <ul class="list-disc pl-5">
+                                <li>This is the order they are referring to.</li>
+                                <li>If that order does not exist, ask the customer for the email address associated with the order.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>No orders associated with a provided customer email address:</strong>
+                            <ul class="list-disc pl-5">
+                                <li>Ask them for the correct email address associated with their order.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Customer forwards the order confirmation email while requesting cancellation:</strong>
+                            <ul class="list-disc pl-5">
+                                <li>Try to examine the email content for the order number.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="connector">▼</div>
+
+        <div class="step-card flow-element">
+            <div class="step-header">
+                <h3>Step 2: Identify the reason for cancel</h3>
+            </div>
+            <div class="step-content">
+                <p class="mb-2">Note: The context mentions asking for the reason "If the order has been fulfilled." This step should ideally be triggered after confirming fulfillment status (which isn't explicitly detailed before this step in the provided instructions, but is implied by the context).</p>
+                <div class="condition-card">
+                    <h4>Handling Customer Reasons:</h4>
+                    <ul class="list-disc pl-5 mt-1 space-y-2">
+                        <li>
+                            <strong>If the customer provides no reason:</strong>
+                            <ul class="list-disc pl-5">
+                                <li>Ask the customer for the reason for the cancellation. (Especially if order is fulfilled)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>If the customer provides a reason "waiting too long for order":</strong>
+                            <ul class="list-disc pl-5">
+                                <li>Apologize to the customer for the delay.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>If the customer provides a reason "I found cheaper":</strong>
+                            <ul class="list-disc pl-5">
+                                <li>Apologize to the customer. (Maintain helpful tone, avoid defensiveness).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="connector">▼</div>
+
+        <div class="step-card escalation-card flow-element">
+            <div class="step-header !bg-purple-600">
+                <h3>Step 3: Get order information and escalate to an agent</h3>
+            </div>
+            <div class="step-content">
+                <div class="action-card">
+                    <h4>Actions:</h4>
+                    <ul class="list-disc pl-5 mt-1">
+                        <li>Retrieve and confirm all relevant details for the identified order.</li>
+                        <li>Based on the instructions, the next step is to escalate. (Further details on *how* to escalate, what information to pass, or specific agent assignment were not provided in this workflow's instructions but would typically be defined).</li>
+                        <li>Inform the customer: "Thank you for that information. I will now pass your cancellation request and order details to our support team who will review it and get back to you shortly." <span class="badge badge-purple">ESCALATE TO AGENT</span></li>
+                        </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

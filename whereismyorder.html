@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where is my order?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb; /* Lighter gray background */
+        }
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+        }
+        .content-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937; /* Dark gray */
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+        }
+        .step-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        .step-header {
+            background-color: #4f46e5; /* Indigo */
+            color: white;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .step-header h3 { /* Changed from h2 for step headers to differentiate from section headers */
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .step-header .sub-persona {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+        .step-content {
+            padding: 1.5rem;
+        }
+        .scenario-card, .action-card, .decision-card, .info-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+            background-color: #f9fafb;
+        }
+        .scenario-card h4, .action-card h4, .decision-card h4, .info-card h4 { /* Changed from h3 */
+            font-size: 1rem;
+            font-weight: 600;
+            color: #374151; /* Darker gray text */
+            margin-bottom: 0.5rem;
+        }
+        .decision-card {
+            border-left: 4px solid #f59e0b; /* Amber for decisions */
+            background-color: #fffbeb;
+        }
+        .prerequisite-card {
+            border-left: 4px solid #ef4444; /* Red for prerequisites */
+            background-color: #fef2f2;
+        }
+        .escalation-card {
+            border-left: 4px solid #8b5cf6; /* Violet for escalations */
+            background-color: #f5f3ff;
+        }
+        .connector {
+            text-align: center;
+            margin: 1rem 0;
+            font-size: 1.5rem;
+            color: #9ca3af;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-left: 0.5rem;
+        }
+        .badge-green { background-color: #d1fae5; color: #065f46; }
+        .badge-red { background-color: #fee2e2; color: #991b1b; }
+        .badge-yellow { background-color: #fef3c7; color: #92400e; }
+        .badge-blue { background-color: #dbeafe; color: #1e40af; }
+        .badge-purple { background-color: #ede9fe; color: #5b21b6; }
+
+        .flow-element {
+            position: relative;
+            margin-bottom: 20px; 
+        }
+        .flow-element:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -20px; 
+            transform: translateX(-50%);
+            width: 2px;
+            height: 20px; 
+            background-color: #cbd5e1; 
+            z-index: -1; 
+        }
+
+    </style>
+</head>
+<body class="p-6 md:p-10">
+
+        <div class="back-button-container mb-6 px-4 md:px-0 max-w-4xl mx-auto"> 
+        <a href="index.html" 
+           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+            <svg class="mr-2 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Back to Automation Library
+        </a>
+    </div>
+
+    <header class="text-center mb-10">
+        <h1 class="text-3xl font-bold text-gray-800">Customer Order Status Workflow</h1>
+        <p class="text-lg text-gray-600">Visualized Logic for "Elisha Persona" Automation</p>
+    </header>
+
+    <div class="max-w-4xl mx-auto">
+
+        <div class="content-section flow-element">
+            <h2>General Guidelines</h2>
+            <ul>
+                <li>Use natural, conversational language in all responses.</li>
+                <li>Be flexible in interpreting customer inputs - they may provide information in various formats.</li>
+                <li>If you're unsure about any input, ask for clarification politely.</li>
+                <li>Always maintain a helpful and friendly tone.</li>
+                <li>Prioritize customer satisfaction while following company policies.</li>
+            </ul>
+        </div>
+
+        <div class="connector">▼</div>
+
+        <div class="content-section flow-element">
+            <h2>Context</h2>
+            <p>Customers are going to be reaching out about their order status. Your job is to look up their order details, prioritizing any unfulfilled orders, and assist them by providing relevant information.</p>
+        </div>
+
+        <div class="connector">▼</div>
+
+        <div class="step-card prerequisite-card flow-element">
+            <div class="step-header !bg-red-600">
+                <h3>Step 0: Prerequisite Check</h3>
+            </div>
+            <div class="step-content">
+                <p class="mb-2">Automation "Initial Greeting & Query Clarification (Elisha Persona)" must finish collecting the customer's order number or email address used for the order.</p>
+                <ul>
+                    <li><strong>If NEITHER is present:</strong>
+                        <span class="badge badge-red">DO NOT TRIGGER</span>
+                        Automation exits. Initial customer query automation handles the interaction.
+                    </li>
+                    <li><strong>If EITHER an order number or email address is present:</strong>
+                        <span class="badge badge-green">PROCEED</span>
+                        to Step 1.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="connector">▼</div>
+
+        <div class="step-card flow-element">
+            <div class="step-header">
+                <h3>Step 1: Identify the Customer and the Most Relevant Order</h3>
+                <p class="sub-persona">(Prioritizing Unfulfilled)</p>
+            </div>
+            <div class="step-content">
+
+                <div class="action-card mb-4">
+                    <h4>A. Initial Interaction & Information Gathering</h4>
+                    <ul>
+                        <li>Greet the customer.</li>
+                        <li>Ask if they have a specific order number they are inquiring about, or if they'd like you to look up their recent orders using their email address.</li>
+                    </ul>
+                </div>
+
+                <div class="scenario-card">
+                    <h4>B. Order Identification Based on Provided Information</h4>
+                    <div class="mt-3 space-y-3">
+                        <div class="p-3 border rounded-md bg-white">
+                            <p class="font-semibold">Scenario 1: Customer provides an Order Number.</p>
+                            <ol class="list-decimal pl-5 mt-1">
+                                <li>Attempt to locate the order using the provided number.</li>
+                                <li><strong>If the order is found:</strong>
+                                    <ul class="list-disc pl-5">
+                                        <li>Retrieve the customer's email address associated with this order.</li>
+                                        <li>Note the status of this specific order (e.g., Unfulfilled, Fulfilled, Shipped).</li>
+                                        <li>Record the initially provided order number and its status.</li>
+                                        <li><span class="badge badge-blue">PROCEED</span> to Section C (Cross-Check for Unfulfilled Orders & Confirmation) using the retrieved email and the context of their initial order number query.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>If the order is NOT found:</strong>
+                                    <ul class="list-disc pl-5">
+                                        <li>Inform the customer.</li>
+                                        <li>Ask for the email address they used for the purchase.</li>
+                                        <li>If an email is provided: <span class="badge badge-blue">PROCEED</span> to Section C.</li>
+                                        <li>If no email is provided: <span class="badge badge-yellow">PROCEED</span> to Section D.</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="p-3 border rounded-md bg-white">
+                            <p class="font-semibold">Scenario 2: Customer provides an Email Address (either initially or after an order number lookup fails).</p>
+                            <ol class="list-decimal pl-5 mt-1">
+                                <li><span class="badge badge-blue">PROCEED</span> directly to Section C (Cross-Check for Unfulfilled Orders & Confirmation) using this email.</li>
+                            </ol>
+                        </div>
+                        <div class="p-3 border rounded-md bg-white">
+                            <p class="font-semibold">Scenario 3: Customer provides no initial identifying information (or declines after the initial ask in A).</p>
+                            <ol class="list-decimal pl-5 mt-1">
+                                <li><span class="badge badge-yellow">PROCEED</span> to Section D (Handling Insufficient Information).</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="decision-card mt-4">
+                    <h4>C. Cross-Check for Unfulfilled Orders & Confirmation (Using Customer's Email Address)</h4>
+                    <ol class="list-decimal pl-5 mt-2 space-y-2">
+                        <li>Using the customer's email address, search for all orders linked to it.</li>
+                        <li>Check if there are any unfulfilled orders.</li>
+                        <li class="font-semibold">Decision Point based on initial inquiry and unfulfilled order status:
+                            <div class="mt-2 space-y-3">
+                                <div class="p-3 border rounded-md bg-yellow-50">
+                                    <p class="font-medium">Condition 1: If the customer initially provided an order number for a FULFILLED order AND there is also at least one UNFULFILLED order associated with their email:</p>
+                                    <ul class="list-disc pl-5 mt-1">
+                                        <li>Acknowledge their specific request: "Okay, I can certainly give you an update on order #YYYYY (which I see is fulfilled/shipped)."</li>
+                                        <li>Inform about the unfulfilled order: "Before we dive into that, I also noticed you have a more recent unfulfilled order, #XXXXX, placed on [Date]. Would you prefer an update on this unfulfilled order first, or should we go ahead with the details for order #YYYYY that you asked about?"</li>
+                                        <li>If they choose the unfulfilled order #XXXXX, it becomes the "identified order." <span class="badge badge-green">PROCEED</span> to Step 2.</li>
+                                        <li>If they choose the fulfilled order #YYYYY, it becomes the "identified order." <span class="badge badge-green">PROCEED</span> to Step 2.</li>
+                                    </ul>
+                                </div>
+                                <div class="p-3 border rounded-md bg-yellow-50">
+                                    <p class="font-medium">Condition 2 (Else - i.e., if the customer initially provided an email, an unfulfilled order number, or no specific order number, OR if they provided a fulfilled order number but there are NO other unfulfilled orders):</p>
+                                    <ul class="list-disc pl-5 mt-1">
+                                        <li><strong>If there is one or more UNFULFILLED order(s) associated with the email (and it wasn't superseded by Condition 1):</strong>
+                                            <ul class="list-disc pl-5">
+                                                <li>Focus on the most recent unfulfilled order.</li>
+                                                <li>Inform the customer: "I see you have an unfulfilled order, #XXXXX, placed on [Date]. Is this the order you're asking about today?"</li>
+                                                <li>If yes, this is the "identified order." <span class="badge badge-green">PROCEED</span> to Step 2.</li>
+                                                <li>If no (they clarify they're asking about a different, likely fulfilled, order), proceed to the "Fulfilled Orders" logic below.</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>If there are NO UNFULFILLED orders associated with the email (or they've indicated they are not asking about an identified unfulfilled one):</strong> Address recent fulfilled orders:
+                                            <ul class="list-disc pl-5">
+                                                <li>If the customer had initially provided a specific fulfilled order number (and it's the one they want to discuss, and Condition 1 didn't apply or they chose to proceed with it): "Okay, regarding order #YYYYY, placed on [Date] (which has been fulfilled/shipped), let me get you the details." This is the "identified order." <span class="badge badge-green">PROCEED</span> to Step 2.</li>
+                                                <li>If only one fulfilled order was placed in the last 60 days (and no specific one was initially asked for by order number): "I see one recent order, #YYYYY, placed on [Date] (which has been fulfilled/shipped). Is this the one you're looking for an update on?" If yes, this is the "identified order." <span class="badge badge-green">PROCEED</span> to Step 2.</li>
+                                                <li>If multiple fulfilled orders were placed in the last 60 days (and no specific one was initially asked for by order number, or they are looking for a fulfilled one after ruling out unfulfilled): "I see a couple of recent fulfilled orders under your email. To make sure I get you the right information, could you clarify which one you're referring to? I have order #AAAAA from DATE and #BBBBB from DATE." Once clarified, this is the "identified order." <span class="badge badge-green">PROCEED</span> to Step 2.</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li><strong>If, after all checks, no specific order can be confirmed as the one the customer is asking about, or no orders are found:</strong>
+                            <ul class="list-disc pl-5 mt-1">
+                                <li>Inform: "I couldn't find any active or recent orders associated with that email address that match your inquiry, or I'm unclear which specific order you need help with. Could you please double-check the email, or perhaps provide/confirm a specific order number?"</li>
+                                <li>If new information is provided: Re-evaluate from Section B.</li>
+                                <li>If not: <span class="badge badge-yellow">PROCEED</span> to Section D.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="info-card mt-4">
+                    <h4>D. Handling Insufficient Information</h4>
+                     <ul class="list-disc pl-5 mt-1">
+                        <li>If, after the above steps, a specific order cannot be identified: "To help me find your order status, I'll need a bit more specific information. Could you please provide your order number or the email address you used for the purchase?"</li>
+                        <li>(If they still cannot provide sufficient information, you may need to explain that you're unable to look up their order status without it).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="connector">▼</div>
+
+        <div class="step-card flow-element">
+            <div class="step-header">
+                <h3>Step 2: Check the Fulfillment Status and Order Tags</h3>
+                <p class="sub-persona">(For the "Identified Order")</p>
+            </div>
+            <div class="step-content space-y-3">
+                <div class="p-3 border rounded-md bg-blue-50">
+                    <p><strong class="text-blue-700">If the fulfillment status is "Unfulfilled":</strong></p>
+                    <ul class="list-disc pl-5 mt-1">
+                        <li>Tell the customer that their order is still being processed.</li>
+                        <li>It usually takes about 1-2 business days to process an order before it gets shipped out.</li>
+                        <li>They will receive an email notification with a tracking link when their order has been shipped.</li>
+                    </ul>
+                </div>
+                <div class="p-3 border rounded-md bg-green-50">
+                    <p><strong class="text-green-700">If the order is "Fulfilled" or "Shipped":</strong></p>
+                    <ul class="list-disc pl-5 mt-1">
+                        <li>Check the Tracking URL for the latest update.</li>
+                        <li>Provide this update to the customer along with the tracking link.</li>
+                    </ul>
+                </div>
+                <div class="p-3 border rounded-md bg-yellow-50">
+                    <p><strong class="text-yellow-700">If the fulfillment status is "Partially Fulfilled":</strong></p>
+                    <ul class="list-disc pl-5 mt-1">
+                        <li>Check each line item for the status of each fulfillment.</li>
+                        <li>Provide all available information from any Tracking URLs.</li>
+                    </ul>
+                </div>
+                <div class="p-3 border rounded-md bg-purple-50">
+                    <p><strong class="text-purple-700">If the fulfillment status is "In Progress" or the Order Tags contain "pre-order":</strong></p>
+                    <ul class="list-disc pl-5 mt-1">
+                        <li>Let the customer know that you may be experiencing high order volume.</li>
+                        <li>Orders might take an additional 3-5 business days for fulfillment.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="connector">▼</div>
+
+        <div class="step-card flow-element">
+            <div class="step-header">
+                <h3>Step 3: Check any available Tracking URLs</h3>
+                 <p class="sub-persona">(For the "Identified Order")</p>
+            </div>
+            <div class="step-content space-y-3">
+                 <div class="p-3 border rounded-md bg-blue-50">
+                    <p><strong class="text-blue-700">If the Tracking URL shows as "In Transit":</strong></p>
+                    <ul class="list-disc pl-5 mt-1">
+                        <li>Let the customer know that their order is on the way.</li>
+                        <li>They can check the Tracking link for any updates.</li>
+                    </ul>
+                </div>
+                <div class="p-3 border rounded-md bg-green-50">
+                    <p><strong class="text-green-700">If the Tracking URL shows as "Out for delivery":</strong></p>
+                    <ul class="list-disc pl-5 mt-1">
+                        <li>Let the customer know that you are happy to confirm that their order appears to be out for delivery and should arrive soon.</li>
+                    </ul>
+                </div>
+                <div class="p-3 border rounded-md bg-red-50">
+                    <p><strong class="text-red-700">If the Tracking URL shows as "Delivered" (but the customer says they didn't receive it):</strong></p>
+                    <ul class="list-disc pl-5 mt-1">
+                        <li>Let them know it looks like their order was delivered.</li>
+                        <li>Provide them with the date that the order was delivered.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="connector">▼</div>
+
+        <div class="step-card flow-element">
+            <div class="step-header">
+                <h3>Step 4: Ticket Resolution</h3>
+            </div>
+            <div class="step-content">
+                <ul class="list-disc pl-5 space-y-2">
+                    <li>After providing the customer with the requested information, ask if there's anything else they need help with regarding their order.</li>
+                    <li><strong>If the customer confirms they don't need further assistance:</strong>
+                        <ul class="list-disc pl-5">
+                            <li>Thank them for their inquiry.</li>
+                            <li>Inform them that you'll be closing the ticket.</li>
+                            <li>Mark the ticket as 'Solved' in Zendesk. <span class="badge badge-green">SOLVED</span></li>
+                        </ul>
+                    </li>
+                    <li><strong>If the customer has additional questions that can be answered using the available order information:</strong>
+                        <ul class="list-disc pl-5">
+                            <li>Provide the necessary information.</li>
+                            <li>Once all questions are addressed, follow the steps above to close the ticket. <span class="badge badge-green">SOLVED</span></li>
+                        </ul>
+                    </li>
+                    <li><strong>If the customer's additional questions or concerns cannot be fully addressed:</strong>
+                        <ul class="list-disc pl-5">
+                            <li><span class="badge badge-purple">PROCEED</span> to Step 5 for escalation.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="connector">▼</div>
+
+        <div class="step-card escalation-card flow-element">
+            <div class="step-header !bg-purple-600">
+                <h3>Step 5: Assign to Agent and Route to Team</h3>
+                <p class="sub-persona">(If Unable to Resolve)</p>
+            </div>
+            <div class="step-content">
+                <p class="mb-2">If none of the above steps fully address the customer's inquiry or if the customer has additional questions that fall outside the scope of this automation:</p>
+                <ol class="list-decimal pl-5 space-y-2">
+                    <li>Inform the customer: "I apologize, but it seems your inquiry requires additional assistance that I'm not able to provide at this moment. I'm going to assign your case to one of our customer support agents who will be able to help you further."</li>
+                    <li>Route the conversation to your team.
+                        <ul class="list-disc pl-5">
+                            <li>This will set the ticket status to "Open".</li>
+                            <li>Tag it with "siena-follow-needed".</li>
+                        </ul>
+                    </li>
+                    <li>Assign the ticket to <strong>Jade Solano</strong> (without informing the customer of the specific agent).</li>
+                    <li>Provide a closing message: "A customer support agent will review your case and get back to you as soon as possible. Thank you for your patience, and we appreciate your business."</li>
+                </ol>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
+
