@@ -32,38 +32,48 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             overflow: hidden;
+            display: flex; /* Make card a flex container to allow content to fill height */
         }
         .automation-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+        /* .automation-card-content is now a flex container with column direction */
+        /* It will take full height of its parent (.automation-card) */
         .automation-card-content {
             padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Allows this div to grow and fill the card */
         }
         .automation-card h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
+            font-size: 1.25rem; /* Tailwind: text-xl */
+            font-weight: 600;   /* Tailwind: font-semibold */
+            color: #1f2937;     /* Tailwind: text-gray-800 */
+            margin-bottom: 0.5rem; /* Tailwind: mb-2 */
         }
+        /* The paragraph will grow to push the button down */
         .automation-card p {
-            font-size: 0.9rem;
-            color: #4b5563;
-            margin-bottom: 1rem;
-            min-height: 40px; /* Ensure consistent card height for description */
+            font-size: 0.9rem;  /* Custom size, close to text-sm */
+            color: #4b5563;     /* Tailwind: text-gray-600 */
+            margin-bottom: 1rem; /* Tailwind: mb-4 */
+            flex-grow: 1;       /* This makes the paragraph take available space */
         }
+        /* Button styling */
         .automation-card a {
-            display: inline-block;
-            background-color: #4f46e5;
+            display: inline-block; /* Or just 'block' if you want full width */
+            background-color: #4f46e5; /* Tailwind: bg-indigo-600 */
             color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
+            padding: 0.6rem 1.2rem; /* Custom padding */
+            border-radius: 8px;    /* Tailwind: rounded-lg */
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 500;      /* Tailwind: font-medium */
             transition: background-color 0.3s ease;
+            margin-top: auto;      /* Pushes button to the bottom of the flex container */
+            align-self: flex-start; /* Aligns button to the left if it's inline-block */
         }
         .automation-card a:hover {
-            background-color: #4338ca; /* Darker indigo */
+            background-color: #4338ca; /* Tailwind: hover:bg-indigo-700 */
         }
         .insights-summary-section { 
             background-color: #fffbeb; 
@@ -90,27 +100,26 @@
             margin-bottom: 0.25rem;
         }
 
-        /* Scroll-to-top button styles */
         #scrollToTopBtn {
-            display: none; /* Hidden by default */
-            position: fixed; /* Fixed/sticky position */
-            bottom: 30px; /* Place at the bottom of the page */
-            right: 30px; /* Place on the right side */
-            z-index: 99; /* Make sure it does not overlap other items */
-            border: none; /* Remove borders */
-            outline: none; /* Remove outline */
-            background-color: #4f46e5; /* Button background color (Indigo) */
-            color: white; /* Text color */
-            cursor: pointer; /* Add a mouse pointer on hover */
-            padding: 12px 15px; /* Some padding */
-            border-radius: 50%; /* Circular button */
-            font-size: 18px; /* Increase font size */
+            display: none; 
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            z-index: 99; 
+            border: none; 
+            outline: none; 
+            background-color: #4f46e5; 
+            color: white; 
+            cursor: pointer; 
+            padding: 12px 15px; 
+            border-radius: 50%; 
+            font-size: 18px; 
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: background-color 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
         }
 
         #scrollToTopBtn:hover {
-            background-color: #4338ca; /* Darker indigo on hover */
+            background-color: #4338ca; 
         }
     </style>
 </head>
@@ -125,58 +134,58 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             <div class="automation-card">
-                <div class="automation-card-content">
+                <div class="automation-card-content"> 
                     <h2>Intent: Where is my order?</h2>
-                    <p>Visualizes the step-by-step logic for handling customer inquiries about their order status, prioritizing unfulfilled orders.</p>
-                    <a href="whereismyorder.html">View Workflow</a>
+                    <p class="flex-grow">Visualizes the step-by-step logic for handling customer inquiries about their order status, prioritizing unfulfilled orders.</p> 
+                    <a href="whereismyorder.html" class="mt-auto self-start">View Workflow</a> 
                 </div>
             </div>
 
             <div class="automation-card">
-                <div class="automation-card-content">
+                <div class="automation-card-content"> 
                     <h2>Initial Greeting & Query Clarification (Elisha Persona)</h2>
-                    <p>Logic for Elisha persona to greet customers, understand their needs, and route or escalate.</p>
-                    <a href="initialgreeting.html">View Workflow</a>
+                    <p class="flex-grow">Logic for Elisha persona to greet customers, understand their needs, and route or escalate.</p> 
+                    <a href="initialgreeting.html" class="mt-auto self-start">View Workflow</a> 
                 </div>
             </div>
             
             <div class="automation-card">
-                <div class="automation-card-content">
+                <div class="automation-card-content"> 
                     <h2>Intent: I want to cancel my order</h2>
-                    <p>Handles customer requests for order cancellations, including reason identification and escalation.</p>
-                    <a href="cancelmyorder.html">View Workflow</a>
+                    <p class="flex-grow">Handles customer requests for order cancellations, including reason identification and escalation.</p> 
+                    <a href="cancelmyorder.html" class="mt-auto self-start">View Workflow</a> 
                 </div>
             </div>
 
             <div class="automation-card">
-                <div class="automation-card-content">
+                <div class="automation-card-content"> 
                     <h2>Intent: I want to return what I received</h2>
-                    <p>Guides through verifying return eligibility based on policy and providing next steps to the customer.</p>
-                    <a href="returns.html">View Workflow</a>
+                    <p class="flex-grow">Guides through verifying return eligibility based on policy and providing next steps to the customer.</p> 
+                    <a href="returns.html" class="mt-auto self-start">View Workflow</a> 
                 </div>
             </div>
 
             <div class="automation-card">
-                <div class="automation-card-content">
+                <div class="automation-card-content"> 
                     <h2>Intent: Inquiry about Bath Bomb availability</h2>
-                    <p>Manages customer inquiries about the upcoming hydrogen bath bombs, including early access sign-up.</p>
-                    <a href="bathbomb.html">View Workflow</a>
+                    <p class="flex-grow">Manages customer inquiries about the upcoming hydrogen bath bombs, including early access sign-up.</p> 
+                    <a href="bathbomb.html" class="mt-auto self-start">View Workflow</a> 
                 </div>
             </div>
 
             <div class="automation-card">
-                <div class="automation-card-content">
+                <div class="automation-card-content"> 
                     <h2>Intent: H2Tab Usage Inquiry</h2>
-                    <p>Provides guidance on proper H2Tab usage, covering dosage, water type, taste, sensitivity, and use with pets or medications.</p>
-                    <a href="H2tabusage.html">View Workflow</a>
+                    <p class="flex-grow">Provides guidance on proper H2Tab usage, covering dosage, water type, taste, sensitivity, and use with pets or medications.</p> 
+                    <a href="H2tabusage.html" class="mt-auto self-start">View Workflow</a> 
                 </div>
             </div>
 
             <div class="automation-card">
-                <div class="automation-card-content">
+                <div class="automation-card-content"> 
                     <h2>Intent: International Shipping Inquiry</h2>
-                    <p>Guides customers on international and military (APO/FPO/DPO) shipping options via Amazon and UK partner leaf.com.</p>
-                    <a href="intshipping.html" target="_blank">View Workflow</a>
+                    <p class="flex-grow">Guides customers on international and military (APO/FPO/DPO) shipping options via Amazon and UK partner leaf.com.</p> 
+                    <a href="intshipping.html" target="_blank" class="mt-auto self-start">View Workflow</a> 
                 </div>
             </div>
 
@@ -250,7 +259,7 @@
             </div>
             <p class="mt-4 text-sm text-center">Prioritizing automations that address these specific pain points can significantly enhance customer satisfaction and operational efficiency.</p>
         </div>
-        </main>
+    </main>
 
     <footer class="text-center py-8"> 
         <p class="text-gray-500 text-sm">&copy; <span id="currentYear"></span> JP Automations. All rights reserved.</p>
@@ -263,15 +272,9 @@
     </button>
 
     <script>
-        // Simple script to set the current year in the footer
         document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-        // Get the scroll-to-top button
         var scrollToTopButton = document.getElementById("scrollToTopBtn");
-
-        // When the user scrolls down 300px from the top of the document, show the button
         window.onscroll = function() {scrollFunction()};
-
         function scrollFunction() {
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
                 scrollToTopButton.style.display = "block";
@@ -279,8 +282,6 @@
                 scrollToTopButton.style.display = "none";
             }
         }
-
-        // When the user clicks on the button, scroll to the top of the document smoothly
         function scrollToTop() {
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
