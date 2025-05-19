@@ -13,6 +13,20 @@
             /* display: flex; /* Uncomment if TOC sidebar is used and not globally set */
         }
 
+#toc-sidebar h2 {
+            color: #4f46e5; /* Indigo to match step headers */
+        }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active {
+            background-color: #eef2ff; /* Light indigo */
+            color: #4f46e5; /* Indigo */
+        }
+         #toc-sidebar ul ul li a:hover,
+         #toc-sidebar ul ul li a.active { /* Sub-level active/hover */
+             color: #4f46e5; /* Indigo */
+             background-color: #e0e7ff; /* Slightly darker light indigo for sub-items if desired */
+        }
+
         .step-header {
             background-color: #fb923c; /* Orange-500 - Main theme for this workflow's steps */
         }
