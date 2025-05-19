@@ -56,7 +56,19 @@
             color: #4f46e5; /* Indigo */
             font-weight: 500;
         }
-         /* Sub-level for step parts if needed */
+        /* Style for the "Back to Library" link in TOC */
+        #toc-sidebar li a.back-link {
+            color: #6366f1; /* Indigo-500 for a bit more emphasis */
+            font-weight: 500;
+            margin-bottom: 1rem; /* Add some space below it */
+            border-bottom: 1px solid #e5e7eb; /* Separator */
+            padding-bottom: 0.75rem;
+        }
+        #toc-sidebar li a.back-link:hover {
+            color: #4338ca; /* Darker Indigo */
+            background-color: transparent; /* No background change on hover for this specific link */
+        }
+        /* Sub-level for step parts if needed */
         #toc-sidebar ul ul {
             padding-left: 1rem;
             margin-top: 0.25rem;
@@ -235,10 +247,18 @@
 
     </style>
 </head>
-<body> <nav id="toc-sidebar">
+<body> 
+    <nav id="toc-sidebar">
         <h2>Workflow Navigation</h2>
         <ul>
-            <li><a href="#back-to-library">Back to Library</a></li>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align: text-bottom;">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Back to Library
+                </a>
+            </li>
             <li><a href="#general-guidelines">General Guidelines</a></li>
             <li><a href="#context">Context</a></li>
             <li><a href="#step0">Step 0: Prerequisite Check</a></li>
@@ -259,22 +279,13 @@
     </nav>
 
     <div class="main-content-area">
-        <div id="back-to-library" class="back-button-container mb-6 px-4 md:px-0"> 
-            <a href="index.html" 
-               class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
-                <svg class="mr-2 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                Back to Automation Library
-            </a>
-        </div>
-
         <header class="text-center mb-10">
             <h1 class="text-3xl font-bold text-gray-800">Customer Order Status Workflow</h1>
             <p class="text-lg text-gray-600">Visualized Logic for "Elisha Persona" Automation</p>
         </header>
 
-        <div class="max-w-4xl mx-auto"> <div id="general-guidelines" class="content-section flow-element">
+        <div class="max-w-4xl mx-auto"> 
+            <div id="general-guidelines" class="content-section flow-element">
                 <h2>General Guidelines</h2>
                 <ul>
                     <li>Use natural, conversational language in all responses.</li>
@@ -553,7 +564,9 @@
                 </div>
             </div>
 
-        </div> </div> <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
+        </div> 
+    </div> 
+    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
             <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" />
         </svg>
@@ -587,35 +600,25 @@
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    // Calculate position, accounting for potential fixed headers if any
-                    // For now, direct scroll. Add offset if you have a fixed top navbar later.
-                    // const headerOffset = 0; // e.g., 60 if you have a 60px fixed header
-                    // const elementPosition = targetElement.getBoundingClientRect().top;
-                    // const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    // window.scrollTo({
-                    //      top: offsetPosition,
-                    //      behavior: "smooth"
-                    // });
                     targetElement.scrollIntoView({
                         behavior: 'smooth',
-                        block: 'start' // or 'center'
+                        block: 'start' 
                     });
 
-                    // Optional: Update active state in TOC
                     document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
                     this.classList.add('active');
                 }
             });
         });
 
-        // Optional: Active state highlighting for TOC on scroll
-        const sections = document.querySelectorAll('.content-section[id], .step-card[id]');
+        // Active state highlighting for TOC on scroll
+        const sections = document.querySelectorAll('.content-section[id], .step-card[id]'); // Include back-to-library if it's a scroll target
         const tocLinks = document.querySelectorAll('#toc-sidebar a');
 
-        const makeActive = (link) => {
+        const makeActive = (linkId) => { // Changed parameter to linkId
             tocLinks.forEach(l => l.classList.remove('active'));
-            if (link) {
-                const correspondingLink = document.querySelector(`#toc-sidebar a[href="#${link}"]`);
+            if (linkId) { // Check if linkId is not null or undefined
+                const correspondingLink = document.querySelector(`#toc-sidebar a[href="#${linkId}"]`);
                 if (correspondingLink) {
                     correspondingLink.classList.add('active');
                 }
@@ -624,18 +627,25 @@
 
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) { // Adjust ratio as needed
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) { 
                     makeActive(entry.target.id);
                 }
             });
         }, {
-            threshold: 0.5, // Trigger when 50% of the element is visible
-            rootMargin: "-50px 0px -50% 0px" // Adjust viewport for triggering, helps with sections near top/bottom
+            threshold: 0.5, 
+            rootMargin: "-50px 0px -50% 0px" 
         });
 
         sections.forEach(section => {
-            observer.observe(section);
+            if (section.id) { // Ensure section has an ID before observing
+                 observer.observe(section);
+            }
         });
+        // Also observe the back-to-library div if it's a scroll target
+        const backToLibDiv = document.getElementById('back-to-library');
+        if (backToLibDiv && backToLibDiv.id) {
+             observer.observe(backToLibDiv);
+        }
 
 
     </script>
