@@ -7,9 +7,72 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f9fafb; /* Lighter gray background */
+            background-color: #f9fafb;
+            display: flex; 
+        }
+        /* Table of Contents Sidebar */
+        #toc-sidebar {
+            width: 280px; 
+            position: fixed; 
+            left: 0;
+            top: 0;
+            height: 100vh; 
+            background-color: #ffffff; 
+            border-right: 1px solid #e5e7eb; 
+            padding: 2rem 1.5rem;
+            overflow-y: auto; 
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        }
+        #toc-sidebar h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #059669; /* Emerald/Green to match step headers */
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        #toc-sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        #toc-sidebar li a {
+            display: block;
+            padding: 0.5rem 0;
+            color: #374151; 
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            padding-left: 0.5rem;
+        }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active { 
+            background-color: #d1fae5; /* Light Emerald */
+            color: #059669; /* Emerald */
+            font-weight: 500;
+        }
+        #toc-sidebar li a.back-link {
+            color: #6366f1; /* Indigo for consistency with other back buttons */
+            font-weight: 500;
+            margin-bottom: 1rem; 
+            border-bottom: 1px solid #e5e7eb; 
+            padding-bottom: 0.75rem;
+        }
+        #toc-sidebar li a.back-link:hover {
+            color: #4338ca; 
+            background-color: transparent; 
+        }
+
+        /* Main Content Area */
+        .main-content-area {
+            margin-left: 280px; 
+            flex-grow: 1; 
+            padding: 1.5rem; 
         }
         .content-section {
             background-color: white;
@@ -21,7 +84,7 @@
         .content-section h2 {
             font-size: 1.5rem;
             font-weight: 600;
-            color: #1f2937; /* Dark gray */
+            color: #1f2937; 
             margin-bottom: 1rem;
             border-bottom: 1px solid #e5e7eb;
             padding-bottom: 0.5rem;
@@ -32,6 +95,7 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             margin-bottom: 1.5rem;
             overflow: hidden;
+            scroll-margin-top: 20px; 
         }
         .step-header {
             background-color: #059669; /* Emerald/Green for this workflow */
@@ -59,8 +123,8 @@
             color: #374151;
             margin-bottom: 0.5rem;
         }
-        .escalation-card { /* Re-using escalation style */
-            border-left: 4px solid #8b5cf6; /* Violet for escalations */
+        .escalation-card { 
+            border-left: 4px solid #8b5cf6; 
             background-color: #f5f3ff;
         }
         .connector {
@@ -69,14 +133,14 @@
             font-size: 1.5rem;
             color: #9ca3af;
         }
-        ul {
+        ul { /* General ul styling */
             list-style-type: disc;
             padding-left: 1.5rem;
         }
         li {
             margin-bottom: 0.5rem;
         }
-        .badge { /* For potential future use, not explicitly in this workflow's text */
+        .badge { 
             display: inline-block;
             padding: 0.25rem 0.75rem;
             border-radius: 9999px;
@@ -87,7 +151,6 @@
         .badge-red { background-color: #fee2e2; color: #991b1b; }
         .badge-yellow { background-color: #fef3c7; color: #92400e; }
         .badge-purple { background-color: #ede9fe; color: #5b21b6; }
-
 
         .flow-element {
             position: relative;
@@ -104,149 +167,166 @@
             background-color: #cbd5e1;
             z-index: -1;
         }
-         @media print { /* Basic print optimizations */
-            body { background-color: white; font-size: 10pt; }
+        #scrollToTopBtn {
+            display: none; 
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            z-index: 99; 
+            border: none; 
+            outline: none; 
+            background-color: #059669; /* Emerald/Green to match step header */
+            color: white; 
+            cursor: pointer; 
+            padding: 12px 15px; 
+            border-radius: 50%; 
+            font-size: 18px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #scrollToTopBtn:hover {
+            background-color: #047857; /* Darker Emerald/Green */
+        }
+         @media print { 
+            body { background-color: white; font-size: 10pt; padding: 0.5in; display: block; }
+            #toc-sidebar { display: none !important; } 
+            .main-content-area { margin-left: 0 !important; padding: 0 !important; } 
             .content-section, .step-card, .scenario-card, .action-card, .condition-card, .escalation-card {
                 box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid;
             }
             .step-header { background-color: #d1fae5 !important; color: #047857 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .escalation-card .step-header { background-color: #ddd6fe !important; color: #4c1d95 !important;}
             .badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; border: 1px solid #ccc; }
-            .connector, .flow-element::after { display: none; }
-        }
-                /* Scroll-to-top button styles */
-        #scrollToTopBtn {
-            display: none; /* Hidden by default */
-            position: fixed; /* Fixed/sticky position */
-            bottom: 30px; /* Place at the bottom of the page */
-            right: 30px; /* Place on the right side */
-            z-index: 99; /* Make sure it does not overlap other items */
-            border: none; /* Remove borders */
-            outline: none; /* Remove outline */
-            background-color: #4f46e5; /* Button background color (Indigo) */
-            color: white; /* Text color */
-            cursor: pointer; /* Add a mouse pointer on hover */
-            padding: 12px 15px; /* Some padding */
-            border-radius: 50%; /* Circular button */
-            font-size: 18px; /* Increase font size */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: background-color 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        #scrollToTopBtn:hover {
-            background-color: #4338ca; /* Darker indigo on hover */
+            .badge-purple { background-color: #ede9fe !important; color: #5b21b6 !important; }
+            .connector, .flow-element::after, #scrollToTopBtn { display: none !important; }
+            header h1 { font-size: 18pt; }
+            header p { font-size: 12pt; }
+            .content-section h2 { font-size: 14pt; }
+            .step-header h3 { font-size: 12pt; }
+            .scenario-card h4, .action-card h4, .condition-card h4, .escalation-card h4 { font-size: 10pt; }
+            li, p { font-size: 9pt; }
+            .badge { font-size: 8pt; }
         }
     </style>
 </head>
-<body class="p-6 md:p-10">
+<body>
 
-        <div class="back-button-container mb-6 px-4 md:px-0 max-w-4xl mx-auto"> 
-        <a href="index.html" 
-           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
-            <svg class="mr-2 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-            </svg>
-            Back to Automation Library
-        </a>
-    </div>
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align: text-bottom;">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#step1">Step 1: Determine Order</a></li>
+            <li><a href="#step2">Step 2: Identify Cancel Reason</a></li>
+            <li><a href="#step3">Step 3: Escalate to Agent</a></li>
+        </ul>
+    </nav>
 
-    <header class="text-center mb-10">
-        <h1 class="text-3xl font-bold text-gray-800">Order Cancellation Request Workflow</h1>
-        <p class="text-lg text-gray-600">Visualized Logic for Handling Customer Cancellation Requests</p>
-    </header>
+    <div class="main-content-area">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl font-bold text-gray-800">Order Cancellation Request Workflow</h1>
+            <p class="text-lg text-gray-600">Visualized Logic for Handling Customer Cancellation Requests</p>
+        </header>
 
-    <div class="max-w-4xl mx-auto">
+        <div class="max-w-4xl mx-auto">
 
-        <div class="content-section flow-element">
-            <h2>Context</h2>
-            <p>Customers will reach out to request for order cancellation. Your job is to look up their order details and assist them by providing information. If the order has been fulfilled, ask question why they want to cancel it.</p>
-        </div>
-
-        <div class="connector">▼</div>
-
-        <div class="step-card flow-element">
-            <div class="step-header">
-                <h3>Step 1: Determine the order that the customer is referring to</h3>
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>Customers will reach out to request for order cancellation. Your job is to look up their order details and assist them by providing information. If the order has been fulfilled, ask question why they want to cancel it.</p>
             </div>
-            <div class="step-content">
-                <div class="scenario-card">
-                    <h4>Order Identification Methods:</h4>
-                    <ul class="list-disc pl-5 mt-1 space-y-2">
-                        <li>
-                            <strong>Customer provides an order number:</strong>
-                            <ul class="list-disc pl-5">
-                                <li>This is the order they are referring to.</li>
-                                <li>If that order does not exist, ask the customer for the email address associated with the order.</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <strong>No orders associated with a provided customer email address:</strong>
-                            <ul class="list-disc pl-5">
-                                <li>Ask them for the correct email address associated with their order.</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <strong>Customer forwards the order confirmation email while requesting cancellation:</strong>
-                            <ul class="list-disc pl-5">
-                                <li>Try to examine the email content for the order number.</li>
-                            </ul>
-                        </li>
-                    </ul>
+
+            <div class="connector">▼</div>
+
+            <div id="step1" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 1: Determine the order that the customer is referring to</h3>
                 </div>
-            </div>
-        </div>
-
-        <div class="connector">▼</div>
-
-        <div class="step-card flow-element">
-            <div class="step-header">
-                <h3>Step 2: Identify the reason for cancel</h3>
-            </div>
-            <div class="step-content">
-                <p class="mb-2">Note: The context mentions asking for the reason "If the order has been fulfilled." This step should ideally be triggered after confirming fulfillment status (which isn't explicitly detailed before this step in the provided instructions, but is implied by the context).</p>
-                <div class="condition-card">
-                    <h4>Handling Customer Reasons:</h4>
-                    <ul class="list-disc pl-5 mt-1 space-y-2">
-                        <li>
-                            <strong>If the customer provides no reason:</strong>
-                            <ul class="list-disc pl-5">
-                                <li>Ask the customer for the reason for the cancellation. (Especially if order is fulfilled)</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <strong>If the customer provides a reason "waiting too long for order":</strong>
-                            <ul class="list-disc pl-5">
-                                <li>Apologize to the customer for the delay.</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <strong>If the customer provides a reason "I found cheaper":</strong>
-                            <ul class="list-disc pl-5">
-                                <li>Apologize to the customer. (Maintain helpful tone, avoid defensiveness).</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="connector">▼</div>
-
-        <div class="step-card escalation-card flow-element">
-            <div class="step-header !bg-purple-600">
-                <h3>Step 3: Get order information and escalate to an agent</h3>
-            </div>
-            <div class="step-content">
-                <div class="action-card">
-                    <h4>Actions:</h4>
-                    <ul class="list-disc pl-5 mt-1">
-                        <li>Retrieve and confirm all relevant details for the identified order.</li>
-                        <li>Based on the instructions, the next step is to escalate. (Further details on *how* to escalate, what information to pass, or specific agent assignment were not provided in this workflow's instructions but would typically be defined).</li>
-                        <li>Inform the customer: "Thank you for that information. I will now pass your cancellation request and order details to our support team who will review it and get back to you shortly." <span class="badge badge-purple">ESCALATE TO AGENT</span></li>
+                <div class="step-content">
+                    <div class="scenario-card">
+                        <h4>Order Identification Methods:</h4>
+                        <ul class="list-disc pl-5 mt-1 space-y-2">
+                            <li>
+                                <strong>Customer provides an order number:</strong>
+                                <ul class="list-disc pl-5">
+                                    <li>This is the order they are referring to.</li>
+                                    <li>If that order does not exist, ask the customer for the email address associated with the order.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>No orders associated with a provided customer email address:</strong>
+                                <ul class="list-disc pl-5">
+                                    <li>Ask them for the correct email address associated with their order.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Customer forwards the order confirmation email while requesting cancellation:</strong>
+                                <ul class="list-disc pl-5">
+                                    <li>Try to examine the email content for the order number.</li>
+                                </ul>
+                            </li>
                         </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step2" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 2: Identify the reason for cancel</h3>
+                </div>
+                <div class="step-content">
+                    <p class="mb-2">Note: The context mentions asking for the reason "If the order has been fulfilled." This step should ideally be triggered after confirming fulfillment status (which isn't explicitly detailed before this step in the provided instructions, but is implied by the context).</p>
+                    <div class="condition-card"> <h4>Handling Customer Reasons:</h4>
+                        <ul class="list-disc pl-5 mt-1 space-y-2">
+                            <li>
+                                <strong>If the customer provides no reason:</strong>
+                                <ul class="list-disc pl-5">
+                                    <li>Ask the customer for the reason for the cancellation. (Especially if order is fulfilled)</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>If the customer provides a reason "waiting too long for order":</strong>
+                                <ul class="list-disc pl-5">
+                                    <li>Apologize to the customer for the delay.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>If the customer provides a reason "I found cheaper":</strong>
+                                <ul class="list-disc pl-5">
+                                    <li>Apologize to the customer. (Maintain helpful tone, avoid defensiveness).</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step3" class="step-card escalation-card flow-element">
+                <div class="step-header !bg-purple-600">
+                    <h3>Step 3: Get order information and escalate to an agent</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Actions:</h4>
+                        <ul class="list-disc pl-5 mt-1">
+                            <li>Retrieve and confirm all relevant details for the identified order.</li>
+                            <li>Based on the instructions, the next step is to escalate. (Further details on *how* to escalate, what information to pass, or specific agent assignment were not provided in this workflow's instructions but would typically be defined).</li>
+                            <li>Inform the customer: "Thank you for that information. I will now pass your cancellation request and order details to our support team who will review it and get back to you shortly." <span class="badge badge-purple">ESCALATE TO AGENT</span></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 
     <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
@@ -256,28 +336,69 @@
     </button>
 
     <script>
-        // Simple script to set the current year in the footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-        // Get the scroll-to-top button
+        // Scroll-to-top button functionality
         var scrollToTopButton = document.getElementById("scrollToTopBtn");
-
-        // When the user scrolls down 300px from the top of the document, show the button
         window.onscroll = function() {scrollFunction()};
-
         function scrollFunction() {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                scrollToTopButton.style.display = "block";
-            } else {
-                scrollToTopButton.style.display = "none";
+            if (scrollToTopButton) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    scrollToTopButton.style.display = "block";
+                } else {
+                    scrollToTopButton.style.display = "none";
+                }
             }
         }
-
-        // When the user clicks on the button, scroll to the top of the document smoothly
         function scrollToTop() {
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
+
+        // TOC smooth scrolling and active state
+        document.querySelectorAll('#toc-sidebar a:not(.back-link)').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('.content-section[id], .step-card[id]');
+        const tocLinks = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
+
+        const makeActive = (linkId) => {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            if (linkId) {
+                const correspondingLink = document.querySelector(`#toc-sidebar a[href="#${linkId}"]`);
+                if (correspondingLink) {
+                    correspondingLink.classList.add('active');
+                }
+            }
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                    makeActive(entry.target.id);
+                }
+            });
+        }, {
+            threshold: 0.5,
+            rootMargin: "-50px 0px -50% 0px" 
+        });
+
+        sections.forEach(section => {
+            if (section.id) {
+                 observer.observe(section);
+            }
+        });
     </script>
-    
+
 </body>
 </html>
