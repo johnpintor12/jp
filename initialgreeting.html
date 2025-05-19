@@ -120,6 +120,28 @@
             .badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; border: 1px solid #ccc; }
             .connector, .flow-element::after { display: none; }
         }
+                /* Scroll-to-top button styles */
+        #scrollToTopBtn {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed/sticky position */
+            bottom: 30px; /* Place at the bottom of the page */
+            right: 30px; /* Place on the right side */
+            z-index: 99; /* Make sure it does not overlap other items */
+            border: none; /* Remove borders */
+            outline: none; /* Remove outline */
+            background-color: #4f46e5; /* Button background color (Indigo) */
+            color: white; /* Text color */
+            cursor: pointer; /* Add a mouse pointer on hover */
+            padding: 12px 15px; /* Some padding */
+            border-radius: 50%; /* Circular button */
+            font-size: 18px; /* Increase font size */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #4338ca; /* Darker indigo on hover */
+        }
     </style>
 </head>
 <body class="p-6 md:p-10">
