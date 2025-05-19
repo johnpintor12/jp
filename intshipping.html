@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>International Shipping Inquiry Workflow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global_styles.css">
+    <style>
+        /* Theme-specific styles for International Shipping Inquiry Workflow (Deep Blue Theme) */
+        body {
+            /* display: flex; /* Ensure this is active if global_styles.css doesn't set it by default for TOC layout */
+        }
+
+#toc-sidebar h2 {
+            color: #4f46e5; /* Indigo to match step headers */
+        }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active {
+            background-color: #eef2ff; /* Light indigo */
+            color: #4f46e5; /* Indigo */
+        }
+         #toc-sidebar ul ul li a:hover,
+         #toc-sidebar ul ul li a.active { /* Sub-level active/hover */
+             color: #4f46e5; /* Indigo */
+             background-color: #e0e7ff; /* Slightly darker light indigo for sub-items if desired */
+        }
+
+        .step-header {
+            background-color: #2563eb; /* Blue-600 - Main theme for this workflow's steps */
+        }
+        /* Specific card header colors if they differ */
+        .documentation-card .step-header { /* Example if documentation had a unique header */
+             background-color: #60a5fa !important; /* Lighter Blue for documentation step header */
+        }
+        
+        .link-style { /* Ensure this is themed if not already in global */
+            color: #2563eb; 
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        .link-style:hover {
+            color: #1d4ed8; /* Blue-700 */
+        }
+
+        #scrollToTopBtn {
+            background-color: #2563eb; /* Blue-600 - Main theme for this workflow's scroll button */
+        }
+        #scrollToTopBtn:hover {
+            background-color: #1d4ed8; /* Darker Blue-700 on hover */
+        }
+
+        /* Print-specific overrides for themed elements */
+        @media print {
+            .step-header { 
+                background-color: #bfdbfe !important; /* Lighter Blue for print */
+                color: #1e40af !important; 
+            }
+            .documentation-card .step-header {
+                 background-color: #93c5fd !important; /* Even lighter blue for documentation */
+                 color: #1e40af !important;
+            }
+            #toc-sidebar h2 {
+                color: #2563eb !important; 
+            }
+        }
+    </style>
+</head>
+<body> 
+
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align: text-bottom;">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#step1">Step 1: Understand Inquiry</a></li>
+            <li><a href="#step2">Step 2: Process Inquiry</a>
+                <ul>
+                    <li><a href="#step2-general-intl">General International/Specific Country</a></li>
+                    <li><a href="#step2-uk">UK Specific</a></li>
+                    <li><a href="#step2-apo-fpo">APO/FPO/DPO</a></li>
+                    <li><a href="#step2-existing-order">Existing Order</a></li>
+                    <li><a href="#step2-no-option">No Option Found</a></li>
+                </ul>
+            </li>
+            <li><a href="#step3">Step 3: Document & Tag</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content-area">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl font-bold text-gray-800">International Shipping Inquiry Workflow</h1>
+            <p class="text-lg text-gray-600">Guiding Customers on International & Military Shipping Options</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto">
+
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>Customers are inquiring about shipping products internationally or to military/diplomatic addresses. Your role is to clearly explain that our direct website store does not offer international shipping. Instead, you will guide customers to our Amazon store for most international orders, including all shipments to APO/FPO/DPO addresses. For customers in the UK, you will also inform them about our local partner, leaf.com, in addition to Amazon's general international availability. You'll also need to direct customers to the appropriate support channels for issues based on where they placed their order.</p>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step1" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 1: Understand the specific nature of the international shipping inquiry</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Initial Question to Customer:</h4>
+                        <p><em>"Could you please provide details about your international shipping inquiry? For example, are you asking about shipping to a specific country, military address, or do you have questions about an existing international order? If it's an existing order, please provide the order number."</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step2" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 2: Process the inquiry based on the customer's response</h3>
+                </div>
+                <div class="step-content">
+                    <div id="step2-general-intl" class="condition-card mb-3">
+                        <h4>IF the inquiry is about general international shipping or a specific country (including the UK):</h4>
+                        <div class="info-card mt-2">
+                            <h4>Response:</h4>
+                            <p class="mb-2"><em>"Our website store currently doesn't support direct international shipping. However, we recommend checking our product listings on Amazon for international shipping options. Amazon provides fulfillment to many countries and calculates shipping costs, delivery estimates, and any applicable import fees at checkout."</em></p>
+                            <div id="step2-uk" class="condition-card mt-2">
+                                 <h4>IF the customer mentions the UK:</h4>
+                                 <p class="mt-1">Add: <em>"For UK customers, in addition to Amazon, you can also purchase from our local UK partner, leaf.com."</em></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="step2-apo-fpo" class="condition-card mb-3">
+                        <h4>IF the inquiry is about shipping to APO/FPO/DPO addresses:</h4>
+                        <div class="info-card mt-2">
+                            <h4>Response:</h4>
+                            <p><em>"For all shipments to APO, FPO, and DPO addresses, please place your order through our Amazon store. When ordering, ensure you format the address correctly according to military guidelines. Amazon's checkout process will guide you through this. Delivery times and tracking for these orders are subject to Amazon's policies and military postal service operations."</em></p>
+                        </div>
+                    </div>
+
+                    <div id="step2-existing-order" class="condition-card mb-3">
+                        <h4>IF the inquiry is about an existing order:</h4>
+                        <div class="action-card mt-2">
+                            <h4>Action:</h4>
+                            <p class="mb-2">Use the 'Get Order Info' action to retrieve order details.</p>
+                            <div class="condition-card mt-2">
+                                <h4>IF the order was placed through Amazon:</h4>
+                                <p class="mt-1">Direct the customer: <em>"Since your order was placed through Amazon, they manage all aspects of fulfillment, shipping, and customer service. Please contact Amazon Customer Service directly through your Amazon account for assistance with tracking, delivery, returns, or refunds."</em></p>
+                            </div>
+                            <div class="condition-card mt-2">
+                                <h4>IF the order was placed through leaf.com:</h4>
+                                <p class="mt-1">Advise: <em>"For orders placed with leaf.com, please reach out to their customer service directly for assistance with your order."</em></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="step2-no-option" class="condition-card">
+                        <h4>IF the customer cannot find an option for their country via Amazon or leaf.com:</h4>
+                         <div class="info-card mt-2">
+                            <h4>Response:</h4>
+                            <p><em>"Currently, Amazon and our UK partner leaf.com are our established channels for international and UK sales respectively. If your specific country isn't serviceable through these channels, unfortunately, we may not have a shipping option to your location at this time."</em></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step3" class="step-card documentation-card flow-element">
+                <div class="step-header"> 
+                    <h3>Step 3: Document the interaction and tag the ticket</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Internal Actions:</h4>
+                        <p class="mb-2">Tag the conversation based on the inquiry type:</p>
+                        <ul class="list-disc pl-5 space-y-1 text-sm">
+                            <li>"International Shipping Inquiry - General" <span class="badge badge-blue">TAG</span></li>
+                            <li>"International Shipping Inquiry - UK" <span class="badge badge-blue">TAG</span></li>
+                            <li>"International Shipping Inquiry - APO/FPO/DPO" <span class="badge badge-blue">TAG</span></li>
+                            <li>"Amazon Referral - International" <span class="badge badge-blue">TAG</span></li>
+                            <li>"UK Partner Referral - leaf.com" <span class="badge badge-blue">TAG</span></li>
+                            <li>"Existing Order Inquiry - International" <span class="badge badge-blue">TAG</span></li>
+                        </ul>
+                        <p class="mt-3 mb-1">Document key details:</p>
+                         <ul class="list-disc pl-5 space-y-1 text-sm">
+                            <li>Customer's specific question</li>
+                            <li>Destination country/address type</li>
+                            <li>Purchasing channel advised (Amazon or leaf.com)</li>
+                            <li>Information provided</li>
+                            <li>Any follow-ups planned</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+            <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" />
+        </svg>
+    </button>
+
+    <script>
+        // Scroll-to-top button functionality
+        var scrollToTopButton = document.getElementById("scrollToTopBtn");
+        window.onscroll = function() {scrollFunction()};
+        function scrollFunction() {
+            if (scrollToTopButton) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    scrollToTopButton.style.display = "block";
+                } else {
+                    scrollToTopButton.style.display = "none";
+                }
+            }
+        }
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // TOC smooth scrolling and active state
+        document.querySelectorAll('#toc-sidebar a:not(.back-link)').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('.content-section[id], .step-card[id], .condition-card[id]'); // Added .condition-card for sub-sections
+        const tocLinks = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
+
+        const makeActive = (linkId) => {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            if (linkId) {
+                const correspondingLink = document.querySelector(`#toc-sidebar a[href="#${linkId}"]`);
+                if (correspondingLink) {
+                    correspondingLink.classList.add('active');
+                     // If it's a sub-link, also activate its parent
+                    const parentLi = correspondingLink.closest('ul')?.closest('li');
+                    if (parentLi) {
+                        const parentAnchor = parentLi.querySelector('a');
+                        if(parentAnchor && parentAnchor.getAttribute('href').startsWith('#step2')) { // Be more specific for parent activation
+                           parentAnchor.classList.add('active');
+                        }
+                    }
+                }
+            }
+        };
+        
+        const observer = new IntersectionObserver(entries => {
+            let intersectingEntry = null;
+            // Find the "most visible" or "topmost relevant" entry
+            for (let i = 0; i < entries.length; i++) {
+                if (entries[i].isIntersecting) {
+                    if (!intersectingEntry || entries[i].target.getBoundingClientRect().top < intersectingEntry.target.getBoundingClientRect().top) {
+                        if (entries[i].intersectionRatio >= 0.1) { // Ensure it's somewhat visible
+                           intersectingEntry = entries[i];
+                        }
+                    }
+                }
+            }
+            if (intersectingEntry) {
+                 makeActive(intersectingEntry.target.id);
+            }
+
+        }, {
+            threshold: [0.1, 0.5], // Trigger when 10% or 50% of the element is visible
+            rootMargin: "-40% 0px -50% 0px" // Focus on the middle part of the viewport
+        });
+
+        sections.forEach(section => {
+            if (section.id) {
+                 observer.observe(section);
+            }
+        });
+    </script>
+
+</body>
+</html>

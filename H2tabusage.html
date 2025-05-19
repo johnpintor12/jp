@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H2Tab Usage Inquiry Workflow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global_styles.css">
+    <style>
+        /* Theme-specific styles for H2Tab Usage Inquiry Workflow (Green Theme) */
+        body {
+            /* display: flex; /* Ensure this is active if global_styles.css doesn't set it by default for TOC layout */
+        }
+
+#toc-sidebar h2 {
+            color: #4f46e5; /* Indigo to match step headers */
+        }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active {
+            background-color: #eef2ff; /* Light indigo */
+            color: #4f46e5; /* Indigo */
+        }
+         #toc-sidebar ul ul li a:hover,
+         #toc-sidebar ul ul li a.active { /* Sub-level active/hover */
+             color: #4f46e5; /* Indigo */
+             background-color: #e0e7ff; /* Slightly darker light indigo for sub-items if desired */
+        }
+
+        .step-header {
+            background-color: #22c55e; /* Green-500 - Main theme for this workflow's steps */
+        }
+        /* Specific card header colors if they differ (none in this workflow's design) */
+        
+        .link-style { /* Ensure this is themed if not already in global */
+            color: #22c55e; 
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        .link-style:hover {
+            color: #16a34a; /* Green-600 */
+        }
+
+        #scrollToTopBtn {
+            background-color: #22c55e; /* Green-500 - Main theme for this workflow's scroll button */
+        }
+        #scrollToTopBtn:hover {
+            background-color: #16a34a; /* Darker Green-600 on hover */
+        }
+
+        /* Print-specific overrides for themed elements */
+        @media print {
+            .step-header { 
+                background-color: #dcfce7 !important; /* Lighter Green for print */
+                color: #15803d !important; 
+            }
+            #toc-sidebar h2 {
+                color: #22c55e !important; 
+            }
+        }
+    </style>
+</head>
+<body> 
+
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align: text-bottom;">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#step1">Step 1: Greet & Identify Question</a></li>
+            <li>
+                <a href="#step2">Step 2: Provide Usage Guidance</a>
+                <ul>
+                    <li><a href="#step2-tablets-per-day">Tablets Per Day</a></li>
+                    <li><a href="#step2-water-type">Water Type</a></li>
+                    <li><a href="#step2-taste-flavorings">Taste/Flavorings</a></li>
+                    <li><a href="#step2-waiting-time">Waiting Time</a></li>
+                    <li><a href="#step2-pets-animals">For Pets/Animals</a></li>
+                    <li><a href="#step2-digestive-sensitivity">Digestive Sensitivity</a></li>
+                    <li><a href="#step2-medications-supplements">With Medications/Supplements</a></li>
+                </ul>
+            </li>
+            <li><a href="#step3">Step 3: Conclude & Offer Help</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content-area">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl font-bold text-gray-800">H2Tab Usage Inquiry Workflow</h1>
+            <p class="text-lg text-gray-600">Visualized Logic for Guiding Customers on Proper H2Tab Use</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto">
+
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>Customers are reaching out with questions about how to properly use H2Tab molecular hydrogen tablets. Inquiries may include how many tablets to take, what kind of water to use, whether they can mix it with other things, what to do if they experience sensitivity, or general best practices for consumption. Your goal is to provide clear, helpful, and supportive guidance to ensure customers have a positive experience and achieve the best results with H2Tab.</p>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step1" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 1: Greet the customer and identify their specific usage question</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Actions:</h4>
+                        <ul class="list-disc pl-5 mt-1">
+                            <li>Start with a friendly greeting: <em>"Hi [Customer's Name],"</em></li>
+                            <li>Ask clarifying questions if needed to understand what aspect of H2Tab usage they are inquiring about. (e.g., "To make sure I give you the best advice, could you tell me a bit more about what you'd like to know regarding H2Tab usage?")</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step2" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 2: Provide guidance based on the customer's specific usage inquiry</h3>
+                </div>
+                <div class="step-content">
+                    <div id="step2-tablets-per-day" class="info-card mb-3">
+                        <h4>If customer asks how many tablets to take per day:</h4>
+                        <p><em>"Most people take 1–2 tablets per day to support energy, mental clarity, and recovery. Some take up to 4 depending on their needs, especially athletes or those dealing with high oxidative stress. Starting with 1 tablet a day is a great place to begin to see how your body responds."</em></p>
+                    </div>
+
+                    <div id="step2-water-type" class="info-card mb-3">
+                        <h4>If customer asks what kind of water to use:</h4>
+                        <p class="mb-2"><em>"We always recommend using H2Tab with clean, filtered, or spring water. This ensures you're getting the best experience and not introducing any unwanted contaminants."</em></p>
+                        <p><em>(Referencing FAQ page 82, "Does H2Tab clean water..."): "It's important to note that while molecular hydrogen offers antioxidant and anti-inflammatory benefits inside the body, H2Tab is not a water purifier or disinfectant. It won’t kill bacteria or contaminants in unclean water."</em></p>
+                    </div>
+
+                    <div id="step2-taste-flavorings" class="info-card mb-3">
+                        <h4>If customer asks about the taste or if they can add flavorings (e.g., lemon):</h4>
+                        <p class="mb-2"><em>(Referencing FAQ page 82, "About the taste"): "The slight mineral or metallic scent and taste some people notice comes from the elemental magnesium reacting with the water to produce molecular hydrogen—it’s totally natural and a sign the tablet is working!"</em></p>
+                        <p class="mb-2"><em>"If the taste isn’t your favorite, you can absolutely add lemon, nitric oxide boosters, or other natural flavors after the tablet has fully dissolved. This won’t reduce the effectiveness; in fact, some additions like lemon might even boost the reaction of effervescing hydrogen."</em></p>
+                        <p><em>"For a neutral experience, our unflavored option is great. If you prefer a bit of taste, our raspberry flavor offers a light and refreshing option, not too sweet."</em></p>
+                    </div>
+                    
+                    <div id="step2-waiting-time" class="info-card mb-3">
+                        <h4>If customer asks how long to wait before drinking or if they need to drink it immediately:</h4>
+                        <p class="mb-2"><em>"For maximum potency and to get the highest concentration of hydrogen, it's generally best to drink the water relatively soon after the H2Tab has fully dissolved and the water has cleared."</em></p>
+                        <p><em>(Referencing FAQ page 51, advice for sensitivity): "However, if you are new to hydrogen water or have a sensitive system, one gentle method to ease in is to wait about 20-25 minutes after the tablet fully dissolves before drinking. At that point, the hydrogen concentration will have decreased to around half-strength, which can be a good starting point."</em></p>
+                    </div>
+
+                    <div id="step2-pets-animals" class="info-card mb-3">
+                        <h4>If customer asks about using H2Tab for pets/animals:</h4>
+                        <p class="mb-2"><em>(Referencing FAQ page 82): "Yes! Many of our customers share hydrogen water with their pets. Molecular hydrogen is non-toxic and generally safe for animals. You can find studies linked to this on our science page!"</em></p>
+                        <p><em>"We just recommend using the unflavored tablets for pets and always checking with your vet, especially if your pet has any pre-existing health conditions or is on medication. A good rule of thumb is to start with moderation—small amounts to begin with."</em></p>
+                    </div>
+
+                    <div id="step2-digestive-sensitivity" class="info-card mb-3">
+                        <h4>If customer reports digestive sensitivity (e.g., stomach ache, loose stools, bloating) after using H2Tab:</h4>
+                        <p class="mb-2"><em>"Thank you for reaching out and for giving H2Tab a try—we’re so sorry to hear about your experience. Your comfort and well-being are incredibly important to us."</em></p>
+                        <p class="mb-2"><em>"H2Tab delivers a potent 12ppm dose of hydrogen, which can sometimes take a little time for the body to adjust to, especially at first. Some people, including members of our own team, have experienced initial digestive sensitivity like loose stools or mild bloating, but found that easing into it made a big difference."</em></p>
+                        <p class="mb-2"><em>"We’d recommend trying one of these approaches to help your body adjust more comfortably:"</em></p>
+                        <ul class="list-disc pl-5 mb-2">
+                            <li><em>"Start with half a tablet in 12oz of water."</em></li>
+                            <li><em>"Or, use more water (e.g., 16-20oz) per full tablet."</em></li>
+                            <li><em>"Or, wait about 20-25 minutes after the tablet fully dissolves before drinking, which reduces the hydrogen concentration to about half-strength."</em></li>
+                        </ul>
+                        <p class="mb-2"><em>"These adjustments have helped many customers enjoy the benefits without discomfort. We’d love for you to give one of these approaches a try and let us know how it works for you!"</em></p>
+                        <p class="mb-2"><em>"Of course, we always recommend you check in with your healthcare provider to ensure H2Tab is the right fit for you, especially if you’re experiencing any discomfort."</em></p>
+                        <p><em>(If they remain uncomfortable and wish to stop): "And of course, if H2Tab still isn’t the right fit after trying to ease in, we’re happy to make it right. We can discuss options like a refund, and if you have a subscription, we can assist with canceling it."</em></p>
+                    </div>
+
+                    <div id="step2-medications-supplements" class="info-card">
+                        <h4>If customer asks if they can take H2Tab with medications or other supplements:</h4>
+                        <p><em>(General safe advice, referencing FAQ page 78 for "Highblood or on blood thinners"): "H2Tab is a natural supplement designed to support hydration, energy, recovery, and overall wellness. However, we always recommend consulting with your healthcare provider before introducing anything new, especially if you're on medications (like blood pressure or blood thinners) or taking other supplements. Your doctor can provide personalized advice based on your unique health needs and any potential interactions."</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step3" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 3: Offer further assistance and conclude</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Concluding Interaction:</h4>
+                        <p><em>"Let me know if you have any other questions! We're here to help you get the best experience with H2Tab."</em></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+            <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" />
+        </svg>
+    </button>
+
+    <script>
+        // Scroll-to-top button functionality
+        var scrollToTopButton = document.getElementById("scrollToTopBtn");
+        window.onscroll = function() {scrollFunction()};
+        function scrollFunction() {
+            if (scrollToTopButton) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    scrollToTopButton.style.display = "block";
+                } else {
+                    scrollToTopButton.style.display = "none";
+                }
+            }
+        }
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // TOC smooth scrolling and active state
+        document.querySelectorAll('#toc-sidebar a:not(.back-link)').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('.content-section[id], .step-card[id], .info-card[id]'); // Added .info-card[id] for sub-sections
+        const tocLinks = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
+
+        const makeActive = (linkId) => {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            if (linkId) {
+                const correspondingLink = document.querySelector(`#toc-sidebar a[href="#${linkId}"]`);
+                if (correspondingLink) {
+                    correspondingLink.classList.add('active');
+                    // If it's a sub-link, also activate its parent
+                    const parentLi = correspondingLink.closest('ul')?.closest('li');
+                    if (parentLi) {
+                        const parentAnchor = parentLi.querySelector('a');
+                        if(parentAnchor) parentAnchor.classList.add('active');
+                    }
+                }
+            }
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            let intersectingEntry = null;
+            for (let i = entries.length -1; i >=0; i--) { // Prioritize the last one in view (usually lowest on screen)
+                 if (entries[i].isIntersecting && entries[i].intersectionRatio >= 0.1) { // Lowered ratio a bit
+                    intersectingEntry = entries[i];
+                    break;
+                 }
+            }
+            if (intersectingEntry) {
+                 makeActive(intersectingEntry.target.id);
+            }
+
+        }, {
+            threshold: [0.1, 0.5, 1.0], // Multiple thresholds
+            rootMargin: "-50px 0px -40% 0px" // Adjust viewport focus
+        });
+
+        sections.forEach(section => {
+            if (section.id) {
+                 observer.observe(section);
+            }
+        });
+    </script>
+
+</body>
+</html>
