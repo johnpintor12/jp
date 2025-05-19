@@ -8,68 +8,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/global_styles.css">
     <style>
-        /* Theme-specific styles for Customer Order Status Workflow */
-        body {
-            /* If your global_styles.css doesn't set display:flex for body by default, 
-               but this page needs the TOC sidebar, uncomment the next line.
-               If global_styles.css *does* set display:flex for body, you might not need this.
-               Alternatively, add a class like "has-toc" to body and target that in global_styles.css */
-            /* display: flex; */ 
+        /* Theme-specific styles for Customer Order Status Workflow (Indigo Theme) */
+        /* Add this class to body if this page uses the TOC sidebar */
+        body.has-toc {
+            display: flex;
         }
-
-        #toc-sidebar h2 {
-            color: #4f46e5; /* Indigo to match step headers */
-        }
+        /* Default TOC header and active link colors for this page */
+        #toc-sidebar h2 { color: #4f46e5; }
         #toc-sidebar li a:hover,
-        #toc-sidebar li a.active {
-            background-color: #eef2ff; /* Light indigo */
-            color: #4f46e5; /* Indigo */
-        }
-         #toc-sidebar ul ul li a:hover,
-         #toc-sidebar ul ul li a.active { /* Sub-level active/hover */
-             color: #4f46e5; /* Indigo */
-             background-color: #e0e7ff; /* Slightly darker light indigo for sub-items if desired */
-        }
+        #toc-sidebar li a.active { background-color: #eef2ff; color: #4f46e5; }
+        #toc-sidebar ul ul li a:hover,
+        #toc-sidebar ul ul li a.active { color: #4f46e5; background-color: #e0e7ff; }
 
-        .step-header {
-            background-color: #4f46e5; /* Indigo - Main theme for this workflow's steps */
-        }
-        /* Specific card header colors if they differ from the main step-header */
-        .prerequisite-card .step-header {
-            background-color: #ef4444 !important; /* Red for prerequisites - ensure it overrides */
-        }
-        .escalation-card .step-header {
-            background-color: #8b5cf6 !important; /* Violet for escalations - ensure it overrides */
-        }
+        /* Main step header color for this page */
+        .step-header { background-color: #4f46e5; }
+        /* Specific card header colors (these will override the general .step-header if class is present) */
+        .prerequisite-card .step-header { background-color: #ef4444 !important; }
+        .escalation-card .step-header { background-color: #8b5cf6 !important; }
 
-        #scrollToTopBtn {
-            background-color: #4f46e5; /* Indigo - Main theme for this workflow's scroll button */
-        }
-        #scrollToTopBtn:hover {
-            background-color: #4338ca; /* Darker indigo on hover */
-        }
+        /* Scroll to top button color for this page */
+        #scrollToTopBtn { background-color: #4f46e5; }
+        #scrollToTopBtn:hover { background-color: #4338ca; }
 
-        /* Print-specific overrides for themed elements if global print styles are too generic */
         @media print {
-            .step-header { 
-                background-color: #c7d2fe !important; /* Lighter Indigo for print */
-                color: #3730a3 !important; 
-            }
-            .prerequisite-card .step-header { 
-                background-color: #fecaca !important; 
-                color: #7f1d1d !important;
-            }
-            .escalation-card .step-header { 
-                background-color: #ddd6fe !important; 
-                color: #4c1d95 !important;
-            }
-            #toc-sidebar h2 {
-                color: #4f46e5 !important; /* Ensure TOC header color prints if desired */
-            }
+            .step-header { background-color: #c7d2fe !important; color: #3730a3 !important; }
+            .prerequisite-card .step-header { background-color: #fecaca !important; color: #7f1d1d !important;}
+            .escalation-card .step-header { background-color: #ddd6fe !important; color: #4c1d95 !important;}
+            #toc-sidebar h2 { color: #4f46e5 !important; }
         }
     </style>
 </head>
-<body> 
+<body class="has-toc"> <button id="menu-toggle" aria-label="Open navigation menu">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+    </button>
+
     <nav id="toc-sidebar">
         <h2>Workflow Navigation</h2>
         <ul>
@@ -100,8 +74,7 @@
         </ul>
     </nav>
 
-    <div class="main-content-area">
-        <header class="text-center mb-10">
+    <div class="main-content-area toc-active"> <header class="text-center mb-10">
             <h1 class="text-3xl font-bold text-gray-800">Customer Order Status Workflow</h1>
             <p class="text-lg text-gray-600">Visualized Logic for "Elisha Persona" Automation</p>
         </header>
@@ -128,7 +101,8 @@
             <div class="connector">▼</div>
 
             <div id="step0" class="step-card prerequisite-card flow-element">
-                <div class="step-header"> <h3>Step 0: Prerequisite Check</h3>
+                <div class="step-header"> 
+                    <h3>Step 0: Prerequisite Check</h3>
                 </div>
                 <div class="step-content">
                     <p class="mb-2">Automation "Initial Greeting & Query Clarification (Elisha Persona)" must finish collecting the customer's order number or email address used for the order.</p>
@@ -153,7 +127,6 @@
                     <p class="sub-persona">(Prioritizing Unfulfilled)</p>
                 </div>
                 <div class="step-content">
-
                     <div id="step1a" class="action-card mb-4">
                         <h4>A. Initial Interaction & Information Gathering</h4>
                         <ul>
@@ -161,10 +134,9 @@
                             <li>Ask if they have a specific order number they are inquiring about, or if they'd like you to look up their recent orders using their email address.</li>
                         </ul>
                     </div>
-
                     <div id="step1b" class="scenario-card">
                         <h4>B. Order Identification Based on Provided Information</h4>
-                        <div class="mt-3 space-y-3">
+                         <div class="mt-3 space-y-3">
                             <div class="p-3 border rounded-md bg-white">
                                 <p class="font-semibold">Scenario 1: Customer provides an Order Number.</p>
                                 <ol class="list-decimal pl-5 mt-1">
@@ -201,7 +173,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div id="step1c" class="decision-card mt-4">
                         <h4>C. Cross-Check for Unfulfilled Orders & Confirmation (Using Customer's Email Address)</h4>
                         <ol class="list-decimal pl-5 mt-2 space-y-2">
@@ -219,42 +190,41 @@
                                         </ul>
                                     </div>
                                     <div class="p-3 border rounded-md bg-yellow-50">
-                                        <p class="font-medium">Condition 2 (Else - i.e., if the customer initially provided an email, an unfulfilled order number, or no specific order number, OR if they provided a fulfilled order number but there are NO other unfulfilled orders):</p>
+                                        <p class="font-medium">Condition 2 (Else):</p>
                                         <ul class="list-disc pl-5 mt-1">
-                                            <li><strong>If there is one or more UNFULFILLED order(s) associated with the email (and it wasn't superseded by Condition 1):</strong>
+                                            <li><strong>If one or more UNFULFILLED order(s) exist:</strong>
                                                 <ul class="list-disc pl-5">
-                                                    <li>Focus on the most recent unfulfilled order.</li>
-                                                    <li>Inform the customer: "I see you have an unfulfilled order, #XXXXX, placed on [Date]. Is this the order you're asking about today?"</li>
-                                                    <li>If yes, this is the "identified order." <span class="badge badge-green">PROCEED</span> to Step 2.</li>
-                                                    <li>If no (they clarify they're asking about a different, likely fulfilled, order), proceed to the "Fulfilled Orders" logic below.</li>
+                                                    <li>Focus on the MOST RECENT unfulfilled order.</li>
+                                                    <li>Inform: "I see you have an unfulfilled order, #XXXXX, placed on [Date]. Is this the order you're asking about today?"</li>
+                                                    <li>If YES: This is the "identified order." <span class="badge badge-green">PROCEED</span> to Step 2.</li>
+                                                    <li>If NO: Proceed to "Fulfilled Orders" logic below.</li>
                                                 </ul>
                                             </li>
-                                            <li><strong>If there are NO UNFULFILLED orders associated with the email (or they've indicated they are not asking about an identified unfulfilled one):</strong> Address recent fulfilled orders:
+                                            <li><strong>If NO UNFULFILLED orders exist:</strong> Address recent FULFILLED orders:
                                                 <ul class="list-disc pl-5">
-                                                    <li>If the customer had initially provided a specific fulfilled order number (and it's the one they want to discuss, and Condition 1 didn't apply or they chose to proceed with it): "Okay, regarding order #YYYYY, placed on [Date] (which has been fulfilled/shipped), let me get you the details." This is the "identified order." <span class="badge badge-green">PROCEED</span> to Step 2.</li>
-                                                    <li>If only one fulfilled order was placed in the last 60 days (and no specific one was initially asked for by order number): "I see one recent order, #YYYYY, placed on [Date] (which has been fulfilled/shipped). Is this the one you're looking for an update on?" If yes, this is the "identified order." <span class="badge badge-green">PROCEED</span> to Step 2.</li>
-                                                    <li>If multiple fulfilled orders were placed in the last 60 days (and no specific one was initially asked for by order number, or they are looking for a fulfilled one after ruling out unfulfilled): "I see a couple of recent fulfilled orders under your email. To make sure I get you the right information, could you clarify which one you're referring to? I have order #AAAAA from DATE and #BBBBB from DATE." Once clarified, this is the "identified order." <span class="badge badge-green">PROCEED</span> to Step 2.</li>
+                                                    <li>If customer initially provided a specific FULFILLED order#: "Okay, regarding order #YYYYY..." This is the "identified order." <span class="badge badge-green">PROCEED</span> to Step 2.</li>
+                                                    <li>If only ONE fulfilled order in last 60 days: "I see one recent order, #YYYYY..." If YES, this is "identified order." <span class="badge badge-green">PROCEED</span> to Step 2.</li>
+                                                    <li>If MULTIPLE fulfilled orders in last 60 days: "I see a couple of recent fulfilled orders..." Once clarified, this is "identified order." <span class="badge badge-green">PROCEED</span> to Step 2.</li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
-                            <li><strong>If, after all checks, no specific order can be confirmed as the one the customer is asking about, or no orders are found:</strong>
+                            <li><strong>If no specific order confirmed/found:</strong>
                                 <ul class="list-disc pl-5 mt-1">
-                                    <li>Inform: "I couldn't find any active or recent orders associated with that email address that match your inquiry, or I'm unclear which specific order you need help with. Could you please double-check the email, or perhaps provide/confirm a specific order number?"</li>
-                                    <li>If new information is provided: Re-evaluate from Section B.</li>
+                                    <li>Inform: "I couldn't find any active or recent orders... Could you please double-check..."</li>
+                                    <li>If new info: Re-evaluate from Section B.</li>
                                     <li>If not: <span class="badge badge-yellow">PROCEED</span> to Section D.</li>
                                 </ul>
                             </li>
                         </ol>
                     </div>
-
                     <div id="step1d" class="info-card mt-4">
                         <h4>D. Handling Insufficient Information</h4>
                          <ul class="list-disc pl-5 mt-1">
-                            <li>If, after the above steps, a specific order cannot be identified: "To help me find your order status, I'll need a bit more specific information. Could you please provide your order number or the email address you used for the purchase?"</li>
-                            <li>(If they still cannot provide sufficient information, you may need to explain that you're unable to look up their order status without it).</li>
+                            <li>If order not identified: "To help me find your order status, I'll need... order number or the email..."</li>
+                            <li>(If still no info, explain inability to look up).</li>
                         </ul>
                     </div>
                 </div>
@@ -269,33 +239,16 @@
                 </div>
                 <div class="step-content space-y-3">
                     <div class="p-3 border rounded-md bg-blue-50">
-                        <p><strong class="text-blue-700">If the fulfillment status is "Unfulfilled":</strong></p>
-                        <ul class="list-disc pl-5 mt-1">
-                            <li>Tell the customer that their order is still being processed.</li>
-                            <li>It usually takes about 1-2 business days to process an order before it gets shipped out.</li>
-                            <li>They will receive an email notification with a tracking link when their order has been shipped.</li>
-                        </ul>
+                        <p><strong class="text-blue-700">If "Unfulfilled":</strong> Tell customer processing (1-2 biz days), email w/ tracking when shipped.</p>
                     </div>
                     <div class="p-3 border rounded-md bg-green-50">
-                        <p><strong class="text-green-700">If the order is "Fulfilled" or "Shipped":</strong></p>
-                        <ul class="list-disc pl-5 mt-1">
-                            <li>Check the Tracking URL for the latest update.</li>
-                            <li>Provide this update to the customer along with the tracking link.</li>
-                        </ul>
+                        <p><strong class="text-green-700">If "Fulfilled" or "Shipped":</strong> Check Tracking URL, provide update & link.</p>
                     </div>
                     <div class="p-3 border rounded-md bg-yellow-50">
-                        <p><strong class="text-yellow-700">If the fulfillment status is "Partially Fulfilled":</strong></p>
-                        <ul class="list-disc pl-5 mt-1">
-                            <li>Check each line item for the status of each fulfillment.</li>
-                            <li>Provide all available information from any Tracking URLs.</li>
-                        </ul>
+                        <p><strong class="text-yellow-700">If "Partially Fulfilled":</strong> Check line items, provide all Tracking URL info.</p>
                     </div>
                     <div class="p-3 border rounded-md bg-purple-50">
-                        <p><strong class="text-purple-700">If the fulfillment status is "In Progress" or the Order Tags contain "pre-order":</strong></p>
-                        <ul class="list-disc pl-5 mt-1">
-                            <li>Let the customer know that you may be experiencing high order volume.</li>
-                            <li>Orders might take an additional 3-5 business days for fulfillment.</li>
-                        </ul>
+                        <p><strong class="text-purple-700">If "In Progress" or "pre-order" tag:</strong> Inform high volume, +3-5 biz days for fulfillment.</p>
                     </div>
                 </div>
             </div>
@@ -309,24 +262,13 @@
                 </div>
                 <div class="step-content space-y-3">
                      <div class="p-3 border rounded-md bg-blue-50">
-                        <p><strong class="text-blue-700">If the Tracking URL shows as "In Transit":</strong></p>
-                        <ul class="list-disc pl-5 mt-1">
-                            <li>Let the customer know that their order is on the way.</li>
-                            <li>They can check the Tracking link for any updates.</li>
-                        </ul>
+                        <p><strong class="text-blue-700">If "In Transit":</strong> Order on the way, check link for updates.</p>
                     </div>
                     <div class="p-3 border rounded-md bg-green-50">
-                        <p><strong class="text-green-700">If the Tracking URL shows as "Out for delivery":</strong></p>
-                        <ul class="list-disc pl-5 mt-1">
-                            <li>Let the customer know that you are happy to confirm that their order appears to be out for delivery and should arrive soon.</li>
-                        </ul>
+                        <p><strong class="text-green-700">If "Out for delivery":</strong> Confirm out for delivery, should arrive soon.</p>
                     </div>
                     <div class="p-3 border rounded-md bg-red-50">
-                        <p><strong class="text-red-700">If the Tracking URL shows as "Delivered" (but the customer says they didn't receive it):</strong></p>
-                        <ul class="list-disc pl-5 mt-1">
-                            <li>Let them know it looks like their order was delivered.</li>
-                            <li>Provide them with the date that the order was delivered.</li>
-                        </ul>
+                        <p><strong class="text-red-700">If "Delivered" (customer says not received):</strong> Looks delivered, provide delivery date.</p>
                     </div>
                 </div>
             </div>
@@ -339,25 +281,10 @@
                 </div>
                 <div class="step-content">
                     <ul class="list-disc pl-5 space-y-2">
-                        <li>After providing the customer with the requested information, ask if there's anything else they need help with regarding their order.</li>
-                        <li><strong>If the customer confirms they don't need further assistance:</strong>
-                            <ul class="list-disc pl-5">
-                                <li>Thank them for their inquiry.</li>
-                                <li>Inform them that you'll be closing the ticket.</li>
-                                <li>Mark the ticket as 'Solved' in Zendesk. <span class="badge badge-green">SOLVED</span></li>
-                            </ul>
-                        </li>
-                        <li><strong>If the customer has additional questions that can be answered using the available order information:</strong>
-                            <ul class="list-disc pl-5">
-                                <li>Provide the necessary information.</li>
-                                <li>Once all questions are addressed, follow the steps above to close the ticket. <span class="badge badge-green">SOLVED</span></li>
-                            </ul>
-                        </li>
-                        <li><strong>If the customer's additional questions or concerns cannot be fully addressed:</strong>
-                            <ul class="list-disc pl-5">
-                                <li><span class="badge badge-purple">PROCEED</span> to Step 5 for escalation.</li>
-                            </ul>
-                        </li>
+                        <li>After providing info, ask if anything else needed.</li>
+                        <li><strong>If NO further assistance:</strong> Thank, inform closing, Mark 'Solved'. <span class="badge badge-green">SOLVED</span></li>
+                        <li><strong>If YES (answerable with order info):</strong> Provide info, then close as above. <span class="badge badge-green">SOLVED</span></li>
+                        <li><strong>If YES (not fully addressable):</strong> <span class="badge badge-purple">PROCEED</span> to Step 5.</li>
                     </ul>
                 </div>
             </div>
@@ -365,41 +292,33 @@
             <div class="connector">▼</div>
 
             <div id="step5" class="step-card escalation-card flow-element">
-                <div class="step-header"> <h3>Step 5: Assign to Agent and Route to Team</h3>
+                <div class="step-header"> 
+                    <h3>Step 5: Assign to Agent and Route to Team</h3>
                     <p class="sub-persona">(If Unable to Resolve)</p>
                 </div>
                 <div class="step-content">
-                    <p class="mb-2">If none of the above steps fully address the customer's inquiry or if the customer has additional questions that fall outside the scope of this automation:</p>
+                    <p class="mb-2">If not fully addressed or questions outside scope:</p>
                     <ol class="list-decimal pl-5 space-y-2">
-                        <li>Inform the customer: "I apologize, but it seems your inquiry requires additional assistance that I'm not able to provide at this moment. I'm going to assign your case to one of our customer support agents who will be able to help you further."</li>
-                        <li>Route the conversation to your team.
-                            <ul class="list-disc pl-5">
-                                <li>This will set the ticket status to "Open".</li>
-                                <li>Tag it with "siena-follow-needed".</li>
-                            </ul>
-                        </li>
-                        <li>Assign the ticket to <strong>Jade Solano</strong> (without informing the customer of the specific agent).</li>
-                        <li>Provide a closing message: "A customer support agent will review your case and get back to you as soon as possible. Thank you for your patience, and we appreciate your business."</li>
+                        <li>Inform: "I apologize, but it seems your inquiry requires additional assistance... I'm going to assign your case to one of our customer support agents..."</li>
+                        <li>Route to team: Status "Open", Tag "siena-follow-needed".</li>
+                        <li>Assign to <strong>Jade Solano</strong> (internal).</li>
+                        <li>Closing message: "A customer support agent will review your case... Thank you for your patience..."</li>
                     </ol>
                 </div>
             </div>
-
         </div> 
     </div> 
+
     <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
             <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" />
         </svg>
     </button>
     <script>
-        // Get the scroll-to-top button
         var scrollToTopButton = document.getElementById("scrollToTopBtn");
-
-        // When the user scrolls down 300px from the top of the document, show the button
         window.onscroll = function() {scrollFunction()};
-
         function scrollFunction() {
-            if (scrollToTopButton) { // Check if button exists
+            if (scrollToTopButton) {
                 if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
                     scrollToTopButton.style.display = "block";
                 } else {
@@ -407,26 +326,18 @@
                 }
             }
         }
-
-        // When the user clicks on the button, scroll to the top of the document smoothly
         function scrollToTop() {
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // Script for smooth scrolling from TOC links
-        document.querySelectorAll('#toc-sidebar a:not(.back-link)').forEach(anchor => { // Exclude back-link from this behavior
+        document.querySelectorAll('#toc-sidebar a:not(.back-link)').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
-                // Only prevent default for internal # links
                 if (targetId && targetId.startsWith('#')) {
                     e.preventDefault();
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start' 
-                        });
-
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
                         this.classList.add('active');
                     }
@@ -434,38 +345,40 @@
             });
         });
 
-        // Active state highlighting for TOC on scroll
-        const sections = document.querySelectorAll('.content-section[id], .step-card[id]'); 
-        const tocLinks = document.querySelectorAll('#toc-sidebar a:not(.back-link)'); // Exclude back-link
-
-        const makeActive = (linkId) => { 
+        const sections = document.querySelectorAll('.content-section[id], .step-card[id]');
+        const tocLinks = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
+        const makeActive = (linkId) => {
             tocLinks.forEach(l => l.classList.remove('active'));
-            if (linkId) { 
+            if (linkId) {
                 const correspondingLink = document.querySelector(`#toc-sidebar a[href="#${linkId}"]`);
                 if (correspondingLink) {
                     correspondingLink.classList.add('active');
+                     const parentLi = correspondingLink.closest('ul')?.closest('li');
+                    if (parentLi) {
+                        const parentAnchor = parentLi.querySelector('a');
+                        if(parentAnchor && parentAnchor.getAttribute('href').startsWith('#step')) { 
+                           parentAnchor.classList.add('active');
+                        }
+                    }
                 }
             }
         };
-
         const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) { 
-                    makeActive(entry.target.id);
-                }
-            });
-        }, {
-            threshold: 0.5, 
-            rootMargin: "-50px 0px -50% 0px" 
-        });
-
-        sections.forEach(section => {
-            if (section.id) { 
-                 observer.observe(section);
+            let intersectingEntry = null;
+            for (let i = 0; i < entries.length; i++) {
+                 if (entries[i].isIntersecting) {
+                    if (!intersectingEntry || entries[i].target.getBoundingClientRect().top < intersectingEntry.target.getBoundingClientRect().top) {
+                        if (entries[i].intersectionRatio >= 0.1) { 
+                           intersectingEntry = entries[i];
+                        }
+                    }
+                 }
             }
-        });
-        // No need to observe back-to-library for active state as it's not a scroll target within the page.
+            if (intersectingEntry) {
+                 makeActive(intersectingEntry.target.id);
+            }
+        }, { threshold: [0.1, 0.5], rootMargin: "-40% 0px -50% 0px" });
+        sections.forEach(section => { if (section.id) { observer.observe(section); } });
     </script>
-
 </body>
 </html>
