@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Where is my order?</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Customer Order Status Workflow</title> <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -39,7 +38,7 @@
             padding: 1rem 1.5rem;
             border-bottom: 1px solid #e5e7eb;
         }
-        .step-header h3 { /* Changed from h2 for step headers to differentiate from section headers */
+        .step-header h3 { 
             font-size: 1.25rem;
             font-weight: 600;
         }
@@ -57,10 +56,10 @@
             margin-top: 1rem;
             background-color: #f9fafb;
         }
-        .scenario-card h4, .action-card h4, .decision-card h4, .info-card h4 { /* Changed from h3 */
+        .scenario-card h4, .action-card h4, .decision-card h4, .info-card h4 { 
             font-size: 1rem;
             font-weight: 600;
-            color: #374151; /* Darker gray text */
+            color: #374151; 
             margin-bottom: 0.5rem;
         }
         .decision-card {
@@ -117,7 +116,8 @@
             background-color: #cbd5e1; 
             z-index: -1; 
         }
-                /* Scroll-to-top button styles */
+        
+        /* Scroll-to-top button styles */
         #scrollToTopBtn {
             display: none; /* Hidden by default */
             position: fixed; /* Fixed/sticky position */
@@ -126,7 +126,7 @@
             z-index: 99; /* Make sure it does not overlap other items */
             border: none; /* Remove borders */
             outline: none; /* Remove outline */
-            background-color: #4f46e5; /* Button background color (Indigo) */
+            background-color: #4f46e5; /* Button background color (Indigo - matches step header) */
             color: white; /* Text color */
             cursor: pointer; /* Add a mouse pointer on hover */
             padding: 12px 15px; /* Some padding */
@@ -139,12 +139,35 @@
         #scrollToTopBtn:hover {
             background-color: #4338ca; /* Darker indigo on hover */
         }
+         @media print { /* Basic print optimizations */
+            body { background-color: white; font-size: 10pt; padding: 0.5in; }
+            .content-section, .step-card, .scenario-card, .action-card, .decision-card, .info-card, .prerequisite-card, .escalation-card {
+                box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid;
+            }
+            .step-header { background-color: #e0e0e0 !important; color: black !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .prerequisite-card .step-header { background-color: #fecaca !important; color: #7f1d1d !important;}
+            .escalation-card .step-header { background-color: #ddd6fe !important; color: #4c1d95 !important;}
+            .badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; border: 1px solid #ccc; }
+            .badge-green { background-color: #d1fae5 !important; color: #065f46 !important; }
+            .badge-red { background-color: #fee2e2 !important; color: #991b1b !important; }
+            .badge-yellow { background-color: #fef3c7 !important; color: #92400e !important; }
+            .badge-blue { background-color: #dbeafe !important; color: #1e40af !important; }
+            .badge-purple { background-color: #ede9fe !important; color: #5b21b6 !important; }
+            .connector, .flow-element::after, .back-button-container, #scrollToTopBtn { display: none !important; /* Hide buttons and connectors for print */ }
+            header h1 { font-size: 18pt; }
+            header p { font-size: 12pt; }
+            .content-section h2 { font-size: 14pt; }
+            .step-header h3 { font-size: 12pt; }
+            .scenario-card h4, .action-card h4, .decision-card h4, .info-card h4 { font-size: 10pt; }
+            li, p { font-size: 9pt; }
+            .badge { font-size: 8pt; }
+        }
 
     </style>
 </head>
 <body class="p-6 md:p-10">
 
-        <div class="back-button-container mb-6 px-4 md:px-0 max-w-4xl mx-auto"> 
+    <div class="back-button-container mb-6 px-4 md:px-0 max-w-4xl mx-auto"> 
         <a href="index.html" 
            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
             <svg class="mr-2 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -153,7 +176,6 @@
             Back to Automation Library
         </a>
     </div>
-
     <header class="text-center mb-10">
         <h1 class="text-3xl font-bold text-gray-800">Customer Order Status Workflow</h1>
         <p class="text-lg text-gray-600">Visualized Logic for "Elisha Persona" Automation</p>
@@ -397,7 +419,7 @@
                     <li>After providing the customer with the requested information, ask if there's anything else they need help with regarding their order.</li>
                     <li><strong>If the customer confirms they don't need further assistance:</strong>
                         <ul class="list-disc pl-5">
-                            <li>Thank them for their inquiry.</li>
+                            <li>Thank them for their inquißry.</li>
                             <li>Inform them that you'll be closing the ticket.</li>
                             <li>Mark the ticket as 'Solved' in Zendesk. <span class="badge badge-green">SOLVED</span></li>
                         </ul>
@@ -447,11 +469,7 @@
             <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" />
         </svg>
     </button>
-
     <script>
-        // Simple script to set the current year in the footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-
         // Get the scroll-to-top button
         var scrollToTopButton = document.getElementById("scrollToTopBtn");
 
@@ -460,9 +478,13 @@
 
         function scrollFunction() {
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                scrollToTopButton.style.display = "block";
+                if (scrollToTopButton) { // Check if button exists
+                    scrollToTopButton.style.display = "block";
+                }
             } else {
-                scrollToTopButton.style.display = "none";
+                if (scrollToTopButton) { // Check if button exists
+                    scrollToTopButton.style.display = "none";
+                }
             }
         }
 
@@ -470,8 +492,15 @@
         function scrollToTop() {
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
+
+        // Script to set the current year in the footer (if a footer with id="currentYear" exists)
+        // This part of the script was from the library page, not strictly needed here unless you add a footer.
+        // For safety, let's check if the element exists.
+        var yearSpan = document.getElementById('currentYear');
+        if (yearSpan) {
+            yearSpan.textContent = new Date().getFullYear();
+        }
     </script>
 
 </body>
 </html>
-
