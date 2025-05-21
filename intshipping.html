@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/global_styles.css">
+    <script src="global_scripts.js"></script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <style>
         /* Theme-specific styles for International Shipping Inquiry Workflow (Deep Blue Theme) */
         
@@ -230,122 +232,6 @@
         </svg>
     </button>
 
-    <script>
-        // Scroll-to-top button functionality
-        var scrollToTopButton = document.getElementById("scrollToTopBtn");
-        window.onscroll = function() {scrollFunction()};
-        function scrollFunction() {
-            if (scrollToTopButton) {
-                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                    scrollToTopButton.style.display = "block";
-                } else {
-                    scrollToTopButton.style.display = "none";
-                }
-            }
-        }
-        function scrollToTop() {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-
-        // TOC and Hamburger Menu Functionality
-        const tocSidebar = document.getElementById('toc-sidebar');
-        const menuToggle = document.getElementById('menu-toggle');
-        const pageOverlay = document.getElementById('page-overlay');
-        const mainContent = document.querySelector('.main-content-area');
-        const body = document.body;
-        
-        function applyLayoutBasedOnScreenSize() {
-            if (window.innerWidth >= 1024 && body.classList.contains('has-toc')) {
-                if(mainContent) mainContent.classList.add('toc-active'); 
-                if(tocSidebar) tocSidebar.classList.add('open'); 
-            } else {
-                if(mainContent) mainContent.classList.remove('toc-active');
-                if(tocSidebar) tocSidebar.classList.remove('open'); 
-            }
-        }
-
-        if (menuToggle && tocSidebar) {
-            menuToggle.addEventListener('click', () => {
-                tocSidebar.classList.toggle('open');
-                if (pageOverlay) pageOverlay.classList.toggle('active'); 
-            });
-        }
-        if (pageOverlay) {
-            pageOverlay.addEventListener('click', () => { 
-                tocSidebar.classList.remove('open');
-                pageOverlay.classList.remove('active');
-            });
-        }
-        
-        document.querySelectorAll('#toc-sidebar a:not(.back-link)').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const targetId = this.getAttribute('href');
-                if (targetId && targetId.startsWith('#')) {
-                    e.preventDefault();
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        const topBarHeight = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
-                        const elementPosition = targetElement.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - topBarHeight - 10; 
-
-                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-
-                        if (window.innerWidth < 1024 && tocSidebar.classList.contains('open')) { 
-                            tocSidebar.classList.remove('open');
-                            if (pageOverlay) pageOverlay.classList.remove('active');
-                        }
-                        document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
-                        this.classList.add('active');
-                    }
-                }
-            });
-        });
-
-        const sections = document.querySelectorAll('.content-section[id], .step-card[id], .condition-card[id]'); 
-        const tocLinksJS = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
-        
-        const makeActive = (linkId) => {
-            tocLinksJS.forEach(l => l.classList.remove('active'));
-            if (linkId) {
-                const correspondingLink = document.querySelector(`#toc-sidebar a[href="#${linkId}"]`);
-                if (correspondingLink) {
-                    correspondingLink.classList.add('active');
-                     const parentLi = correspondingLink.closest('ul')?.closest('li');
-                    if (parentLi) {
-                        const parentAnchor = parentLi.querySelector('a');
-                        if(parentAnchor && !parentAnchor.classList.contains('back-link') && parentAnchor.getAttribute('href').startsWith('#step')) { 
-                           parentAnchor.classList.add('active');
-                        }
-                    }
-                }
-            }
-        };
-        
-        const observer = new IntersectionObserver(entries => {
-            let intersectingEntry = null;
-            const topBarHeightForObserver = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
-            for (let i = 0; i < entries.length; i++) { 
-                 if (entries[i].isIntersecting) {
-                    if (!intersectingEntry || entries[i].target.getBoundingClientRect().top < intersectingEntry.target.getBoundingClientRect().top) {
-                        if (entries[i].intersectionRatio >= 0.1) { 
-                           intersectingEntry = entries[i];
-                        }
-                    }
-                 }
-            }
-            if (intersectingEntry) {
-                 makeActive(intersectingEntry.target.id);
-            }
-        }, { 
-            threshold: [0.1, 0.5], 
-            rootMargin: `-${(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) + 20}px 0px -60% 0px` 
-        });
-
-        sections.forEach(section => { if (section.id) { observer.observe(section); } });
-        
-        window.addEventListener('resize', applyLayoutBasedOnScreenSize);
-        applyLayoutBasedOnScreenSize(); // Initial call
-    </script>
 
 </body>
 </html>
