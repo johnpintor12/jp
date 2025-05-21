@@ -9,54 +9,62 @@
     <link rel="stylesheet" href="css/global_styles.css">
     <style>
         /* Theme-specific styles for Hydrogen Bath Bomb Inquiry Workflow (Teal Theme) */
-        /* body.has-toc is handled by global_styles.css for responsive layout */
-
-        .app-top-bar { /* Theme the top bar for this page */
-            background-color: #0d9488; /* Teal-600 */
+        
+        :root { /* Define page-specific theme color for JS to potentially use if needed */
+            /* --top-bar-height is defined in global_styles.css */
+            --page-theme-color-main: #0d9488; /* Teal-600 */
+            --page-theme-color-darker: #0f766e; /* Teal-700 */
+            --page-theme-color-lighter: #99f6e4; /* Teal-200 */
+            --page-theme-color-lightest: #ccfbf1; /* Teal-100 */
         }
 
+        .app-top-bar { 
+            background-color: var(--page-theme-color-main);
+        }
+        /* #menu-toggle color is white by default in global_styles if top bar is dark */
+
         #toc-sidebar h2 {
-            color: #0d9488; /* Teal-600 */
+            color: var(--page-theme-color-main);
         }
         #toc-sidebar li a:hover,
         #toc-sidebar li a.active {
-            background-color: #ccfbf1; /* Teal-100 */
-            color: #0d9488; /* Teal-600 */
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
         }
-         #toc-sidebar ul ul li a:hover, /* If you add sub-levels to TOC */
+         #toc-sidebar ul ul li a:hover,
          #toc-sidebar ul ul li a.active { 
-             color: #0d9488; /* Teal-600 */
-             background-color: #99f6e4; /* Teal-200 for sub-items if desired */
+             color: var(--page-theme-color-main);
+             background-color: var(--page-theme-color-lighter);
         }
 
-        .step-header { /* Main step header color for this page */
-            background-color: #0d9488; /* Teal-600 */
+        .step-header { 
+            background-color: var(--page-theme-color-main);
         }
         /* No specific card header overrides in this workflow's design */
         
-        .link-style { /* Theme for inline links if any */
-            color: #0d9488; /* Teal-600 */
+        .link-style { 
+            color: var(--page-theme-color-main);
         }
         .link-style:hover {
-            color: #0f766e; /* Teal-700 */
+            color: var(--page-theme-color-darker);
         }
 
         #scrollToTopBtn {
-            background-color: #0d9488; /* Teal-600 */
+            background-color: var(--page-theme-color-main);
         }
         #scrollToTopBtn:hover {
-            background-color: #0f766e; /* Teal-700 */
+            background-color: var(--page-theme-color-darker);
         }
 
         /* Print-specific overrides for themed elements */
         @media print {
-            .app-top-bar { display: none !important; }
+            /* .app-top-bar is already display:none in global_styles.css for print */
             .step-header { 
-                background-color: #99f6e4 !important; /* Lighter Teal for print */
-                color: #0f766e !important; 
+                background-color: var(--page-theme-color-lighter) !important; 
+                color: var(--page-theme-color-darker) !important; 
             }
-            #toc-sidebar h2 {
-                color: #0d9488 !important; 
+            #toc-sidebar h2 { /* This won't be visible due to TOC being hidden in print */
+                color: var(--page-theme-color-main) !important; 
             }
         }
     </style>
@@ -65,7 +73,7 @@
 
     <div class="app-top-bar">
         <button id="menu-toggle" aria-label="Open navigation menu">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
         </button>
@@ -91,8 +99,8 @@
         </ul>
     </nav>
 
-    <div class="main-content-area toc-active"> <header class="text-center mb-10 pt-4"> 
-            <h1 class="text-3xl font-bold text-gray-800">Hydrogen Bath Bomb Inquiry Workflow</h1>
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> <h1 class="text-3xl font-bold text-gray-800">Hydrogen Bath Bomb Inquiry Workflow</h1>
             <p class="text-lg text-gray-600">Visualized Logic for Handling Customer Questions about Upcoming Launch</p>
         </header>
 
@@ -208,18 +216,31 @@
         const tocSidebar = document.getElementById('toc-sidebar');
         const menuToggle = document.getElementById('menu-toggle');
         const pageOverlay = document.getElementById('page-overlay');
+        const mainContent = document.querySelector('.main-content-area');
+        const body = document.body;
         
+        function applyLayoutBasedOnScreenSize() {
+            if (window.innerWidth >= 1024 && body.classList.contains('has-toc')) {
+                if(mainContent) mainContent.classList.add('toc-active'); // For desktop margin
+                if(tocSidebar) tocSidebar.classList.add('open'); // Keep TOC open on desktop
+                if(menuToggle) menuToggle.style.display = 'none';
+                if(pageOverlay) pageOverlay.classList.remove('active');
+            } else {
+                if(mainContent) mainContent.classList.remove('toc-active');
+                if(tocSidebar) tocSidebar.classList.remove('open'); // Ensure TOC is closed by default on mobile
+                if(menuToggle) menuToggle.style.display = 'block';
+            }
+        }
+
         if (menuToggle && tocSidebar) {
             menuToggle.addEventListener('click', () => {
                 tocSidebar.classList.toggle('open');
-                // menuToggle.classList.toggle('shifted'); // Not needed if hamburger is in fixed top bar
                 if (pageOverlay) pageOverlay.classList.toggle('active'); 
             });
         }
         if (pageOverlay) {
             pageOverlay.addEventListener('click', () => { 
                 tocSidebar.classList.remove('open');
-                // menuToggle.classList.remove('shifted');
                 pageOverlay.classList.remove('active');
             });
         }
@@ -231,15 +252,14 @@
                     e.preventDefault();
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        const topBarHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60;
+                        const topBarHeight = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
                         const elementPosition = targetElement.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - topBarHeight - 10; 
+                        const offsetPosition = elementPosition + window.pageYOffset - topBarHeight - 10; // 10px extra offset
 
                         window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
 
                         if (window.innerWidth < 1024 && tocSidebar.classList.contains('open')) { 
                             tocSidebar.classList.remove('open');
-                            // menuToggle.classList.remove('shifted');
                             if (pageOverlay) pageOverlay.classList.remove('active');
                         }
                         document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
@@ -251,8 +271,7 @@
 
         const sections = document.querySelectorAll('.content-section[id], .step-card[id], .info-card[id]'); 
         const tocLinksJS = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
-        const topBarHeightForObserver = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60;
-
+        
         const makeActive = (linkId) => {
             tocLinksJS.forEach(l => l.classList.remove('active'));
             if (linkId) {
@@ -272,6 +291,7 @@
         
         const observer = new IntersectionObserver(entries => {
             let intersectingEntry = null;
+            const topBarHeightForObserver = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
             for (let i = 0; i < entries.length; i++) { 
                  if (entries[i].isIntersecting) {
                     if (!intersectingEntry || entries[i].target.getBoundingClientRect().top < intersectingEntry.target.getBoundingClientRect().top) {
@@ -286,10 +306,13 @@
             }
         }, { 
             threshold: [0.1, 0.5], 
-            rootMargin: `-${topBarHeightForObserver + 20}px 0px -60% 0px` // Adjusted rootMargin
+            rootMargin: `-${(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) + 20}px 0px -60% 0px` 
         });
 
         sections.forEach(section => { if (section.id) { observer.observe(section); } });
+        
+        window.addEventListener('resize', applyLayoutBasedOnScreenSize);
+        applyLayoutBasedOnScreenSize(); // Initial call
     </script>
 
 </body>

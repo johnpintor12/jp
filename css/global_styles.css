@@ -1,10 +1,9 @@
 /* Global Styles for Siena Automation Library Visualizations */
 
 :root {
-    --top-bar-height: 60px; /* Define top bar height as a CSS variable */
+    --top-bar-height: 60px; 
 }
 
-/* Base HTML and Body Styles */
 html {
     scroll-behavior: smooth; 
 }
@@ -12,58 +11,52 @@ html {
 body {
     font-family: 'Inter', sans-serif;
     background-color: #f9fafb; 
-    padding-top: var(--top-bar-height); /* Global padding to prevent content under fixed top bar */
+    /* padding-top removed from here, will be handled by .main-content-area for mobile */
 }
 
-/* Application Top Bar */
+/* Application Top Bar - Mobile First */
 .app-top-bar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: var(--top-bar-height);
-    background-color: #4f46e5; /* Default: Indigo. Page-specific CSS will override this. */
-    color: white;
+    /* background-color will be set by page-specific CSS */
+    color: white; /* Assuming dark background for top bar */
     display: flex;
     align-items: center;
     padding: 0 1rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    z-index: 150; /* High z-index */
+    z-index: 150; 
 }
-.app-top-bar .library-title-mobile { /* Optional: Title next to hamburger */
+.app-top-bar .library-title-mobile { 
     font-weight: 600;
     font-size: 1.125rem;
     margin-left: 0.75rem;
 }
 
-
-/* Hamburger Menu Button Styles (now within .app-top-bar on mobile) */
+/* Hamburger Menu Button Styles (within .app-top-bar on mobile) */
 #menu-toggle {
-    background-color: transparent; /* Will be part of the top bar */
-    color: white; /* Assuming top bar has dark bg */
+    background-color: transparent; 
+    color: white; /* Default, page theme can override */
     border: none;
-    padding: 0.25rem; /* Smaller padding as it's an icon button */
+    padding: 0.25rem; 
     border-radius: 0.375rem; 
     cursor: pointer;
-    display: block; /* Display by default for mobile-first */
-    /* position, top, left, z-index removed as it's no longer independently fixed */
+    display: block; /* Visible on mobile */
 }
 #menu-toggle svg {
-    width: 1.75rem; /* Slightly larger icon */
+    width: 1.75rem; 
     height: 1.75rem; 
 }
-#menu-toggle.shifted { 
-    /* This class might not be needed if sidebar overlays or hamburger icon changes to a close icon */
-}
-
 
 /* Table of Contents Sidebar */
 #toc-sidebar {
     width: 280px; 
     position: fixed; 
     left: 0;
-    top: var(--top-bar-height); /* Start below the top bar */
-    height: calc(100vh - var(--top-bar-height)); /* Full remaining viewport height */
+    top: var(--top-bar-height); /* Start below the mobile top bar */
+    height: calc(100vh - var(--top-bar-height)); 
     background-color: #ffffff; 
     border-right: 1px solid #e5e7eb; 
     padding: 1.5rem; 
@@ -77,11 +70,8 @@ body {
     transform: translateX(0); 
 }
 #toc-sidebar h2 { 
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #e5e7eb;
+    font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb;
     /* color will be set by page-specific CSS */
 }
 #toc-sidebar ul { list-style: none; padding: 0; }
@@ -102,59 +92,70 @@ body {
 #toc-sidebar ul ul { padding-left: 1rem; margin-top: 0.25rem; list-style: none; }
 #toc-sidebar ul ul li a { font-size: 0.85rem; color: #6b7280; }
 
-
 /* Main Content Area */
 .main-content-area {
     flex-grow: 1; 
     padding: 1.5rem; 
+    padding-top: var(--top-bar-height); /* Space for fixed top bar on mobile */
     transition: margin-left 0.3s ease-in-out; 
 }
 
 /* Page Overlay for mobile menu */
 #page-overlay {
     display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.5); z-index: 99; /* Below sidebar, above content */
+    background-color: rgba(0,0,0,0.5); z-index: 99; 
 }
 #page-overlay.active { display: block; }
 
-
 /* Responsive adjustments for larger screens (Desktop TOC layout) */
 @media (min-width: 1024px) { /* lg breakpoint, adjust as needed */
+    .app-top-bar {
+        display: none !important; /* Hide top bar on desktop */
+    }
     body.has-toc { 
         display: flex; 
-        padding-top: 0; /* Remove body padding-top as top bar will be part of flex flow or sticky within main */
+        padding-top: 0; /* Reset body padding-top */
     }
-    .app-top-bar { /* On desktop, top bar can be part of the main flow or remain fixed */
-        /* If you want it fixed on desktop too, keep position:fixed. */
-        /* If you want it to scroll with content but be above TOC, more complex layout needed or make it sticky */
-        /* For simplicity, let's assume it remains fixed for now */
-         position: fixed; 
-         /* The main-content-area and toc-sidebar will need padding-top: var(--top-bar-height) */
-    }
-     body.has-toc #toc-sidebar { 
+    body.has-toc #toc-sidebar { 
         transform: translateX(0); 
         position: sticky; 
-        top: var(--top-bar-height); /* Sticky below the fixed top bar */
-        height: calc(100vh - var(--top-bar-height));
+        top: 0; /* Align with the very top of the viewport */
+        height: 100vh; /* Full viewport height */
         box-shadow: none; 
         border-right: 1px solid #e5e7eb;
     }
     body.has-toc .main-content-area { 
-       /*  margin-left: 280px; */
-         padding-top: var(--top-bar-height); /* Ensure content starts below fixed top bar */
+         margin-left: 280px; 
+         padding-top: 1.5rem; /* Reset to normal content padding */
     }
     #menu-toggle { display: none !important; } 
     #page-overlay { display: none !important; }
 }
-/* If top-bar is NOT fixed on desktop, then body doesn't need padding-top, and main-content-area & toc-sidebar don't need top padding/offset */
 
-
-/* General Content Sections (like Context, Guidelines) */
+/* General Content Sections */
 .content-section {
     background-color: white; border-radius: 8px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    margin-bottom: 1.5rem; padding: 1.5rem; scroll-margin-top: calc(var(--top-bar-height) + 20px); 
+    margin-bottom: 1.5rem; padding: 1.5rem; 
+    scroll-margin-top: 20px; /* Default scroll margin, adjust if top bar is present */
 }
+/* Adjust scroll-margin if top bar is present on mobile */
+body:not(.lg-screen) .content-section, /* Using a placeholder class for non-desktop */
+body:not(.lg-screen) .step-card,
+body:not(.lg-screen) .scenario-card, 
+body:not(.lg-screen) .action-card, 
+body:not(.lg-screen) .condition-card, 
+body:not(.lg-screen) .decision-card, 
+body:not(.lg-screen) .info-card, 
+body:not(.lg-screen) .prerequisite-card, 
+body:not(.lg-screen) .escalation-card, 
+body:not(.lg-screen) .documentation-card, 
+body:not(.lg-screen) .persona-card, 
+body:not(.lg-screen) .policy-check-card {
+    scroll-margin-top: calc(var(--top-bar-height) + 20px);
+}
+
+
 .content-section h2 { 
     font-size: 1.5rem; font-weight: 600; color: #1f2937; 
     margin-bottom: 1rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem;
@@ -164,10 +165,12 @@ body {
 .step-card {
     background-color: white; border-radius: 8px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    margin-bottom: 1.5rem; overflow: hidden; scroll-margin-top: calc(var(--top-bar-height) + 20px); 
+    margin-bottom: 1.5rem; overflow: hidden; 
+    /* scroll-margin-top handled above */
 }
-.step-header { /* Page-specific CSS will set the background-color */
+.step-header { 
     color: white; padding: 1rem 1.5rem; border-bottom: 1px solid #e5e7eb;
+    /* background-color will be set by page-specific CSS */
 }
 .step-header h3 { font-size: 1.25rem; font-weight: 600; }
 .step-header .sub-persona { font-size: 0.875rem; opacity: 0.9; }
@@ -178,7 +181,7 @@ body {
 .prerequisite-card, .escalation-card, .documentation-card, .persona-card, .policy-check-card {
     border: 1px solid #e5e7eb; border-radius: 6px; padding: 1rem;
     margin-top: 1rem; background-color: #f9fafb;
-    scroll-margin-top: calc(var(--top-bar-height) + 20px); 
+    /* scroll-margin-top handled above */
 }
 .scenario-card h4, .action-card h4, .condition-card h4, .decision-card h4, 
 .info-card h4, .prerequisite-card h4, .escalation-card h4, .documentation-card h4, .persona-card h4, .policy-check-card h4 {
@@ -212,9 +215,9 @@ li { margin-bottom: 0.5rem; }
 #scrollToTopBtn { display: none; position: fixed; bottom: 30px; right: 30px; z-index: 99; border: none; outline: none; color: white; cursor: pointer; padding: 12px 15px; border-radius: 50%; font-size: 18px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: background-color 0.3s ease, opacity 0.3s ease, visibility 0.3s ease; }
 
 @media print { 
-    body { background-color: white !important; font-size: 10pt; padding-top: 0 !important; /* Remove padding for print */ display: block !important; }
+    body { background-color: white !important; font-size: 10pt; padding-top: 0 !important; display: block !important; }
     .app-top-bar, #toc-sidebar, #menu-toggle, #page-overlay { display: none !important; } 
-    .main-content-area { margin-left: 0 !important; padding: 0.5in !important; /* Add print margins here */ } 
+    .main-content-area { margin-left: 0 !important; padding: 0.5in !important; } 
     .content-section, .step-card, .scenario-card, .action-card, .condition-card, .escalation-card,
     .policy-check-card, .documentation-card, .persona-card, .info-card, .prerequisite-card {
         box-shadow: none !important; border: 1px solid #ccc !important; page-break-inside: avoid !important; background-color: white !important; 
