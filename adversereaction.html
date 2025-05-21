@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H2Tab Product, Ingredients & Reactions Inquiry Workflow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global_styles.css">
+    <style>
+        /* Theme-specific styles for Product Inquiry Workflow (Green Theme) */
+        
+        :root { 
+            /* --top-bar-height is defined in global_styles.css */
+            --page-theme-color-main: #22c55e; /* Green-500 */
+            --page-theme-color-darker: #16a34a; /* Green-600 */
+            --page-theme-color-lighter: #dcfce7; /* Green-100 */
+            --page-theme-color-lightest: #f0fdf4; /* Green-50 */
+        }
+
+        .app-top-bar { 
+            background-color: var(--page-theme-color-main);
+        }
+
+        #toc-sidebar h2 {
+            color: var(--page-theme-color-main);
+        }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active {
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
+        }
+         #toc-sidebar ul ul li a:hover,
+         #toc-sidebar ul ul li a.active { 
+             color: var(--page-theme-color-main);
+             background-color: var(--page-theme-color-lighter);
+        }
+
+        .step-header { /* Main step header color for this page */
+            background-color: var(--page-theme-color-main);
+        }
+        /* Specific card header colors */
+        .documentation-card .step-header { /* This class is from global_styles.css */
+             background-color: #60a5fa !important; /* Lighter Blue for documentation step header */
+        }
+        
+        #scrollToTopBtn {
+            background-color: var(--page-theme-color-main);
+        }
+        #scrollToTopBtn:hover {
+            background-color: var(--page-theme-color-darker);
+        }
+
+        /* Print-specific overrides for themed elements */
+        @media print {
+            /* .app-top-bar is already display:none in global_styles.css for print */
+            .step-header { 
+                background-color: var(--page-theme-color-lighter) !important; 
+                color: var(--page-theme-color-darker) !important; 
+            }
+            .documentation-card .step-header {
+                 background-color: #bfdbfe !important; 
+                 color: #1e40af !important;
+            }
+            #toc-sidebar h2 { /* This won't be visible due to TOC being hidden in print */
+                color: var(--page-theme-color-main) !important; 
+            }
+        }
+    </style>
+</head>
+<body class="has-toc"> 
+
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </button>
+        </div>
+    <div id="page-overlay"></div>
+
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align: text-bottom;">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#step1">Step 1: Greet & Identify Concern</a></li>
+            <li>
+                <a href="#step2">Step 2: Provide Information</a>
+                <ul>
+                    <li><a href="#step2-h2tab-ingredients">H2Tab Ingredients</a></li>
+                    <li><a href="#step2-isotonix-ingredients">Isotonix Ingredients</a></li>
+                    <li><a href="#step2-digestive-sensitivity">Digestive Sensitivity</a></li>
+                    <li><a href="#step2-metallic-taste">Unusual/Metallic Taste</a></li>
+                    <li><a href="#step2-general-safety">General Safety</a></li>
+                    <li><a href="#step2-children-pregnancy">Children/Pregnancy Safety</a></li>
+                    <li><a href="#step2-storage-expiration">Storage & Expiration</a></li>
+                    <li><a href="#step2-flavor-choice">Flavor Choice</a></li>
+                    <li><a href="#step2-vs-machines">Comparison to Machines</a></li>
+                    <li><a href="#step2-water-purification">Water Purification</a></li>
+                    <li><a href="#step2-dosage">Dosage (Tablets per Day)</a></li>
+                    <li><a href="#step2-pets">Use for Pets</a></li>
+                    <li><a href="#step2-medications">Use with Medications</a></li>
+                    <li><a href="#step2-hsa-fsa">HSA/FSA Eligibility</a></li>
+                </ul>
+            </li>
+            <li><a href="#step3">Step 3: Offer Further Assistance</a></li>
+            <li><a href="#step4-internal">Step 4: Document & Tag (Internal)</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
+            <h1 class="text-3xl font-bold text-gray-800">H2Tab Product, Ingredients & Reactions Inquiry</h1>
+            <p class="text-lg text-gray-600">Guiding Customers on Product Details, Ingredients, and Sensitivities</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto">
+
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>Customers are reaching out with various questions about your H2Tab molecular hydrogen tablets. Their inquiries may range from basic product understanding, ingredients, safety, usage, storage, and potential side effects, to comparisons with other products or specific concerns. Your goal is to provide accurate, helpful, and reassuring information based on the company's approved answers, encouraging confidence in the product.</p>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step1" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 1: Greet the customer and identify their specific concern</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Actions:</h4>
+                        <ul class="list-disc pl-5 mt-1">
+                            <li>Start with a friendly greeting: <em>"Hi [Customer's Name],"</em></li>
+                            <li>Determine if the customer is asking about:
+                                <ul class="list-disc pl-5 mt-1">
+                                    <li>H2Tab ingredients.</li>
+                                    <li>Isotonix ingredients (in context of H2Tab).</li>
+                                    <li>Reporting an adverse reaction (digestive issues, taste).</li>
+                                    <li>General safety concerns.</li>
+                                    <li>Other usage questions (dosage, water type, storage, etc.).</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step2" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 2: Provide information based on the customer's specific inquiry</h3>
+                </div>
+                <div class="step-content">
+                    <div id="step2-h2tab-ingredients" class="info-card mb-3">
+                        <h4>If the customer asks about H2Tab ingredients:</h4>
+                        <p><em>"Thanks so much for your message and interest in H2Tab! We completely understand how important it is to feel confident about what you’re putting in your body. Safety and transparency are top priorities for us.<br>
+                        Our molecular hydrogen tablets are primarily made from extremely high-quality elemental magnesium. This is the key to generating pure molecular hydrogen. When dissolved in water, the magnesium reacts to release ultra-pure hydrogen gas—with no harmful byproducts, additives, or fillers involved.<br>
+                        To optimize this clean reaction, we use a carefully selected blend of natural acids: malic acid (found in apples), tartaric acid (found in grapes), and adipic acid (found in sugar beets). These natural acids help break down the magnesium and activate hydrogen production effectively.<br>
+                        We also use a very small amount of non-GMO dextrose that serves as a binder and is necessary to hold the other ingredients together.<br>
+                        We’re proud of our formulation that is clean, effective, and free from preservatives, artificial ingredients, or anything that doesn’t belong in your body.<br>
+                        If you have more questions on the formulation, please visit the "Science" page on our website. From there, click the "Formulation" tab and watch the video to get a better understanding of our product!"</em></p>
+                    </div>
+
+                    <div id="step2-isotonix-ingredients" class="info-card mb-3">
+                        <h4>If the customer asks about Isotonix ingredients (when mentioned alongside H2Tab):</h4>
+                        <p class="mb-2"><em>First, clarify the relationship: "H2Tab and Isotonix are separate brands, but we’ve partnered together to highlight how well they complement each other. Combining Isotonix Daily Essentials with H2Tab can help optimize nutrient absorption and hydration—making it a perfect daily routine."</em></p>
+                        <p class="mb-2"><em>Then, address ingredient concerns: "Regarding Isotonix ingredients, while Isotonix isn’t an H2Tab product, we understand the interest. Isotonix products utilize specific carbohydrates, including non-GMO glucose, fructose, and resistant maltodextrin, for a functional purpose. These ingredients aren't just for taste; they play a key role in ensuring nutrients are effectively absorbed by mirroring your body's natural fluids for faster absorption. The fructose is derived from beets, not high-fructose corn syrup, and resistant maltodextrin supports digestive health."</em></p>
+                        <p><em>"If you have detailed questions about Isotonix formulations, we recommend reaching out to Isotonix customer service directly for the most accurate information, or we can help connect you."</em></p>
+                    </div>
+                    
+                    <div id="step2-digestive-sensitivity" class="info-card mb-3">
+                        <h4>If the customer reports digestive sensitivity (stomach ache, loose stools, bloating) after using H2Tab:</h4>
+                        <p class="mb-2"><em>"Thank you for reaching out and for giving H2Tab a try—we’re so sorry to hear about your experience. Your comfort and well-being are incredibly important to us, and we truly appreciate you sharing this with us.<br>
+                        At 12ppm, H2Tab delivers a potent dose of molecular hydrogen. While many people do well with it, some may need to ease in gradually, especially at first. We’ve heard from others, including some on our team, who experienced initial digestive sensitivity.<br>
+                        Research suggests molecular hydrogen can interact with the gut by potentially increasing gastric motility or shifting microbial populations, which can cause temporary changes as your body adjusts. These effects are typically short-term, similar to starting a fiber supplement.<br>
+                        We’d recommend trying one of these approaches to help your body adjust more comfortably:
+                        <ul class="list-disc pl-5 my-2">
+                            <li>Start with half a tablet in 12oz of water.</li>
+                            <li>Or, use more water (e.g., 16-20oz) per full tablet.</li>
+                            <li>Or, wait about 20-25 minutes after the tablet fully dissolves before drinking (this reduces the hydrogen concentration to about half-strength).</li>
+                        </ul>
+                        These adjustments have helped many customers enjoy the benefits without discomfort. We’d love for you to give one of these approaches a try and let us know how it works for you!<br>
+                        We do always recommend you check in with your healthcare provider to ensure H2Tab is the right fit for you, especially if you’re experiencing any discomfort.<br>
+                        (If applicable, and they wish to cancel/get a refund due to this): "If H2Tab still isn’t the right fit, we’re happy to make it right by issuing a full refund for your order without the need to return anything. If you have a subscription, we can also cancel that for you."</em></p>
+                    </div>
+
+                    <div id="step2-metallic-taste" class="info-card mb-3">
+                        <h4>If the customer comments on an unusual taste/metallic taste (especially with dental work):</h4>
+                        <p class="mb-2"><em>"Thanks for reaching out and sharing your experience! The slight mineral or metallic scent or taste some people notice comes from the elemental magnesium reacting with the water to produce molecular hydrogen—it’s totally natural and actually a sign the tablet is working effectively!"</em></p>
+                        <p class="mb-2"><em>"If the taste isn’t your favorite, you can absolutely add lemon, nitric oxide boosters, or other natural flavors after the tablet has fully dissolved and the water is clear. This won’t reduce the effectiveness."</em></p>
+                        <p class="mb-2"><em>"For individuals with dental work like crowns or fillings, this taste might be slightly more noticeable due to the interaction between hydrogen and certain metals, but it's harmless. Waiting for the water to clear or using a straw might help minimize this sensation."</em></p>
+                        <p><em>"That said, if the sensation becomes uncomfortable or persists, we recommend consulting with your dentist to ensure there are no underlying sensitivities."</em></p>
+                    </div>
+
+                    <div id="step2-general-safety" class="info-card mb-3">
+                        <h4>If the customer asks about general safety:</h4>
+                        <p><em>"Yes, H2Tab is made from safe, high-quality ingredients and is designed to support your health without any harmful side effects.<br>
+                        Molecular hydrogen itself has no known adverse effects and is considered extremely safe for daily use."</em></p>
+                    </div>
+
+                    <div id="step2-children-pregnancy" class="info-card mb-3">
+                        <h4>If the customer asks if H2Tab is safe for children or pregnant women:</h4>
+                        <p><em>"While hydrogen water is generally safe, we recommend consulting with a healthcare professional before use in children or during pregnancy."</em></p>
+                    </div>
+
+                    <div id="step2-storage-expiration" class="info-card mb-3">
+                        <h4>If customer asks about storage or shelf life/expiration:</h4>
+                        <p class="mb-2"><em>"You should store H2Tab in a cool, dry place away from direct sunlight and moisture to maintain effectiveness and maximum potency."</em></p>
+                        <p class="mb-2"><em>"H2Tab does expire, but it has a long shelf life when stored properly. Please check the packaging for the specific expiration date."</em></p>
+                        <p><em>"H2Tab has a shelf life of approximately two years, but we recommend using it within 6 months of opening for optimal freshness."</em></p>
+                    </div>
+                    
+                    <div id="step2-flavor-choice" class="info-card mb-3">
+                        <h4>If customer asks which flavor is better (raspberry or unflavored):</h4>
+                        <p><em>"It all comes down to personal preference! The raspberry flavor offers a light and refreshing taste, not too sweet, perfect if you like a bit of flavor! The unflavored option is very neutral but is great if you want to keep the flavor simple or if you want to mix it in with other supplements. Either way, you’re getting the same high-potency hydrogen."</em></p>
+                    </div>
+                    
+                    <div id="step2-vs-machines" class="info-card mb-3">
+                        <h4>If customer asks if H2Tab is the same as hydrogen water machines:</h4>
+                        <p class="mb-2"><em>"Yes! Both use the same principle—infusing hydrogen gas into water. H2Tab just does it more conveniently (and affordably) without needing an expensive machine. Our tablets deliver high parts per million (ppm) of hydrogen, often even more than most machines."</em></p>
+                        <p><em>"For example, H2Tab delivers a highly potent 12 ppm of hydrogen with each tablet. This means you would have to drink 6x the amount of water from a typical hydrogen bottle to get the same benefits as just one of our tablets."</em></p>
+                    </div>
+
+                    <div id="step2-water-purification" class="info-card mb-3">
+                        <h4>If customer asks if H2Tab cleans water or kills "bad things" in it:</h4>
+                        <p><em>"While molecular hydrogen offers antioxidant and anti-inflammatory benefits inside the body, it is not a water purifier or disinfectant. It won’t kill bacteria or contaminants in unclean water. So we always recommend using H2Tab with clean, filtered, or spring water."</em></p>
+                    </div>
+
+                    <div id="step2-dosage" class="info-card mb-3">
+                        <h4>If customer asks how many tablets to take per day:</h4>
+                        <p><em>"Most people take 1–2 tablets per day to support energy, mental clarity, and recovery. Some take up to 4 depending on their needs (especially athletes or those dealing with high oxidative stress), but starting with 1 tablet is a great place to begin."</em></p>
+                    </div>
+
+                    <div id="step2-pets" class="info-card mb-3">
+                        <h4>If customer asks if their animals/pets can drink hydrogen water from H2Tab:</h4>
+                        <p class="mb-2"><em>"Yes! Many of our customers share hydrogen water with their pets. You can find studies linked to this on our science page! Molecular hydrogen is non-toxic and generally safe for animals."</em></p>
+                        <p><em>"We just recommend using the unflavored tablets and checking with your vet, especially if your pet has health conditions or is on medication. A good rule of thumb is to use moderation—small amounts to start."</em></p>
+                    </div>
+                                        
+                    <div id="step2-medications" class="info-card mb-3">
+                        <h4>If customer asks if they can take H2Tab with medications or other supplements:</h4>
+                        <p><em>"(General safe advice, referencing FAQ page 78 for "Highblood or on blood thinners"): H2Tab is a natural supplement designed to support hydration, energy, recovery, and overall wellness. However, we always recommend consulting with your healthcare provider before introducing anything new, especially if you're on medications (like blood pressure or blood thinners) or taking other supplements. Your doctor can provide personalized advice based on your unique health needs and any potential interactions."</em></p>
+                    </div>
+
+                    <div id="step2-hsa-fsa" class="info-card">
+                        <h4>If customer asks about using H2Tab with HSA/FSA:</h4>
+                        <p class="mb-2"><em>"Thank you for reaching out! Hydrogen tablets, like our H2Tabs, may be eligible for FSA or HSA reimbursement, but approval depends on your specific plan and provider. We recommend checking directly with your FSA/HSA administrator to confirm eligibility."</em></p>
+                        <p><em>"If you need any additional information or documentation to support your claim, we’d be happy to help—just let us know!"</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step3" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 3: Offer further assistance and conclude</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Concluding Interaction:</h4>
+                        <p><em>"Please let me know if you have any other questions or if there's anything else we can assist you with!"</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+            
+            <div id="step4-internal" class="step-card documentation-card flow-element">
+                 <div class="step-header"> 
+                    <h3>Step 4: Document and tag the interaction (Internal)</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Internal Actions:</h4>
+                        <ul class="list-disc pl-5 mt-1 space-y-1">
+                            <li>Tag the conversation with relevant keywords (e.g., "Product Inquiry - H2Tab," "Ingredients," "Safety," "Usage," "Side Effects," "Flavor," "HSA/FSA," "Isotonix Question" etc.). <span class="badge badge-blue">TAG</span></li>
+                            <li>Note any specific feedback or recurring questions for internal review and potential FAQ updates.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+            <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" />
+        </svg>
+    </button>
+
+    <script>
+        // Scroll-to-top button functionality
+        var scrollToTopButton = document.getElementById("scrollToTopBtn");
+        window.onscroll = function() {scrollFunction()};
+        function scrollFunction() {
+            if (scrollToTopButton) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    scrollToTopButton.style.display = "block";
+                } else {
+                    scrollToTopButton.style.display = "none";
+                }
+            }
+        }
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // TOC and Hamburger Menu Functionality
+        const tocSidebar = document.getElementById('toc-sidebar');
+        const menuToggle = document.getElementById('menu-toggle');
+        const pageOverlay = document.getElementById('page-overlay');
+        const mainContent = document.querySelector('.main-content-area');
+        const body = document.body;
+        
+        function applyLayoutBasedOnScreenSize() {
+            if (window.innerWidth >= 1024 && body.classList.contains('has-toc')) {
+                if(mainContent) mainContent.classList.add('toc-active'); 
+                if(tocSidebar) tocSidebar.classList.add('open'); 
+            } else {
+                if(mainContent) mainContent.classList.remove('toc-active');
+                if(tocSidebar) tocSidebar.classList.remove('open'); 
+            }
+        }
+
+        if (menuToggle && tocSidebar) {
+            menuToggle.addEventListener('click', () => {
+                tocSidebar.classList.toggle('open');
+                if (pageOverlay) pageOverlay.classList.toggle('active'); 
+            });
+        }
+        if (pageOverlay) {
+            pageOverlay.addEventListener('click', () => { 
+                tocSidebar.classList.remove('open');
+                pageOverlay.classList.remove('active');
+            });
+        }
+        
+        document.querySelectorAll('#toc-sidebar a:not(.back-link)').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const topBarHeight = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - topBarHeight - 10; 
+
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+
+                        if (window.innerWidth < 1024 && tocSidebar.classList.contains('open')) { 
+                            tocSidebar.classList.remove('open');
+                            if (pageOverlay) pageOverlay.classList.remove('active');
+                        }
+                        document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('.content-section[id], .step-card[id], .info-card[id]'); 
+        const tocLinksJS = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
+        
+        const makeActive = (linkId) => {
+            tocLinksJS.forEach(l => l.classList.remove('active'));
+            if (linkId) {
+                const correspondingLink = document.querySelector(`#toc-sidebar a[href="#${linkId}"]`);
+                if (correspondingLink) {
+                    correspondingLink.classList.add('active');
+                     const parentLi = correspondingLink.closest('ul')?.closest('li');
+                    if (parentLi) {
+                        const parentAnchor = parentLi.querySelector('a');
+                        if(parentAnchor && !parentAnchor.classList.contains('back-link') && parentAnchor.getAttribute('href').startsWith('#step')) { 
+                           parentAnchor.classList.add('active');
+                        }
+                    }
+                }
+            }
+        };
+        
+        const observer = new IntersectionObserver(entries => {
+            let intersectingEntry = null;
+            const topBarHeightForObserver = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
+            for (let i = 0; i < entries.length; i++) { 
+                 if (entries[i].isIntersecting) {
+                    if (!intersectingEntry || entries[i].target.getBoundingClientRect().top < intersectingEntry.target.getBoundingClientRect().top) {
+                        if (entries[i].intersectionRatio >= 0.1) { 
+                           intersectingEntry = entries[i];
+                        }
+                    }
+                 }
+            }
+            if (intersectingEntry) {
+                 makeActive(intersectingEntry.target.id);
+            }
+        }, { 
+            threshold: [0.1, 0.5], 
+            rootMargin: `-${(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) + 20}px 0px -60% 0px` 
+        });
+
+        sections.forEach(section => { if (section.id) { observer.observe(section); } });
+        
+        window.addEventListener('resize', applyLayoutBasedOnScreenSize);
+        applyLayoutBasedOnScreenSize(); // Initial call
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Proposal & Wholesale Inquiry Workflow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global_styles.css">
+    <style>
+        /* Theme-specific styles for Business Proposal & Wholesale Inquiry Workflow (Blue-Gray Theme) */
+        
+        :root { 
+            /* --top-bar-height is defined in global_styles.css */
+            --page-theme-color-main: #475569; /* Slate-600 */
+            --page-theme-color-darker: #334155; /* Slate-700 */
+            --page-theme-color-lighter: #cbd5e1; /* Slate-300 */
+            --page-theme-color-lightest: #f1f5f9; /* Slate-100 */
+        }
+
+        .app-top-bar { 
+            background-color: var(--page-theme-color-main);
+        }
+
+        #toc-sidebar h2 {
+            color: var(--page-theme-color-main);
+        }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active {
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
+        }
+         #toc-sidebar ul ul li a:hover, /* If sub-levels were used */
+         #toc-sidebar ul ul li a.active { 
+             color: var(--page-theme-color-main);
+             background-color: var(--page-theme-color-lighter);
+        }
+
+        .step-header { /* Main step header color for this page */
+            background-color: var(--page-theme-color-main);
+        }
+        /* No specific card header overrides in this workflow's design, but can be added if needed */
+        
+        .link-style { /* Theme for inline links if any */
+            color: var(--page-theme-color-main); /* Using main theme color for links */
+            text-decoration: underline;
+            font-weight: 500;
+        }
+        .link-style:hover {
+            color: var(--page-theme-color-darker);
+        }
+
+        #scrollToTopBtn {
+            background-color: var(--page-theme-color-main);
+        }
+        #scrollToTopBtn:hover {
+            background-color: var(--page-theme-color-darker);
+        }
+
+        /* Print-specific overrides for themed elements */
+        @media print {
+            /* .app-top-bar is already display:none in global_styles.css for print */
+            .step-header { 
+                background-color: var(--page-theme-color-lighter) !important; 
+                color: var(--page-theme-color-darker) !important; 
+            }
+            #toc-sidebar h2 { /* This won't be visible due to TOC being hidden in print */
+                color: var(--page-theme-color-main) !important; 
+            }
+        }
+    </style>
+</head>
+<body class="has-toc"> 
+
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </button>
+        </div>
+    <div id="page-overlay"></div>
+
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align: text-bottom;">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#step1">Step 1: Acknowledge & Appreciate</a></li>
+            <li><a href="#step2">Step 2: Explain B2B/Wholesale Process</a></li>
+            <li><a href="#step3">Step 3: Other Business Proposals</a></li>
+            <li><a href="#step4">Step 4: Clarify CX Role</a></li>
+            <li><a href="#step5">Step 5: Conclude Professionally</a></li>
+            <li><a href="#step6-internal">Step 6: Document & Tag (Internal)</a></li> 
+        </ul>
+    </nav>
+
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
+            <h1 class="text-3xl font-bold text-gray-800">Business Proposal & Wholesale Inquiry Workflow</h1>
+            <p class="text-lg text-gray-600">Guiding External Parties on Collaboration and Wholesale Processes</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto">
+
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>External individuals, companies, or organizations are reaching out with business proposals, partnership ideas, wholesale inquiries, or requests for business collaborations (e.g., displaying products in stores, bulk purchases). Your role as a CX Support Specialist is to acknowledge their interest and direct them to the appropriate channel, particularly for wholesale inquiries, using the established process.</p>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step1" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 1: Acknowledge the inquiry and express appreciation</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Response:</h4>
+                        <ul class="list-disc pl-5 mt-1">
+                            <li>Start with a professional and courteous greeting: <em>"Hi [Contact Person's Name/Company Name], thank you for reaching out to H2Tab and for your interest in exploring a potential [business proposal/collaboration/wholesale opportunity] with us."</em></li>
+                            <li>Acknowledge the nature of their inquiry: <em>"I understand you're looking to discuss a [business proposal/collaboration idea/wholesale account/bulk purchase/stocking our products]."</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step2" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 2: Explain the process for submitting B2B/Wholesale inquiries</h3>
+                </div>
+                <div class="step-content">
+                    <div class="info-card">
+                        <h4>Response for Wholesale/B2B:</h4>
+                        <p class="mb-2"><em>"Thank you for your interest in bringing H2Tab to your community! We’re excited to learn more about your business. Our molecular hydrogen tablets are designed to support energy, focus, and overall wellness—offering a convenient, cost-effective, and science-backed solution your customers can trust."</em></p>
+                        <p class="mb-2">Provide the specific link for the Wholesale Program application: <br><em>"To get started with H2Tab's Wholesale Program, just fill out this quick form (it only takes a minute): <a href="https://h2tabwholesale1.paperform.co/" target="_blank" class="link-style">https://h2tabwholesale1.paperform.co/</a>"</em></p>
+                        <p class="mb-2">Explain the next steps after form submission: <br><em>"Once submitted, we’ll send you a follow-up email with next steps to move forward. Our team typically reviews applications within 3–7 business days and will reach out with wholesale access and product details."</em></p>
+                        <p class="mb-2">If the customer mentions issues with the first form or needs the second step: <br><em>"So sorry for the inconvenience, if you are looking for the next steps in our wholesale process, please use this link: <a href="https://h2tabwholesale2.paperform.co/" target="_blank" class="link-style">https://h2tabwholesale2.paperform.co/</a>"</em></p>
+                        <p>If a customer claims to already have a wholesale account (and you need to clarify): <br><em>"Thank you for your message. We completely understand the confusion and have double-checked with our internal team to be sure. At this time, we do not have active wholesale accounts or wholesale pricing available through that previous understanding—we’re not offering wholesale just yet through general accounts, though it’s something we plan to roll out more broadly in the near future. The correct process for all new wholesale inquiries is through the application form I mentioned. It sounds like there may have been some miscommunication, and we’d love to better understand what happened. Would you mind letting us know who you spoke with previously about setting up a wholesale account? That’ll help us make sure we’re all aligned moving forward."</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step3" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 3: For other types of business proposals or collaborations (non-wholesale)</h3>
+                </div>
+                <div class="step-content">
+                    <div class="info-card">
+                        <h4>If the inquiry is for a non-wholesale business proposal/collaboration:</h4>
+                        <p><em>"Thank you for sharing the details of your [proposal/collaboration idea]. For these types of initiatives that are not related to our wholesale program, I will ensure your email and the information you've provided are forwarded directly to our [Relevant Department, e.g., Business Development Team or Partnerships Department at partnerships@yourcompany.com or info@drinkh2tab.com - adjust as per your actual internal routing and if you name the dept/email to the customer]. They handle all such proposals and will review your submission. If there's a potential fit or if they require more information, they will reach out to you directly."</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step4" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 4: Clarify the customer support team's role</h3>
+                </div>
+                <div class="step-content">
+                    <div class="info-card">
+                        <h4>Managing Expectations:</h4>
+                        <p class="mb-2"><em>"Our customer support team is primarily focused on assisting customers with product inquiries, order support, and general questions about our services. Therefore, we don't directly handle the review or negotiation of business proposals or collaborations beyond guiding you to the correct application process or forwarding your initial inquiry."</em></p>
+                        <p><em>"Using the wholesale application form for those inquiries, or having your proposal forwarded as I've mentioned, will ensure it's seen by the appropriate team."</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step5" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 5: Conclude the interaction professionally</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Concluding Interaction:</h4>
+                        <ul class="list-disc pl-5 mt-1 space-y-1">
+                            <li>Thank them again: <em>"Thank you once again for considering H2Tab. We appreciate you taking the time to share your interest/proposal with us."</em></li>
+                            <li>Set expectations for follow-up: <em>"Our team will review applications/proposals and typically reach out within [mention timeframe if known, e.g., 3-7 business days for wholesale applications, or a more general timeframe for other proposals] if there is an alignment with our current strategic objectives or if further information is needed."</em></li>
+                            <li>Offer to help with CX-related questions: <em>"If you have any questions related to our products or customer services, please feel free to ask."</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+            
+            <div id="step6-internal" class="step-card documentation-card flow-element">
+                 <div class="step-header"> 
+                    <h3>Step 6: Document and tag the interaction (Internal)</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Internal Actions:</h4>
+                        <p class="mb-2">Tag the conversation with relevant keywords (e.g., "Business Proposal," "Wholesale Inquiry," "Partnership," "B2B," "Collaboration," etc.). <span class="badge badge-blue">TAG</span></p>
+                        <p>Note key details: contact person/company, nature of proposal, links provided, department forwarded to (if applicable), and any immediate impressions or red flags.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+            <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" />
+        </svg>
+    </button>
+
+    <script>
+        // Scroll-to-top button functionality
+        var scrollToTopButton = document.getElementById("scrollToTopBtn");
+        window.onscroll = function() {scrollFunction()};
+        function scrollFunction() {
+            if (scrollToTopButton) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    scrollToTopButton.style.display = "block";
+                } else {
+                    scrollToTopButton.style.display = "none";
+                }
+            }
+        }
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // TOC and Hamburger Menu Functionality
+        const tocSidebar = document.getElementById('toc-sidebar');
+        const menuToggle = document.getElementById('menu-toggle');
+        const pageOverlay = document.getElementById('page-overlay');
+        const mainContent = document.querySelector('.main-content-area');
+        const body = document.body;
+        
+        function applyLayoutBasedOnScreenSize() {
+            if (window.innerWidth >= 1024 && body.classList.contains('has-toc')) {
+                if(mainContent) mainContent.classList.add('toc-active'); 
+                if(tocSidebar) tocSidebar.classList.add('open'); 
+            } else {
+                if(mainContent) mainContent.classList.remove('toc-active');
+                if(tocSidebar) tocSidebar.classList.remove('open'); 
+            }
+        }
+
+        if (menuToggle && tocSidebar) {
+            menuToggle.addEventListener('click', () => {
+                tocSidebar.classList.toggle('open');
+                if (pageOverlay) pageOverlay.classList.toggle('active'); 
+            });
+        }
+        if (pageOverlay) {
+            pageOverlay.addEventListener('click', () => { 
+                tocSidebar.classList.remove('open');
+                pageOverlay.classList.remove('active');
+            });
+        }
+        
+        document.querySelectorAll('#toc-sidebar a:not(.back-link)').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const topBarHeight = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - topBarHeight - 10; 
+
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+
+                        if (window.innerWidth < 1024 && tocSidebar.classList.contains('open')) { 
+                            tocSidebar.classList.remove('open');
+                            if (pageOverlay) pageOverlay.classList.remove('active');
+                        }
+                        document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('.content-section[id], .step-card[id], .info-card[id]'); 
+        const tocLinksJS = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
+        
+        const makeActive = (linkId) => {
+            tocLinksJS.forEach(l => l.classList.remove('active'));
+            if (linkId) {
+                const correspondingLink = document.querySelector(`#toc-sidebar a[href="#${linkId}"]`);
+                if (correspondingLink) {
+                    correspondingLink.classList.add('active');
+                     const parentLi = correspondingLink.closest('ul')?.closest('li');
+                    if (parentLi) {
+                        const parentAnchor = parentLi.querySelector('a');
+                        if(parentAnchor && !parentAnchor.classList.contains('back-link') && parentAnchor.getAttribute('href').startsWith('#step')) { 
+                           parentAnchor.classList.add('active');
+                        }
+                    }
+                }
+            }
+        };
+        
+        const observer = new IntersectionObserver(entries => {
+            let intersectingEntry = null;
+            const topBarHeightForObserver = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
+            for (let i = 0; i < entries.length; i++) { 
+                 if (entries[i].isIntersecting) {
+                    if (!intersectingEntry || entries[i].target.getBoundingClientRect().top < intersectingEntry.target.getBoundingClientRect().top) {
+                        if (entries[i].intersectionRatio >= 0.1) { 
+                           intersectingEntry = entries[i];
+                        }
+                    }
+                 }
+            }
+            if (intersectingEntry) {
+                 makeActive(intersectingEntry.target.id);
+            }
+        }, { 
+            threshold: [0.1, 0.5], 
+            rootMargin: `-${(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) + 20}px 0px -60% 0px` 
+        });
+
+        sections.forEach(section => { if (section.id) { observer.observe(section); } });
+        
+        window.addEventListener('resize', applyLayoutBasedOnScreenSize);
+        applyLayoutBasedOnScreenSize(); // Initial call
+    </script>
+
+</body>
+</html>

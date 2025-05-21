@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Military & First Responder Discount Inquiry Workflow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global_styles.css">
+    <style>
+        /* Theme-specific styles for Military Discount Inquiry Workflow (Dark Gray/Slate Theme) */
+        
+        :root { 
+            /* --top-bar-height is defined in global_styles.css */
+            --page-theme-color-main: #475569; /* Slate-600 */
+            --page-theme-color-darker: #334155; /* Slate-700 */
+            --page-theme-color-lighter: #e2e8f0; /* Slate-200 */
+            --page-theme-color-lightest: #f1f5f9; /* Slate-100 */
+        }
+
+        .app-top-bar { 
+            background-color: var(--page-theme-color-main);
+        }
+
+        #toc-sidebar h2 {
+            color: var(--page-theme-color-main);
+        }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active {
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
+        }
+         #toc-sidebar ul ul li a:hover,
+         #toc-sidebar ul ul li a.active { 
+             color: var(--page-theme-color-main);
+             background-color: var(--page-theme-color-lighter);
+        }
+
+        .step-header { /* Main step header color for this page */
+            background-color: var(--page-theme-color-main);
+        }
+        /* Specific card header colors */
+        .documentation-card .step-header { /* This class is from global_styles.css */
+             background-color: #60a5fa !important; /* Lighter Blue for documentation step header (from global) */
+        }
+        
+        #scrollToTopBtn {
+            background-color: var(--page-theme-color-main);
+        }
+        #scrollToTopBtn:hover {
+            background-color: var(--page-theme-color-darker);
+        }
+
+        /* Print-specific overrides for themed elements */
+        @media print {
+            /* .app-top-bar is already display:none in global_styles.css for print */
+            .step-header { 
+                background-color: var(--page-theme-color-lighter) !important; 
+                color: var(--page-theme-color-darker) !important; 
+            }
+            .documentation-card .step-header {
+                 background-color: #bfdbfe !important; 
+                 color: #1e40af !important;
+            }
+            #toc-sidebar h2 { /* This won't be visible due to TOC being hidden in print */
+                color: var(--page-theme-color-main) !important; 
+            }
+        }
+    </style>
+</head>
+<body class="has-toc"> 
+
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </button>
+        </div>
+    <div id="page-overlay"></div>
+
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align: text-bottom;">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#step1">Step 1: Acknowledge & Thank</a></li>
+            <li><a href="#step2">Step 2: Confirm Discount & Verification</a></li>
+            <li><a href="#step3">Step 3: Explain Conditions & Limitations</a></li>
+            <li><a href="#step4">Step 4: Address Specific Scenarios</a>
+                <ul>
+                    <li><a href="#step4-combine-discounts">Combining Discounts</a></li>
+                    <li><a href="#step4-forgot-to-apply">Forgot to Apply Discount</a></li>
+                </ul>
+            </li>
+            <li><a href="#step5">Step 5: Offer Further Assistance</a></li>
+            <li><a href="#step6-internal">Step 6: Document & Tag (Internal)</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
+            <h1 class="text-3xl font-bold text-gray-800">Military & First Responder Discount Inquiry</h1>
+            <p class="text-lg text-gray-600">Guiding Customers on Discount Availability and Application</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto">
+
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>Customers, including active military members, veterans, and first responders, are inquiring about the availability of a military discount, how to apply it, and any conditions or restrictions associated with it. Your role is to thank them for their service, clearly explain the discount policy, guide them on how to receive it using GovX ID, and clarify its applicability, especially concerning subscriptions and other offers.</p>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step1" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 1: Acknowledge the customer's inquiry and thank them for their service</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Response:</h4>
+                        <ul class="list-disc pl-5 mt-1">
+                            <li>Start with a polite and appreciative greeting: <em>"Hi [Customer's Name],"</em></li>
+                            <li>Thank them for their service: <em>"Thank you for reaching out and asking about our discounts. And thank you for your service!"</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step2" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 2: Confirm the availability and terms of the discount</h3>
+                </div>
+                <div class="step-content">
+                    <div class="info-card">
+                        <h4>Response:</h4>
+                        <p class="mb-2"><em>"Yes, we proudly offer a 10% discount for all military members, veterans, and first responders."</em></p>
+                        <p><em>"We use GovX ID for verification. You should see the option for this in the cart window towards the bottom when you are placing an order. You can click there and verify your status in the window that pops up to receive the discount."</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step3" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 3: Explain the conditions and limitations of the discount</h3>
+                </div>
+                <div class="step-content">
+                    <div class="info-card">
+                        <h4>Key Conditions:</h4>
+                        <ul class="list-disc pl-5 mt-1 space-y-1">
+                            <li><strong>General Rule - No Combining with Other Offers:</strong> <em>"A couple of quick notes: The discount generally can’t be combined with other offers, including the ongoing savings from subscriptions."</em></li>
+                            <li><strong>Exception for First Subscription Payment:</strong> <em>"However, we do make an exception – you can apply the GovX verified discount to your very first subscription payment."</em></li>
+                            <li><strong>Application During Checkout:</strong> <em>"It's important to note that the verification and discount application need to be completed during the checkout process before the order is placed."</em></li>
+                            <li><strong>Cannot be Applied Retroactively to Existing Subscriptions:</strong> <em>"Unfortunately, once a subscription order is confirmed, the system doesn't allow us to go back and apply that specific GovX-verified discount retroactively, even to the first payment if it wasn't applied at checkout."</em></li>
+                            <li><strong>Use on Future One-Time Orders:</strong> <em>"You can certainly use the GovX ID verification process to receive the discount on future one-time (non-subscription) orders you place through our website. Just be sure to complete the verification in the cart before finalizing your payment next time you place a one-time order."</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step4" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 4: Address specific scenarios</h3>
+                </div>
+                <div class="step-content">
+                    <div id="step4-combine-discounts" class="condition-card mb-3">
+                        <h4>If a customer asks if they can use the military discount and another discount code together:</h4>
+                        <div class="info-card mt-2">
+                            <h4>Response:</h4>
+                            <p><em>"Thank you so much for your service! We’re proud to offer a 10% discount for all military members and first responders. A couple of quick notes: The discount can’t be combined with other offers, including other discount codes or subscriptions. However, we do make an exception—you can apply it to your first subscription payment."</em></p>
+                        </div>
+                    </div>
+
+                    <div id="step4-forgot-to-apply" class="condition-card">
+                        <h4>If a customer placed an order and forgot to apply the GovX ID discount (especially a subscription):</h4>
+                        <div class="info-card mt-2">
+                            <h4>Response:</h4>
+                            <p class="mb-2"><em>"Thank you for your order (#[Order Number if provided]) and for reaching out about the discount! Also, thank you for your service!"</em></p>
+                            <p class="mb-2"><em>"Regarding applying it to your recent subscription order: the verification and discount application need to be completed during the checkout process before the order is placed. Unfortunately, once a subscription order is confirmed, the system doesn't allow us to go back and apply that specific GovX-verified discount retroactively, even to the first payment. We apologize for any confusion if the placement of the GovX ID button seemed unclear during checkout!"</em></p>
+                            <p><em>"Generally, this discount also cannot be combined with the ongoing savings already included in subscription orders (beyond the first payment exception if applied at checkout). However, you can certainly use the GovX ID verification process to receive the discount on future one-time (non-subscription) orders you place through our website."</em></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="connector">▼</div>
+
+            <div id="step5" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 5: Offer further assistance and conclude</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Concluding Interaction:</h4>
+                         <ul class="list-disc pl-5 mt-1 space-y-1">
+                            <li>End with: <em>"Let us know if you have any further questions, we’re happy to help!"</em></li>
+                            <li>Thank them again: <em>"Thank you again for your service and for choosing our products."</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+            
+            <div id="step6-internal" class="step-card documentation-card flow-element">
+                 <div class="step-header"> 
+                    <h3>Step 6: Document and tag the interaction (Internal)</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Internal Actions:</h4>
+                        <ul class="list-disc pl-5 mt-1 space-y-1">
+                            <li>Tag the conversation with relevant keywords (e.g., "Military Discount," "First Responder Discount," "GovX ID," "Discount Inquiry," "Subscription Discount"). <span class="badge badge-blue">TAG</span></li>
+                            <li>Note key details: customer's service status (if confirmed), specific question, information provided, and resolution.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+            <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" />
+        </svg>
+    </button>
+
+    <script>
+        // Scroll-to-top button functionality
+        var scrollToTopButton = document.getElementById("scrollToTopBtn");
+        window.onscroll = function() {scrollFunction()};
+        function scrollFunction() {
+            if (scrollToTopButton) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    scrollToTopButton.style.display = "block";
+                } else {
+                    scrollToTopButton.style.display = "none";
+                }
+            }
+        }
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // TOC and Hamburger Menu Functionality
+        const tocSidebar = document.getElementById('toc-sidebar');
+        const menuToggle = document.getElementById('menu-toggle');
+        const pageOverlay = document.getElementById('page-overlay');
+        const mainContent = document.querySelector('.main-content-area');
+        const body = document.body;
+        
+        function applyLayoutBasedOnScreenSize() {
+            if (window.innerWidth >= 1024 && body.classList.contains('has-toc')) {
+                if(mainContent) mainContent.classList.add('toc-active'); 
+                if(tocSidebar) tocSidebar.classList.add('open'); 
+            } else {
+                if(mainContent) mainContent.classList.remove('toc-active');
+                if(tocSidebar) tocSidebar.classList.remove('open'); 
+            }
+        }
+
+        if (menuToggle && tocSidebar) {
+            menuToggle.addEventListener('click', () => {
+                tocSidebar.classList.toggle('open');
+                if (pageOverlay) pageOverlay.classList.toggle('active'); 
+            });
+        }
+        if (pageOverlay) {
+            pageOverlay.addEventListener('click', () => { 
+                tocSidebar.classList.remove('open');
+                pageOverlay.classList.remove('active');
+            });
+        }
+        
+        document.querySelectorAll('#toc-sidebar a:not(.back-link)').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const topBarHeight = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - topBarHeight - 10; 
+
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+
+                        if (window.innerWidth < 1024 && tocSidebar.classList.contains('open')) { 
+                            tocSidebar.classList.remove('open');
+                            if (pageOverlay) pageOverlay.classList.remove('active');
+                        }
+                        document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('.content-section[id], .step-card[id], .condition-card[id], .info-card[id]'); 
+        const tocLinksJS = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
+        
+        const makeActive = (linkId) => {
+            tocLinksJS.forEach(l => l.classList.remove('active'));
+            if (linkId) {
+                const correspondingLink = document.querySelector(`#toc-sidebar a[href="#${linkId}"]`);
+                if (correspondingLink) {
+                    correspondingLink.classList.add('active');
+                     const parentLi = correspondingLink.closest('ul')?.closest('li');
+                    if (parentLi) {
+                        const parentAnchor = parentLi.querySelector('a');
+                        if(parentAnchor && !parentAnchor.classList.contains('back-link') && parentAnchor.getAttribute('href').startsWith('#step')) { 
+                           parentAnchor.classList.add('active');
+                        }
+                    }
+                }
+            }
+        };
+        
+        const observer = new IntersectionObserver(entries => {
+            let intersectingEntry = null;
+            const topBarHeightForObserver = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
+            for (let i = 0; i < entries.length; i++) { 
+                 if (entries[i].isIntersecting) {
+                    if (!intersectingEntry || entries[i].target.getBoundingClientRect().top < intersectingEntry.target.getBoundingClientRect().top) {
+                        if (entries[i].intersectionRatio >= 0.1) { 
+                           intersectingEntry = entries[i];
+                        }
+                    }
+                 }
+            }
+            if (intersectingEntry) {
+                 makeActive(intersectingEntry.target.id);
+            }
+        }, { 
+            threshold: [0.1, 0.5], 
+            rootMargin: `-${(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) + 20}px 0px -60% 0px` 
+        });
+
+        sections.forEach(section => { if (section.id) { observer.observe(section); } });
+        
+        window.addEventListener('resize', applyLayoutBasedOnScreenSize);
+        applyLayoutBasedOnScreenSize(); // Initial call
+    </script>
+
+</body>
+</html>
