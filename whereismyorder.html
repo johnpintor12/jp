@@ -330,6 +330,20 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
+        const tocSidebar = document.getElementById('toc-sidebar');
+        const menuToggle = document.getElementById('menu-toggle');
+        // const mainContentArea = document.querySelector('.main-content-area'); // Not strictly needed for this version of toggle
+
+        if (menuToggle && tocSidebar) {
+            menuToggle.addEventListener('click', () => {
+                tocSidebar.classList.toggle('open');
+                // If you want to push content instead of overlay, toggle a class on main-content-area too
+                // if (mainContentArea) {
+                //    mainContentArea.classList.toggle('toc-shifted'); // You'd need CSS for .toc-shifted
+                // }
+            });
+        }
+        
         document.querySelectorAll('#toc-sidebar a:not(.back-link)').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
@@ -338,6 +352,9 @@
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
                         targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (window.innerWidth < 768 && tocSidebar.classList.contains('open')) {
+                            tocSidebar.classList.remove('open');
+                        }
                         document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
                         this.classList.add('active');
                     }
@@ -356,7 +373,7 @@
                      const parentLi = correspondingLink.closest('ul')?.closest('li');
                     if (parentLi) {
                         const parentAnchor = parentLi.querySelector('a');
-                        if(parentAnchor && parentAnchor.getAttribute('href').startsWith('#step')) { 
+                        if(parentAnchor && parentAnchor.hasAttribute('href') && parentAnchor.getAttribute('href').startsWith('#step')) { 
                            parentAnchor.classList.add('active');
                         }
                     }
