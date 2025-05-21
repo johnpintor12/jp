@@ -140,7 +140,7 @@ body {
         border-right: 1px solid #e5e7eb;
     }
     body.has-toc .main-content-area { 
-         margin-left: 280px; 
+       /*  margin-left: 280px; */
          padding-top: var(--top-bar-height); /* Ensure content starts below fixed top bar */
     }
     #menu-toggle { display: none !important; } 
