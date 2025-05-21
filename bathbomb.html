@@ -11,6 +11,10 @@
         /* Theme-specific styles for Hydrogen Bath Bomb Inquiry Workflow (Teal Theme) */
         /* body.has-toc is handled by global_styles.css for responsive layout */
 
+        .app-top-bar { /* Theme the top bar for this page */
+            background-color: #0d9488; /* Teal-600 */
+        }
+
         #toc-sidebar h2 {
             color: #0d9488; /* Teal-600 */
         }
@@ -19,12 +23,11 @@
             background-color: #ccfbf1; /* Teal-100 */
             color: #0d9488; /* Teal-600 */
         }
-         /* No sub-levels in this specific TOC, but if added:
-         #toc-sidebar ul ul li a:hover,
+         #toc-sidebar ul ul li a:hover, /* If you add sub-levels to TOC */
          #toc-sidebar ul ul li a.active { 
-             color: #0d9488; 
-             background-color: #99f6e4;
-        } */
+             color: #0d9488; /* Teal-600 */
+             background-color: #99f6e4; /* Teal-200 for sub-items if desired */
+        }
 
         .step-header { /* Main step header color for this page */
             background-color: #0d9488; /* Teal-600 */
@@ -47,6 +50,7 @@
 
         /* Print-specific overrides for themed elements */
         @media print {
+            .app-top-bar { display: none !important; }
             .step-header { 
                 background-color: #99f6e4 !important; /* Lighter Teal for print */
                 color: #0f766e !important; 
@@ -59,11 +63,13 @@
 </head>
 <body class="has-toc"> 
 
-    <button id="menu-toggle" aria-label="Open navigation menu">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-        </svg>
-    </button>
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </button>
+        </div>
     <div id="page-overlay"></div>
 
     <nav id="toc-sidebar">
@@ -85,8 +91,7 @@
         </ul>
     </nav>
 
-    <div class="main-content-area toc-active">
-        <header class="text-center mb-10">
+    <div class="main-content-area toc-active"> <header class="text-center mb-10 pt-4"> 
             <h1 class="text-3xl font-bold text-gray-800">Hydrogen Bath Bomb Inquiry Workflow</h1>
             <p class="text-lg text-gray-600">Visualized Logic for Handling Customer Questions about Upcoming Launch</p>
         </header>
@@ -207,14 +212,14 @@
         if (menuToggle && tocSidebar) {
             menuToggle.addEventListener('click', () => {
                 tocSidebar.classList.toggle('open');
-                menuToggle.classList.toggle('shifted'); 
+                // menuToggle.classList.toggle('shifted'); // Not needed if hamburger is in fixed top bar
                 if (pageOverlay) pageOverlay.classList.toggle('active'); 
             });
         }
         if (pageOverlay) {
             pageOverlay.addEventListener('click', () => { 
                 tocSidebar.classList.remove('open');
-                menuToggle.classList.remove('shifted');
+                // menuToggle.classList.remove('shifted');
                 pageOverlay.classList.remove('active');
             });
         }
@@ -226,10 +231,15 @@
                     e.preventDefault();
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        const topBarHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - topBarHeight - 10; 
+
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+
                         if (window.innerWidth < 1024 && tocSidebar.classList.contains('open')) { 
                             tocSidebar.classList.remove('open');
-                            menuToggle.classList.remove('shifted');
+                            // menuToggle.classList.remove('shifted');
                             if (pageOverlay) pageOverlay.classList.remove('active');
                         }
                         document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
@@ -241,6 +251,7 @@
 
         const sections = document.querySelectorAll('.content-section[id], .step-card[id], .info-card[id]'); 
         const tocLinksJS = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
+        const topBarHeightForObserver = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60;
 
         const makeActive = (linkId) => {
             tocLinksJS.forEach(l => l.classList.remove('active'));
@@ -273,7 +284,10 @@
             if (intersectingEntry) {
                  makeActive(intersectingEntry.target.id);
             }
-        }, { threshold: [0.1, 0.5], rootMargin: "-40% 0px -50% 0px" });
+        }, { 
+            threshold: [0.1, 0.5], 
+            rootMargin: `-${topBarHeightForObserver + 20}px 0px -60% 0px` // Adjusted rootMargin
+        });
 
         sections.forEach(section => { if (section.id) { observer.observe(section); } });
     </script>
