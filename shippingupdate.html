@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping Address Change Request Workflow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global_styles.css">
+    <style>
+        /* Theme-specific styles for Shipping Address Change Workflow (Purple Theme) */
+        
+        :root { 
+            /* --top-bar-height is defined in global_styles.css */
+            --page-theme-color-main: #8b5cf6; /* Violet-500 */
+            --page-theme-color-darker: #7c3aed; /* Violet-600 */
+            --page-theme-color-lighter: #ddd6fe; /* Violet-200 */
+            --page-theme-color-lightest: #ede9fe; /* Violet-50 */
+        }
+
+        .app-top-bar { 
+            background-color: var(--page-theme-color-main);
+        }
+
+        #toc-sidebar h2 {
+            color: var(--page-theme-color-main);
+        }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active {
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
+        }
+         #toc-sidebar ul ul li a:hover,
+         #toc-sidebar ul ul li a.active { 
+             color: var(--page-theme-color-main);
+             background-color: var(--page-theme-color-lighter);
+        }
+
+        .step-header { /* Main step header color for this page */
+            background-color: var(--page-theme-color-main);
+        }
+        /* No specific card header overrides needed for this workflow's design */
+        
+        #scrollToTopBtn {
+            background-color: var(--page-theme-color-main);
+        }
+        #scrollToTopBtn:hover {
+            background-color: var(--page-theme-color-darker);
+        }
+
+        /* Print-specific overrides for themed elements */
+        @media print {
+            /* .app-top-bar is already display:none in global_styles.css for print */
+            .step-header { 
+                background-color: var(--page-theme-color-lighter) !important; 
+                color: var(--page-theme-color-darker) !important; 
+            }
+            #toc-sidebar h2 { /* This won't be visible due to TOC being hidden in print */
+                color: var(--page-theme-color-main) !important; 
+            }
+        }
+    </style>
+</head>
+<body class="has-toc"> 
+
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </button>
+        </div>
+    <div id="page-overlay"></div>
+
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align: text-bottom;">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#step1">Step 1: Greet & Gather Info</a></li>
+            <li><a href="#step2">Step 2: Check Order Status</a></li>
+            <li><a href="#step3">Step 3: Proceed by Status</a>
+                <ul>
+                    <li><a href="#step3-pending">Order Pending/Not Shipped</a></li>
+                    <li><a href="#step3-shipped">Order Processed/Shipped</a></li>
+                    <li><a href="#step3-subscription">Subscription Address Change</a></li>
+                    <li><a href="#step3-failed-delivery">Failed Delivery</a></li>
+                    <li><a href="#step3-returned-package">Package Returned</a></li>
+                </ul>
+            </li>
+            <li><a href="#step4">Step 4: Conclude & Offer Help</a></li>
+            <!-- Step 4 from instructions is "Document and tag the ticket", which is an internal action.
+                 The user-facing Step 4 is "Offer further assistance and conclude".
+                 I'll add a Step 5 for internal documentation for clarity in the visualization. -->
+            <li><a href="#step5-internal">Step 5: Internal Documentation</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
+            <h1 class="text-3xl font-bold text-gray-800">Shipping Address Change Request Workflow</h1>
+            <p class="text-lg text-gray-600">Guiding Customers Through Address Update Procedures</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto">
+
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>Customers are reaching out to request a change to the shipping address for their order(s) or subscription. The ability to update the address depends on the order's current processing and shipping status. Your goal is to assist the customer by attempting to update the address if possible, or clearly explaining the situation and next steps if the address cannot be changed for an order already in progress.</p>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step1" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 1: Greet the customer and gather necessary information</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Actions:</h4>
+                        <ul class="list-disc pl-5 mt-1">
+                            <li>Start with a friendly greeting: <em>"Hi [Customer's Name],"</em></li>
+                            <li>Ask for the order number for which they want to update the shipping address.</li>
+                            <li>Request the new, complete, and correct shipping address.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step2" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 2: Check the status of the order</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Internal Action:</h4>
+                        <p>Look up the order in the system to determine its current status (e.g., pending fulfillment, processing, label created, shipped/in-transit, delivered, returned, failed delivery).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step3" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 3: Proceed based on the order status</h3>
+                </div>
+                <div class="step-content">
+                    <div id="step3-pending" class="condition-card mb-3">
+                        <h4>If the order has not yet been processed or shipped (still pending fulfillment):</h4>
+                        <div class="action-card mt-2">
+                            <h4>Response & Action:</h4>
+                            <p class="mb-2"><em>"Thank you for providing the new address. Let me try to update that for you in our system."</em></p>
+                            <p class="mb-2">Attempt to update the address in the order management system.</p>
+                            <ul class="list-disc pl-5">
+                                <li><strong>If the update is successful:</strong><br><em>"Good news! I've successfully updated the shipping address for your order to [New Address]. You’ll receive another email with tracking details as soon as your order ships to this updated address."</em> <span class="badge badge-green">SUCCESS</span></li>
+                                <li><strong>If the update is not successful for some system reason (but still pre-shipment):</strong><br><em>"I'm encountering a slight issue updating the address directly in the system at this moment. However, since your order hasn't shipped yet, I will flag this with our fulfillment team immediately to ensure they use the correct address: [New Address]. I'll keep you posted on the confirmation."</em> <span class="badge badge-yellow">FLAG TO FULFILLMENT</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="step3-shipped" class="condition-card mb-3">
+                        <h4>If the order has already been processed, a shipping label has been created, or the order is already shipped/in-transit:</h4>
+                        <div class="info-card mt-2">
+                            <h4>Response:</h4>
+                            <p class="mb-2"><em>"Thank you for reaching out. I understand you'd like to update the shipping address for order #[Order Number]."</em></p>
+                            <p class="mb-2"><em>"Unfortunately, since your order has already been packed and shipped (or a label has been created and it's ready for dispatch), we are unable to change the shipping address at this stage."</em></p>
+                            <p class="mb-2">Provide the tracking number: <em>"You can track its progress using the following tracking number: [Tracking Number]."</em></p>
+                            <p><em>"Once you receive the order, if there are any issues, or if it's returned to us due to the address, please let us know, and we’ll be happy to assist you further with the next steps, such as reshipment to the correct address."</em> (Note: Consider return shipping costs policy). </p>
+                        </div>
+                    </div>
+                    
+                    <div id="step3-subscription" class="condition-card mb-3">
+                        <h4>If the customer is requesting an address update for a subscription (for future shipments):</h4>
+                        <div class="action-card mt-2">
+                             <h4>Response & Action:</h4>
+                            <p class="mb-2"><em>"Thank you for letting us know. I can certainly update the shipping address for your future subscription orders."</em></p>
+                            <p class="mb-2">Update the address in their subscription profile.</p>
+                            <p><em>"I've successfully updated your shipping address in our system. Rest assured, all your upcoming subscription orders will be sent to this new address: [New Address].<br>
+                            You can also easily monitor and make changes to your current subscription, including the shipping address, by visiting your Customer Portal here: [Link to Customer Portal, if available]."</em> <span class="badge badge-green">SUBSCRIPTION UPDATED</span></p>
+                        </div>
+                    </div>
+
+                    <div id="step3-failed-delivery" class="condition-card mb-3">
+                        <h4>If a delivery has already failed due to an incorrect address:</h4>
+                        <div class="action-card mt-2">
+                            <h4>Response & Action:</h4>
+                            <p class="mb-2"><em>"We wanted to inform you that there has been a failed delivery of your order #[Order Number] due to an issue with the shipping address previously on file."</em></p>
+                            <p class="mb-2"><em>"To resolve this, could you kindly verify the new, correct shipping address you'd like us to use?"</em></p>
+                            <p>Once new address confirmed: <em>"Once we have confirmation of the correct address: [New Address], we will ensure that the address is corrected and arrange for a successful reshipment."</em> (Note: Check internal policy on reshipment costs).</p>
+                        </div>
+                    </div>
+
+                    <div id="step3-returned-package" class="condition-card">
+                        <h4>If a package was returned to your warehouse due to an address issue:</h4>
+                        <div class="action-card mt-2">
+                            <h4>Response & Action:</h4>
+                            <p class="mb-2"><em>"We wanted to inform you that your package for order #[Order Number] was recently returned to us due to an issue with the address provided."</em></p>
+                            <p class="mb-2"><em>"We are ready to reship it. Could you please verify the complete and correct shipping address you'd like us to use?"</em></p>
+                            <p><em>"Once confirmed, I will promptly arrange to reship your order to the correct address: [New Address]. You will receive a new tracking number as soon as it ships."</em></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step4" class="step-card flow-element"> <div class="step-header">
+                    <h3>Step 4: Offer further assistance and conclude</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Concluding Interaction:</h4>
+                        <p><em>"Let me know if you have any other questions! We're here to help."</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+            
+            <div id="step5-internal" class="step-card documentation-card flow-element"> <div class="step-header"> 
+                    <h3>Step 5: Document and tag the ticket (Internal)</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Internal Actions:</h4>
+                        <p class="mb-2">Tag the conversation as appropriate (e.g., "Address Change Request", "Subscription Address Update", "Reshipment - Address Issue").</p>
+                        <p>Document key details: original address, new address requested, order status at time of request, action taken (updated, flagged, advised re-ship), and any customer confirmations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+            <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" />
+        </svg>
+    </button>
+
+    <script>
+        // Scroll-to-top button functionality
+        var scrollToTopButton = document.getElementById("scrollToTopBtn");
+        window.onscroll = function() {scrollFunction()};
+        function scrollFunction() {
+            if (scrollToTopButton) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    scrollToTopButton.style.display = "block";
+                } else {
+                    scrollToTopButton.style.display = "none";
+                }
+            }
+        }
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // TOC and Hamburger Menu Functionality
+        const tocSidebar = document.getElementById('toc-sidebar');
+        const menuToggle = document.getElementById('menu-toggle');
+        const pageOverlay = document.getElementById('page-overlay');
+        const mainContent = document.querySelector('.main-content-area');
+        const body = document.body;
+        
+        function applyLayoutBasedOnScreenSize() {
+            if (window.innerWidth >= 1024 && body.classList.contains('has-toc')) {
+                if(mainContent) mainContent.classList.add('toc-active'); 
+                if(tocSidebar) tocSidebar.classList.add('open'); 
+            } else {
+                if(mainContent) mainContent.classList.remove('toc-active');
+                if(tocSidebar) tocSidebar.classList.remove('open'); 
+            }
+        }
+
+        if (menuToggle && tocSidebar) {
+            menuToggle.addEventListener('click', () => {
+                tocSidebar.classList.toggle('open');
+                if (pageOverlay) pageOverlay.classList.toggle('active'); 
+            });
+        }
+        if (pageOverlay) {
+            pageOverlay.addEventListener('click', () => { 
+                tocSidebar.classList.remove('open');
+                pageOverlay.classList.remove('active');
+            });
+        }
+        
+        document.querySelectorAll('#toc-sidebar a:not(.back-link)').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const topBarHeight = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - topBarHeight - 10; 
+
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+
+                        if (window.innerWidth < 1024 && tocSidebar.classList.contains('open')) { 
+                            tocSidebar.classList.remove('open');
+                            if (pageOverlay) pageOverlay.classList.remove('active');
+                        }
+                        document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                }
+            });
+        });
+
+        const sections = document.querySelectorAll('.content-section[id], .step-card[id], .condition-card[id]'); 
+        const tocLinksJS = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
+        
+        const makeActive = (linkId) => {
+            tocLinksJS.forEach(l => l.classList.remove('active'));
+            if (linkId) {
+                const correspondingLink = document.querySelector(`#toc-sidebar a[href="#${linkId}"]`);
+                if (correspondingLink) {
+                    correspondingLink.classList.add('active');
+                     const parentLi = correspondingLink.closest('ul')?.closest('li');
+                    if (parentLi) {
+                        const parentAnchor = parentLi.querySelector('a');
+                        if(parentAnchor && !parentAnchor.classList.contains('back-link') && parentAnchor.getAttribute('href').startsWith('#step')) { 
+                           parentAnchor.classList.add('active');
+                        }
+                    }
+                }
+            }
+        };
+        
+        const observer = new IntersectionObserver(entries => {
+            let intersectingEntry = null;
+            const topBarHeightForObserver = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
+            for (let i = 0; i < entries.length; i++) { 
+                 if (entries[i].isIntersecting) {
+                    if (!intersectingEntry || entries[i].target.getBoundingClientRect().top < intersectingEntry.target.getBoundingClientRect().top) {
+                        if (entries[i].intersectionRatio >= 0.1) { 
+                           intersectingEntry = entries[i];
+                        }
+                    }
+                 }
+            }
+            if (intersectingEntry) {
+                 makeActive(intersectingEntry.target.id);
+            }
+        }, { 
+            threshold: [0.1, 0.5], 
+            rootMargin: `-${(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) + 20}px 0px -60% 0px` 
+        });
+
+        sections.forEach(section => { if (section.id) { observer.observe(section); } });
+        
+        window.addEventListener('resize', applyLayoutBasedOnScreenSize);
+        applyLayoutBasedOnScreenSize(); // Initial call
+    </script>
+
+</body>
+</html>
