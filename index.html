@@ -6,12 +6,12 @@
     <title>H2Tab Siena Automation Library</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/global_styles.css"> 
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Light gray background */
-        }
+        /* Styles specific to the Automation Library Page */
+        /* These styles were previously in the main <style> block of this page */
+        /* and are retained here as they are unique to the library's layout and theme */
+
         .library-header {
             background-color: #4f46e5; /* Indigo */
             color: white;
@@ -28,179 +28,229 @@
             opacity: 0.9;
         }
         .automation-card {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            overflow: hidden;
-            display: flex; /* Make card a flex container to allow content to fill height */
+            /* Most .automation-card styles are now in global_styles.css */
+            /* We ensure it's a flex container for content alignment */
+            display: flex; 
         }
-        .automation-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        /* .automation-card-content is now a flex container with column direction */
-        /* It will take full height of its parent (.automation-card) */
         .automation-card-content {
+            /* This is now a flex container with column direction */
+            /* It will take full height of its parent (.automation-card) */
             padding: 1.5rem;
             display: flex;
             flex-direction: column;
-            flex-grow: 1; /* Allows this div to grow and fill the card */
+            flex-grow: 1; 
         }
         .automation-card h2 {
-            font-size: 1.25rem; /* Tailwind: text-xl */
-            font-weight: 600;   /* Tailwind: font-semibold */
-            color: #1f2937;     /* Tailwind: text-gray-800 */
-            margin-bottom: 0.5rem; /* Tailwind: mb-2 */
+            font-size: 1.25rem; 
+            font-weight: 600;   
+            color: #1f2937;     
+            margin-bottom: 0.5rem; 
         }
-        /* The paragraph will grow to push the button down */
         .automation-card p {
-            font-size: 0.9rem;  /* Custom size, close to text-sm */
-            color: #4b5563;     /* Tailwind: text-gray-600 */
-            margin-bottom: 1rem; /* Tailwind: mb-4 */
-            flex-grow: 1;       /* This makes the paragraph take available space */
+            font-size: 0.9rem;  
+            color: #4b5563;     
+            margin-bottom: 1rem; 
+            flex-grow: 1; /* This makes the paragraph take available space */
         }
-        /* Button styling */
-        .automation-card a {
-            display: inline-block; /* Or just 'block' if you want full width */
-            background-color: #4f46e5; /* Tailwind: bg-indigo-600 */
+        .automation-card a.workflow-button { 
+            display: inline-block; 
+            background-color: #4f46e5; /* Indigo button */
             color: white;
-            padding: 0.6rem 1.2rem; /* Custom padding */
-            border-radius: 8px;    /* Tailwind: rounded-lg */
+            padding: 0.6rem 1.2rem; 
+            border-radius: 8px;    
             text-decoration: none;
-            font-weight: 500;      /* Tailwind: font-medium */
+            font-weight: 500;      
             transition: background-color 0.3s ease;
-            margin-top: auto;      /* Pushes button to the bottom of the flex container */
-            align-self: flex-start; /* Aligns button to the left if it's inline-block */
+            margin-top: auto;      
+            align-self: flex-start; 
         }
-        .automation-card a:hover {
-            background-color: #4338ca; /* Tailwind: hover:bg-indigo-700 */
+        .automation-card a.workflow-button:hover {
+            background-color: #4338ca; /* Darker Indigo */
         }
+
         .insights-summary-section { 
             background-color: #fffbeb; 
             border: 1px solid #fde68a; 
             color: #78350f; 
             border-radius: 12px; 
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            /* Other .insights-summary-section styles like h3, h4, ul, li are in global_styles.css */
         }
-        .insights-summary-section h3 {
+         .insights-summary-section h3 { /* Overriding global .content-section h2 for this specific section title */
             color: #713f12; 
             font-size: 1.5rem; 
+            text-align: center;
+            border-bottom: none; /* Remove border if not desired for this title */
+            padding-bottom: 0;
         }
-        .insights-summary-section h4 {
-            font-weight: 600;
-            margin-top: 1rem;
-            color: #78350f;
-            font-size: 1.125rem;
-        }
-        .insights-summary-section ul {
-            list-style-type: disc;
-            padding-left: 1.5rem; 
-        }
-        .insights-summary-section li {
-            margin-bottom: 0.25rem;
+         .insights-summary-section h4 {
+            color: #78350f; /* Ensure this color is applied */
         }
 
+
+        /* Scroll-to-top button specific theme for this page */
         #scrollToTopBtn {
-            display: none; 
-            position: fixed; 
-            bottom: 30px; 
-            right: 30px; 
-            z-index: 99; 
-            border: none; 
-            outline: none; 
-            background-color: #4f46e5; 
-            color: white; 
-            cursor: pointer; 
-            padding: 12px 15px; 
-            border-radius: 50%; 
-            font-size: 18px; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: background-color 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+            background-color: #4f46e5; /* Indigo to match header */
+        }
+        #scrollToTopBtn:hover {
+            background-color: #4338ca; /* Darker indigo on hover */
         }
 
-        #scrollToTopBtn:hover {
-            background-color: #4338ca; 
+        /* Pagination Styles (were specific to this page) */
+        .pagination-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+            padding-bottom: 1rem; 
         }
+        .pagination-controls button, .pagination-controls span { /* Span might be used for page numbers */
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid #4f46e5; /* Indigo border */
+            background-color: white;
+            color: #4f46e5; /* Indigo text */
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .pagination-controls button:hover:not(:disabled) {
+            background-color: #4f46e5; /* Indigo background on hover */
+            color: white;
+        }
+        .pagination-controls button:disabled {
+            color: #9ca3af; 
+            border-color: #d1d5db; 
+            cursor: not-allowed;
+        }
+        .pagination-controls .page-number.active { /* For current page number button */
+            background-color: #4f46e5; /* Indigo background */
+            color: white;
+            font-weight: bold;
+        }
+        .pagination-controls .page-number { /* For non-active page number buttons */
+             border: 1px solid #d1d5db; /* Lighter border */
+             color: #4b5563; /* Darker gray text */
+        }
+         .pagination-controls .page-number:hover:not(.active) {
+            background-color: #eef2ff; /* Light indigo background on hover */
+        }
+        /* Ensure body doesn't have display:flex if global_styles.css adds it, as this page doesn't have a TOC sidebar */
+        body {
+            display: block; /* Override display:flex if it's in global_styles.css for body */
+        }
+        /* Ensure .main-content-area doesn't have margin-left if global_styles.css adds it for TOC pages */
+        .main-content-area {
+            margin-left: 0 !important; 
+        }
+
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
-
-    <header class="library-header">
+<body class="min-h-screen flex flex-col"> <header class="library-header">
         <h1>H2Tab Siena Automation Library</h1>
         <p>A central repository for all visualized automation workflows and documentation.</p>
     </header>
 
     <main class="container mx-auto px-4 py-12 flex-grow">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div id="automationGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             <div class="automation-card">
-                <div class="automation-card-content"> 
+                <div class="automation-card-content">
                     <h2>Intent: Where is my order?</h2>
-                    <p class="flex-grow">Visualizes the step-by-step logic for handling customer inquiries about their order status, prioritizing unfulfilled orders.</p> 
-                    <a href="whereismyorder.html" class="mt-auto self-start">View Workflow</a> 
+                    <p>Visualizes the step-by-step logic for handling customer inquiries about their order status, prioritizing unfulfilled orders.</p>
+                    <a href="whereismyorder.html" class="workflow-button">View Workflow</a>
                 </div>
             </div>
 
             <div class="automation-card">
-                <div class="automation-card-content"> 
+                <div class="automation-card-content">
                     <h2>Initial Greeting & Query Clarification (Elisha Persona)</h2>
-                    <p class="flex-grow">Logic for Elisha persona to greet customers, understand their needs, and route or escalate.</p> 
-                    <a href="initialgreeting.html" class="mt-auto self-start">View Workflow</a> 
+                    <p>Logic for Elisha persona to greet customers, understand their needs, and route or escalate.</p>
+                    <a href="initialgreeting.html" class="workflow-button">View Workflow</a>
                 </div>
             </div>
             
             <div class="automation-card">
-                <div class="automation-card-content"> 
+                <div class="automation-card-content">
                     <h2>Intent: I want to cancel my order</h2>
-                    <p class="flex-grow">Handles customer requests for order cancellations, including reason identification and escalation.</p> 
-                    <a href="cancelmyorder.html" class="mt-auto self-start">View Workflow</a> 
+                    <p>Handles customer requests for order cancellations, including reason identification and escalation.</p>
+                    <a href="cancelmyorder.html" class="workflow-button">View Workflow</a>
                 </div>
             </div>
 
             <div class="automation-card">
-                <div class="automation-card-content"> 
+                <div class="automation-card-content">
                     <h2>Intent: I want to return what I received</h2>
-                    <p class="flex-grow">Guides through verifying return eligibility based on policy and providing next steps to the customer.</p> 
-                    <a href="returns.html" class="mt-auto self-start">View Workflow</a> 
+                    <p>Guides through verifying return eligibility based on policy and providing next steps to the customer.</p>
+                    <a href="returns.html" class="workflow-button">View Workflow</a>
                 </div>
             </div>
 
             <div class="automation-card">
-                <div class="automation-card-content"> 
+                <div class="automation-card-content">
                     <h2>Intent: Inquiry about Bath Bomb availability</h2>
-                    <p class="flex-grow">Manages customer inquiries about the upcoming hydrogen bath bombs, including early access sign-up.</p> 
-                    <a href="bathbomb.html" class="mt-auto self-start">View Workflow</a> 
+                    <p>Manages customer inquiries about the upcoming hydrogen bath bombs, including early access sign-up.</p>
+                    <a href="bathbomb.html" class="workflow-button">View Workflow</a>
                 </div>
             </div>
 
             <div class="automation-card">
-                <div class="automation-card-content"> 
+                <div class="automation-card-content">
                     <h2>Intent: H2Tab Usage Inquiry</h2>
-                    <p class="flex-grow">Provides guidance on proper H2Tab usage, covering dosage, water type, taste, sensitivity, and use with pets or medications.</p> 
-                    <a href="H2tabusage.html" class="mt-auto self-start">View Workflow</a> 
+                    <p>Provides guidance on proper H2Tab usage, covering dosage, water type, taste, sensitivity, and use with pets or medications.</p>
+                    <a href="H2tabusage.html" class="workflow-button">View Workflow</a>
                 </div>
             </div>
 
             <div class="automation-card">
-                <div class="automation-card-content"> 
+                <div class="automation-card-content">
                     <h2>Intent: International Shipping Inquiry</h2>
-                    <p class="flex-grow">Guides customers on international and military (APO/FPO/DPO) shipping options via Amazon and UK partner leaf.com.</p> 
-                    <a href="intshipping.html" class="mt-auto self-start">View Workflow</a> 
+                    <p>Guides customers on international and military (APO/FPO/DPO) shipping options via Amazon and UK partner leaf.com.</p>
+                    <a href="intshipping.html" target="_blank" class="workflow-button">View Workflow</a>
+                </div>
+            </div>
+            
+            <div class="automation-card">
+                <div class="automation-card-content">
+                    <h2>Automation Example 8</h2>
+                    <p>Description for automation example 8 to ensure we have enough items for pagination testing.</p>
+                    <a href="#" class="workflow-button">View Workflow</a>
+                </div>
+            </div>
+            <div class="automation-card">
+                <div class="automation-card-content">
+                    <h2>Automation Example 9</h2>
+                    <p>Description for automation example 9. This is the last item on the first page.</p>
+                    <a href="#" class="workflow-button">View Workflow</a>
+                </div>
+            </div>
+            <div class="automation-card">
+                <div class="automation-card-content">
+                    <h2>Automation Example 10</h2>
+                    <p>Description for automation example 10. This should appear on the second page.</p>
+                    <a href="#" class="workflow-button">View Workflow</a>
+                </div>
+            </div>
+            <div class="automation-card">
+                <div class="automation-card-content">
+                    <h2>Automation Example 11</h2>
+                    <p>Description for automation example 11. Another item for the second page.</p>
+                    <a href="#" class="workflow-button">View Workflow</a>
                 </div>
             </div>
 
         </div>
 
-        <div class="mt-12 p-6 rounded-lg insights-summary-section">
-            <h3 class="font-semibold text-xl mb-4 text-center">Key Customer Insights & Recommendations Summary</h3>
-            <p class="mb-4 text-center text-sm italic">Derived from the Siena Memory Insights Report (May 17 - May 20, 2025)</p>
+        <div id="paginationControls" class="pagination-controls">
+            </div>
 
+        <div class="mt-12 p-6 rounded-lg insights-summary-section">
+            <h3 class="font-semibold text-xl mb-4">Key Customer Insights & Recommendations Summary</h3>
+            <p class="mb-4 text-center text-sm italic">Derived from the Siena Memory Insights Report (May 17 - May 20, 2025)</p>
             <div class="grid md:grid-cols-2 gap-6">
                 <div>
                     <h4>Overall Customer Sentiment:</h4>
                     <p class="mb-3">Analysis of 146 customer interactions reveals strong product enthusiasm for H2Tab products. However, this positive sentiment is often tempered by significant operational challenges. Addressing these friction points in ordering, subscription management, delivery, and customer service responsiveness is a substantial opportunity to improve retention and capitalize on the product's positive reception.</p>
-                    
                     <h4>Key Recommendations:</h4>
                     <ul class="list-disc list-inside mb-3 space-y-1">
                         <li>Overhaul the shipping and delivery system to address widespread delays and tracking issues.</li>
@@ -213,48 +263,11 @@
                 <div>
                     <h4>Primary Areas for Improvement Identified:</h4>
                     <ul class="list-disc list-inside space-y-2">
-                        <li>
-                            <strong>Shipping and Delivery System:</strong>
-                            <ul class="list-disc list-inside pl-4 text-sm">
-                                <li>Extended domestic delivery times (2-4 weeks vs. 3-5 days expected).</li>
-                                <li>Tracking information frequently unavailable, inaccurate, or not updated.</li>
-                                <li>Partial orders received (especially missing hydrogen tablets).</li>
-                                <li>Most commonly cited reason for cancellations/not repurchasing.</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <strong>Subscription Service Technical Issues:</strong>
-                            <ul class="list-disc list-inside pl-4 text-sm">
-                                <li>Subscription discounts (e.g., 10%) not applying at checkout.</li>
-                                <li>Customers unable to access or modify their subscriptions online.</li>
-                                <li>Difficulties logging into accounts.</li>
-                                <li>Duplicate charges or incorrect pricing.</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <strong>Product Formulation (Dextrose):</strong>
-                            <ul class="list-disc list-inside pl-4 text-sm">
-                                <li>Consistent concerns from health-conscious customers about dextrose, especially in unflavored versions.</li>
-                                <li>Suggestions for alternatives like stevia.</li>
-                                <li>Some report film/residue after dissolving tablets.</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <strong>Customer Service Responsiveness:</strong>
-                            <ul class="list-disc list-inside pl-4 text-sm">
-                                <li>Multiple unanswered emails.</li>
-                                <li>Frustration with needing to follow up repeatedly.</li>
-                                <li>Inconsistent issue resolution.</li>
-                                <li>Positive service experiences rarely mentioned.</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <strong>International Market Expansion:</strong>
-                            <ul class="list-disc list-inside pl-4 text-sm">
-                                <li>Clear international demand (Australia, EU, UAE, UK noted).</li>
-                                <li>Current shipping capabilities appear limited and lack transparency.</li>
-                            </ul>
-                        </li>
+                        <li><strong>Shipping and Delivery System:</strong> Extended delivery times, tracking issues, partial orders.</li>
+                        <li><strong>Subscription Service Technical Issues:</strong> Discount failures, account management difficulties, login problems.</li>
+                        <li><strong>Product Formulation (Dextrose):</strong> Concerns from health-conscious customers.</li>
+                        <li><strong>Customer Service Responsiveness:</strong> Unanswered emails, inconsistent resolution.</li>
+                        <li><strong>International Market Expansion:</strong> Clear demand, limited current capabilities.</li>
                     </ul>
                 </div>
             </div>
@@ -274,17 +287,106 @@
 
     <script>
         document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
         var scrollToTopButton = document.getElementById("scrollToTopBtn");
         window.onscroll = function() {scrollFunction()};
         function scrollFunction() {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                scrollToTopButton.style.display = "block";
-            } else {
-                scrollToTopButton.style.display = "none";
+            if (scrollToTopButton) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    scrollToTopButton.style.display = "block";
+                } else {
+                    scrollToTopButton.style.display = "none";
+                }
             }
         }
         function scrollToTop() {
             window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        const automationGrid = document.getElementById('automationGrid');
+        const paginationControls = document.getElementById('paginationControls');
+        const itemsPerPage = 9;
+        let currentPage = 1;
+        const automationCards = Array.from(automationGrid.children).filter(child => child.classList.contains('automation-card'));
+
+        function displayPage(page) {
+            currentPage = page;
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+
+            automationCards.forEach((card, index) => {
+                if (index >= startIndex && index < endIndex) {
+                    card.style.display = 'flex'; 
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            updatePaginationControls();
+
+            if (automationGrid) {
+                const gridTopOffset = automationGrid.offsetTop;
+                const headerHeightElement = document.querySelector('.library-header');
+                const headerHeight = headerHeightElement ? headerHeightElement.offsetHeight : 0;
+                let scrollTargetPosition = gridTopOffset - headerHeight - 20; 
+                if (scrollTargetPosition < 0) scrollTargetPosition = 0; 
+
+                const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+                if (Math.abs(currentScrollY - scrollTargetPosition) > 50) { 
+                    window.scrollTo({ 
+                        top: scrollTargetPosition, 
+                        behavior: 'smooth' 
+                    });
+                }
+            }
+        }
+
+        function updatePaginationControls() {
+            if (!paginationControls) return;
+            paginationControls.innerHTML = ''; 
+            const totalPages = Math.ceil(automationCards.length / itemsPerPage);
+
+            if (totalPages <= 1) {
+                paginationControls.style.display = 'none'; 
+                return;
+            }
+            paginationControls.style.display = 'flex';
+
+            const prevButton = document.createElement('button');
+            prevButton.textContent = 'Previous';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    displayPage(currentPage - 1);
+                }
+            });
+            paginationControls.appendChild(prevButton);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.classList.add('page-number');
+                if (i === currentPage) {
+                    pageButton.classList.add('active');
+                }
+                pageButton.addEventListener('click', () => displayPage(i));
+                paginationControls.appendChild(pageButton);
+            }
+
+            const nextButton = document.createElement('button');
+            nextButton.textContent = 'Next';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    displayPage(currentPage + 1);
+                }
+            });
+            paginationControls.appendChild(nextButton);
+        }
+
+        if (automationCards.length > 0) {
+            displayPage(1);
+        } else {
+            if(paginationControls) paginationControls.style.display = 'none';
         }
     </script>
 
