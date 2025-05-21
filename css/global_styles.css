@@ -8,7 +8,7 @@ html {
 body {
     font-family: 'Inter', sans-serif;
     background-color: #f9fafb; /* Lighter gray background */
-    /* display: flex; /* Removed from global body - apply per page if needed or via a class */
+    /* display: flex; /* Apply 'display: flex;' only to body.has-toc for pages with a sidebar */
 }
 
 /* Table of Contents Sidebar */
@@ -20,11 +20,11 @@ body {
     height: 100vh; 
     background-color: #ffffff; 
     border-right: 1px solid #e5e7eb; 
-    padding: 1.5rem; /* Consistent padding */
+    padding: 1.5rem; 
     overflow-y: auto; 
     box-shadow: 2px 0 5px rgba(0,0,0,0.05);
-    z-index: 100; /* Ensure it's above other content if it slides over */
-    transform: translateX(-100%); /* Hidden by default off-screen */
+    z-index: 100; 
+    transform: translateX(-100%); /* Hidden by default off-screen for mobile */
     transition: transform 0.3s ease-in-out;
 }
 
@@ -32,10 +32,9 @@ body {
     transform: translateX(0); /* Slides in when .open class is added */
 }
 
-#toc-sidebar h2 {
+#toc-sidebar h2 { /* Page-specific CSS will set the color */
     font-size: 1.25rem;
     font-weight: 700;
-    /* color: #4f46e5; /* Default TOC header color - can be themed per page */
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #e5e7eb;
@@ -46,7 +45,7 @@ body {
 }
 #toc-sidebar li a {
     display: block;
-    padding: 0.5rem 0.5rem; /* Added horizontal padding */
+    padding: 0.5rem 0.5rem; 
     color: #374151; 
     text-decoration: none;
     font-size: 0.9rem;
@@ -54,18 +53,16 @@ body {
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 #toc-sidebar li a:hover,
-#toc-sidebar li a.active { 
-    /* background-color: #eef2ff; /* Default active/hover background */
-    /* color: #4f46e5; /* Default active/hover text color */
+#toc-sidebar li a.active { /* Page-specific CSS will set background-color and color */
     font-weight: 500;
 }
 #toc-sidebar li a.back-link {
-    color: #6366f1; 
+    color: #6366f1; /* Standard Indigo for "Back to Library" */
     font-weight: 500;
     margin-bottom: 1rem; 
     border-bottom: 1px solid #e5e7eb; 
     padding-bottom: 0.75rem;
-    display: inline-flex; /* For icon alignment */
+    display: inline-flex; 
     align-items: center;
 }
 #toc-sidebar li a.back-link svg {
@@ -83,17 +80,18 @@ body {
     font-size: 0.85rem;
     color: #6b7280; 
 }
-/* #toc-sidebar ul ul li a:hover,
+/* Page-specific CSS will set hover/active for sub-items:
+#toc-sidebar ul ul li a:hover,
 #toc-sidebar ul ul li a.active {
-     color: #4f46e5; /* Default sub-item active/hover color */
-/* } */
+     color: #THEME_COLOR; 
+} */
 
 
 /* Main Content Area */
 .main-content-area {
     flex-grow: 1; 
     padding: 1.5rem; 
-    transition: margin-left 0.3s ease-in-out; /* Smooth transition for margin change */
+    transition: margin-left 0.3s ease-in-out; 
 }
 
 /* Hamburger Menu Button Styles */
@@ -101,35 +99,34 @@ body {
     position: fixed;
     top: 1rem;
     left: 1rem;
-    z-index: 101; /* Above sidebar */
-    background-color: #4f46e5; /* Indigo, or a neutral color */
+    z-index: 101; 
+    background-color: #4f46e5; /* Default Indigo, can be themed per page if desired */
     color: white;
     border: none;
     padding: 0.5rem;
-    border-radius: 0.375rem; /* rounded-md */
+    border-radius: 0.375rem; 
     cursor: pointer;
     display: block; /* Show by default on small screens */
 }
 #menu-toggle svg {
-    width: 1.5rem; /* w-6 */
-    height: 1.5rem; /* h-6 */
+    width: 1.5rem; 
+    height: 1.5rem; 
 }
 
-/* Responsive adjustments for larger screens */
+/* Responsive adjustments for larger screens (TOC layout) */
 @media (min-width: 768px) { /* md breakpoint in Tailwind */
-    body.has-toc { /* Add this class to body if TOC is present */
-        display: flex;
+    body.has-toc { 
+        display: flex; /* Enable flex layout for body when TOC is present */
     }
-    #toc-sidebar {
-        transform: translateX(0); /* Sidebar visible by default */
-        position: sticky; /* Sticky for desktop, can also be fixed if preferred */
-        /* If sticky, ensure parent (body or a wrapper) has enough height */
+    body.has-toc #toc-sidebar { /* Only apply these if body has .has-toc */
+        transform: translateX(0); 
+        position: sticky; 
     }
-    .main-content-area.toc-active { /* When TOC is active on desktop */
+    body.has-toc .main-content-area.toc-active { /* Only apply margin if body has .has-toc */
          margin-left: 280px; 
     }
-    #menu-toggle {
-        display: none; /* Hide hamburger on larger screens */
+    #menu-toggle { /* This button is for mobile, hide on desktop */
+        display: none; 
     }
 }
 
@@ -141,7 +138,7 @@ body {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     margin-bottom: 1.5rem;
     padding: 1.5rem;
-    scroll-margin-top: 20px; /* For in-page anchor scrolling */
+    scroll-margin-top: 20px; 
 }
 .content-section h2 { 
     font-size: 1.5rem;
@@ -161,8 +158,7 @@ body {
     overflow: hidden;
     scroll-margin-top: 20px; 
 }
-.step-header { 
-    background-color: #6366f1; /* Default Indigo, page-specific CSS will override */
+.step-header { /* Page-specific CSS will set the background-color */
     color: white;
     padding: 1rem 1.5rem;
     border-bottom: 1px solid #e5e7eb;
@@ -181,23 +177,23 @@ body {
 
 /* Inner Card Styles */
 .scenario-card, .action-card, .condition-card, .decision-card, .info-card, 
-.prerequisite-card, .escalation-card, .documentation-card, .persona-card {
+.prerequisite-card, .escalation-card, .documentation-card, .persona-card, .policy-check-card { /* Added policy-check-card */
     border: 1px solid #e5e7eb;
     border-radius: 6px;
     padding: 1rem;
     margin-top: 1rem;
     background-color: #f9fafb;
-    scroll-margin-top: 20px; /* For in-page anchor scrolling */
+    scroll-margin-top: 20px; 
 }
 .scenario-card h4, .action-card h4, .condition-card h4, .decision-card h4, 
-.info-card h4, .prerequisite-card h4, .escalation-card h4, .documentation-card h4, .persona-card h4 {
+.info-card h4, .prerequisite-card h4, .escalation-card h4, .documentation-card h4, .persona-card h4, .policy-check-card h4 { /* Added policy-check-card h4 */
     font-size: 1rem;
     font-weight: 600;
     color: #374151;
     margin-bottom: 0.5rem;
 }
 
-/* Specific Card Border Styles */
+/* Specific Card Border Styles & Backgrounds (these have unique visual cues) */
 .decision-card { border-left: 4px solid #f59e0b; background-color: #fffbeb; }
 .prerequisite-card { border-left: 4px solid #ef4444; background-color: #fef2f2; }
 .escalation-card { border-left: 4px solid #8b5cf6; background-color: #f5f3ff; }
@@ -220,6 +216,11 @@ ul {
     list-style-type: disc;
     padding-left: 1.5rem;
 }
+/* TOC ul has list-style: none; already */
+#toc-sidebar ul ul { /* Ensure sub-lists in TOC also don't have bullets if not intended */
+     list-style: none;
+}
+
 li {
     margin-bottom: 0.5rem;
 }
@@ -265,7 +266,7 @@ li {
     z-index: 99; 
     border: none; 
     outline: none; 
-    /* background-color: #4f46e5; /* Default color, page-specific CSS will override */
+    /* background-color will be set by page-specific CSS */
     color: white; 
     cursor: pointer; 
     padding: 12px 15px; 
@@ -274,9 +275,8 @@ li {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     transition: background-color 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
 }
-/* #scrollToTopBtn:hover {
-    background-color: #4338ca; /* Default hover color */
-/* } */
+/* #scrollToTopBtn:hover will be set by page-specific CSS */
+
 
 /* Print Optimizations */
 @media print { 
@@ -284,10 +284,11 @@ li {
         background-color: white !important; 
         font-size: 10pt; 
         padding: 0.5in; 
-        display: block !important; 
+        display: block !important; /* Ensure body is not flex for print */
     }
     #toc-sidebar, #menu-toggle { display: none !important; } 
     .main-content-area { margin-left: 0 !important; padding: 0 !important; } 
+    
     .content-section, .step-card, .scenario-card, .action-card, .condition-card, .escalation-card,
     .policy-check-card, .documentation-card, .persona-card, .info-card, .prerequisite-card {
         box-shadow: none !important; 
@@ -295,35 +296,38 @@ li {
         page-break-inside: avoid !important;
         background-color: white !important; 
     }
-    .step-header { 
+    
+    .step-header { /* Generic print style for step headers, page-specific will override for color */
         background-color: #e0e0e0 !important; 
         color: black !important; 
         -webkit-print-color-adjust: exact; 
         print-color-adjust: exact; 
     }
-    /* Specific header colors for print if needed, make them lighter */
-    .prerequisite-card .step-header { background-color: #fde8e8 !important; color: #7f1d1d !important;}
-    .escalation-card .step-header { background-color: #f0e6ff !important; color: #4c1d95 !important;}
         
     .badge { 
         -webkit-print-color-adjust: exact; 
         print-color-adjust: exact; 
         border: 1px solid #ccc; 
     }
+    /* Badge colors for print */
     .badge-green { background-color: #d1fae5 !important; color: #065f46 !important; }
     .badge-red { background-color: #fee2e2 !important; color: #991b1b !important; }
     .badge-yellow { background-color: #fef3c7 !important; color: #92400e !important; }
     .badge-blue { background-color: #dbeafe !important; color: #1e40af !important; }
     .badge-purple { background-color: #ede9fe !important; color: #5b21b6 !important; }
     
-    .connector, .flow-element::after, .back-button-container, #scrollToTopBtn { 
+    .connector, .flow-element::after, #scrollToTopBtn { 
         display: none !important; 
     }
+    /* Typography for print */
     header h1 { font-size: 18pt; }
     header p { font-size: 12pt; }
     .content-section h2 { font-size: 14pt; }
     .step-header h3 { font-size: 12pt; }
-    .scenario-card h4, .action-card h4, .decision-card h4, .info-card h4 { font-size: 10pt; }
+    .scenario-card h4, .action-card h4, .decision-card h4, .info-card h4, 
+    .prerequisite-card h4, .escalation-card h4, .documentation-card h4, .persona-card h4, .policy-check-card h4 { 
+        font-size: 10pt; 
+    }
     li, p { font-size: 9pt; }
     .badge { font-size: 8pt; }
 }

@@ -7,10 +7,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/global_styles.css"> 
+    <!-- 
+        Page-specific styles for the Library Page.
+        These styles are for components unique to this page or for theming 
+        globally styled elements (like the scroll-to-top button).
+    -->
     <style>
         /* Styles specific to the Automation Library Page */
-        /* These styles were previously in the main <style> block of this page */
-        /* and are retained here as they are unique to the library's layout and theme */
 
         .library-header {
             background-color: #4f46e5; /* Indigo */
@@ -27,14 +30,23 @@
             font-size: 1.125rem;
             opacity: 0.9;
         }
+
+        /* Styles for the automation cards on this library page */
+        /* .automation-card base visual styles (bg, shadow, radius) can come from global_styles.css if we add a common card class */
+        /* For now, keeping them specific to ensure they look as intended on this page */
         .automation-card {
-            /* Most .automation-card styles are now in global_styles.css */
-            /* We ensure it's a flex container for content alignment */
-            display: flex; 
+            background-color: white;
+            border-radius: 12px; 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            display: flex; /* For aligning button to bottom */
+        }
+        .automation-card:hover { 
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         .automation-card-content {
-            /* This is now a flex container with column direction */
-            /* It will take full height of its parent (.automation-card) */
             padding: 1.5rem;
             display: flex;
             flex-direction: column;
@@ -50,7 +62,7 @@
             font-size: 0.9rem;  
             color: #4b5563;     
             margin-bottom: 1rem; 
-            flex-grow: 1; /* This makes the paragraph take available space */
+            flex-grow: 1; /* Pushes button down */
         }
         .automation-card a.workflow-button { 
             display: inline-block; 
@@ -61,34 +73,39 @@
             text-decoration: none;
             font-weight: 500;      
             transition: background-color 0.3s ease;
-            margin-top: auto;      
+            margin-top: auto;      /* Aligns button to bottom */
             align-self: flex-start; 
         }
         .automation-card a.workflow-button:hover {
             background-color: #4338ca; /* Darker Indigo */
         }
 
+        /* Styles for the insights summary section */
         .insights-summary-section { 
-            background-color: #fffbeb; 
-            border: 1px solid #fde68a; 
-            color: #78350f; 
+            background-color: #fffbeb; /* Light yellow */
+            border: 1px solid #fde68a; /* Yellow border */
+            color: #78350f; /* Dark yellow/brown text */
             border-radius: 12px; 
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            /* Other .insights-summary-section styles like h3, h4, ul, li are in global_styles.css */
+            /* General ul, li styles will be inherited from global_styles.css */
         }
-         .insights-summary-section h3 { /* Overriding global .content-section h2 for this specific section title */
+         .insights-summary-section h3 { /* Specific styling for this section's main title */
             color: #713f12; 
             font-size: 1.5rem; 
             text-align: center;
-            border-bottom: none; /* Remove border if not desired for this title */
+            border-bottom: none; 
             padding-bottom: 0;
+            margin-bottom: 1rem; 
         }
-         .insights-summary-section h4 {
-            color: #78350f; /* Ensure this color is applied */
+         .insights-summary-section h4 { /* Specific styling for sub-titles in this section */
+            font-weight: 600;
+            margin-top: 1rem;
+            color: #78350f;
+            font-size: 1.125rem;
         }
 
-
-        /* Scroll-to-top button specific theme for this page */
+        /* Scroll-to-top button theme for this library page */
+        /* Base #scrollToTopBtn styles (display, position, etc.) are in global_styles.css */
         #scrollToTopBtn {
             background-color: #4f46e5; /* Indigo to match header */
         }
@@ -96,7 +113,7 @@
             background-color: #4338ca; /* Darker indigo on hover */
         }
 
-        /* Pagination Styles (were specific to this page) */
+        /* Pagination Styles (unique to this library page) */
         .pagination-controls {
             display: flex;
             justify-content: center;
@@ -104,18 +121,18 @@
             margin-top: 2rem;
             padding-bottom: 1rem; 
         }
-        .pagination-controls button, .pagination-controls span { /* Span might be used for page numbers */
+        .pagination-controls button, .pagination-controls span {
             margin: 0 0.5rem;
             padding: 0.5rem 1rem;
-            border: 1px solid #4f46e5; /* Indigo border */
+            border: 1px solid #4f46e5; 
             background-color: white;
-            color: #4f46e5; /* Indigo text */
+            color: #4f46e5; 
             border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         .pagination-controls button:hover:not(:disabled) {
-            background-color: #4f46e5; /* Indigo background on hover */
+            background-color: #4f46e5; 
             color: white;
         }
         .pagination-controls button:disabled {
@@ -123,27 +140,22 @@
             border-color: #d1d5db; 
             cursor: not-allowed;
         }
-        .pagination-controls .page-number.active { /* For current page number button */
-            background-color: #4f46e5; /* Indigo background */
+        .pagination-controls .page-number.active { 
+            background-color: #4f46e5; 
             color: white;
             font-weight: bold;
         }
-        .pagination-controls .page-number { /* For non-active page number buttons */
-             border: 1px solid #d1d5db; /* Lighter border */
-             color: #4b5563; /* Darker gray text */
+        .pagination-controls .page-number { 
+             border: 1px solid #d1d5db; 
+             color: #4b5563; 
         }
          .pagination-controls .page-number:hover:not(.active) {
-            background-color: #eef2ff; /* Light indigo background on hover */
+            background-color: #eef2ff; 
         }
-        /* Ensure body doesn't have display:flex if global_styles.css adds it, as this page doesn't have a TOC sidebar */
-        body {
-            display: block; /* Override display:flex if it's in global_styles.css for body */
-        }
-        /* Ensure .main-content-area doesn't have margin-left if global_styles.css adds it for TOC pages */
-        .main-content-area {
-            margin-left: 0 !important; 
-        }
-
+        /* No need for body { display: block; } or .main-content-area { margin-left: 0; } here,
+           as this page won't use .has-toc on body or .toc-active on .main-content-area,
+           so the TOC-specific layout styles from global_styles.css won't apply.
+        */
     </style>
 </head>
 <body class="min-h-screen flex flex-col"> <header class="library-header">
@@ -151,7 +163,13 @@
         <p>A central repository for all visualized automation workflows and documentation.</p>
     </header>
 
-    <main class="container mx-auto px-4 py-12 flex-grow">
+    <!-- 
+        The class "main-content-area" can be kept if it provides desired global padding/flex-grow.
+        If its only purpose in global_styles.css was the margin-left for the TOC, 
+        and this page doesn't need that, you could use a more generic class or just rely on 
+        Tailwind for main content structuring. For now, keeping it as it might have other global benefits.
+    -->
+    <main class="main-content-area container mx-auto px-4 py-12 flex-grow">
         <div id="automationGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             <div class="automation-card">
