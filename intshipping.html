@@ -9,69 +9,83 @@
     <link rel="stylesheet" href="css/global_styles.css">
     <style>
         /* Theme-specific styles for International Shipping Inquiry Workflow (Deep Blue Theme) */
-        /* body.has-toc is handled by global_styles.css for responsive layout */
+        
+        :root { 
+            /* --top-bar-height is defined in global_styles.css */
+            --page-theme-color-main: #2563eb; /* Blue-600 */
+            --page-theme-color-darker: #1d4ed8; /* Blue-700 */
+            --page-theme-color-lighter: #bfdbfe; /* Blue-200 */
+            --page-theme-color-lightest: #dbeafe; /* Blue-100 */
+        }
+
+        .app-top-bar { 
+            background-color: var(--page-theme-color-main);
+        }
+        /* #menu-toggle color is white by default in global_styles if top bar is dark */
 
         #toc-sidebar h2 {
-            color: #2563eb; /* Blue-600 */
+            color: var(--page-theme-color-main);
         }
         #toc-sidebar li a:hover,
         #toc-sidebar li a.active {
-            background-color: #dbeafe; /* Blue-100 */
-            color: #2563eb; /* Blue-600 */
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
         }
          #toc-sidebar ul ul li a:hover,
          #toc-sidebar ul ul li a.active { 
-             color: #2563eb; /* Blue-600 */
-             background-color: #bfdbfe; /* Blue-200 */
+             color: var(--page-theme-color-main);
+             background-color: var(--page-theme-color-lighter);
         }
 
         .step-header { /* Main step header color for this page */
-            background-color: #2563eb; /* Blue-600 */
+            background-color: var(--page-theme-color-main);
         }
         /* Specific card header colors, e.g., for documentation step */
-        .documentation-card .step-header { 
+        .documentation-card .step-header { /* This class is from global_styles.css */
              background-color: #60a5fa !important; /* Lighter Blue for documentation step header, ensure it overrides default */
         }
         
         .link-style { /* Theme for inline links if any */
-            color: #2563eb; /* Blue-600 */
+            color: var(--page-theme-color-main);
         }
         .link-style:hover {
-            color: #1d4ed8; /* Blue-700 */
+            color: var(--page-theme-color-darker);
         }
 
         #scrollToTopBtn {
-            background-color: #2563eb; /* Blue-600 */
+            background-color: var(--page-theme-color-main);
         }
         #scrollToTopBtn:hover {
-            background-color: #1d4ed8; /* Blue-700 */
+            background-color: var(--page-theme-color-darker);
         }
 
         /* Print-specific overrides for themed elements */
         @media print {
+            /* .app-top-bar is already display:none in global_styles.css for print */
             .step-header { 
-                background-color: #bfdbfe !important; /* Lighter Blue for print */
-                color: #1e40af !important; 
+                background-color: var(--page-theme-color-lighter) !important; 
+                color: #1e40af !important; /* A darker blue for text on light blue bg */
             }
-            .documentation-card .step-header { /* Ensure this specific override is also print-friendly */
-                 background-color: #93c5fd !important; 
+            .documentation-card .step-header {
+                 background-color: #93c5fd !important; /* Specific lighter blue for documentation print */
                  color: #1e40af !important;
             }
-            #toc-sidebar h2 {
-                color: #2563eb !important; 
+            #toc-sidebar h2 { /* This won't be visible due to TOC being hidden in print */
+                color: var(--page-theme-color-main) !important; 
             }
         }
     </style>
 </head>
 <body class="has-toc"> 
 
-    <button id="menu-toggle" aria-label="Open navigation menu">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-        </svg>
-    </button>
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </button>
+        </div>
     <div id="page-overlay"></div>
-
 
     <nav id="toc-sidebar">
         <h2>Workflow Navigation</h2>
@@ -99,8 +113,8 @@
         </ul>
     </nav>
 
-    <div class="main-content-area toc-active">
-        <header class="text-center mb-10">
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
             <h1 class="text-3xl font-bold text-gray-800">International Shipping Inquiry Workflow</h1>
             <p class="text-lg text-gray-600">Guiding Customers on International & Military Shipping Options</p>
         </header>
@@ -237,20 +251,28 @@
         const tocSidebar = document.getElementById('toc-sidebar');
         const menuToggle = document.getElementById('menu-toggle');
         const pageOverlay = document.getElementById('page-overlay');
-        // const mainContentAreaForToggle = document.querySelector('.main-content-area'); // Not strictly needed for overlay method
-
+        const mainContent = document.querySelector('.main-content-area');
+        const body = document.body;
+        
+        function applyLayoutBasedOnScreenSize() {
+            if (window.innerWidth >= 1024 && body.classList.contains('has-toc')) {
+                if(mainContent) mainContent.classList.add('toc-active'); 
+                if(tocSidebar) tocSidebar.classList.add('open'); 
+            } else {
+                if(mainContent) mainContent.classList.remove('toc-active');
+                if(tocSidebar) tocSidebar.classList.remove('open'); 
+            }
+        }
 
         if (menuToggle && tocSidebar) {
             menuToggle.addEventListener('click', () => {
                 tocSidebar.classList.toggle('open');
-                menuToggle.classList.toggle('shifted'); 
                 if (pageOverlay) pageOverlay.classList.toggle('active'); 
             });
         }
         if (pageOverlay) {
             pageOverlay.addEventListener('click', () => { 
                 tocSidebar.classList.remove('open');
-                menuToggle.classList.remove('shifted');
                 pageOverlay.classList.remove('active');
             });
         }
@@ -262,10 +284,14 @@
                     e.preventDefault();
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        const topBarHeight = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - topBarHeight - 10; 
+
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+
                         if (window.innerWidth < 1024 && tocSidebar.classList.contains('open')) { 
                             tocSidebar.classList.remove('open');
-                            menuToggle.classList.remove('shifted');
                             if (pageOverlay) pageOverlay.classList.remove('active');
                         }
                         document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
@@ -277,7 +303,7 @@
 
         const sections = document.querySelectorAll('.content-section[id], .step-card[id], .condition-card[id]'); 
         const tocLinksJS = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
-
+        
         const makeActive = (linkId) => {
             tocLinksJS.forEach(l => l.classList.remove('active'));
             if (linkId) {
@@ -297,6 +323,7 @@
         
         const observer = new IntersectionObserver(entries => {
             let intersectingEntry = null;
+            const topBarHeightForObserver = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
             for (let i = 0; i < entries.length; i++) { 
                  if (entries[i].isIntersecting) {
                     if (!intersectingEntry || entries[i].target.getBoundingClientRect().top < intersectingEntry.target.getBoundingClientRect().top) {
@@ -309,9 +336,15 @@
             if (intersectingEntry) {
                  makeActive(intersectingEntry.target.id);
             }
-        }, { threshold: [0.1, 0.5], rootMargin: "-40% 0px -50% 0px" });
+        }, { 
+            threshold: [0.1, 0.5], 
+            rootMargin: `-${(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) + 20}px 0px -60% 0px` 
+        });
 
         sections.forEach(section => { if (section.id) { observer.observe(section); } });
+        
+        window.addEventListener('resize', applyLayoutBasedOnScreenSize);
+        applyLayoutBasedOnScreenSize(); // Initial call
     </script>
 
 </body>

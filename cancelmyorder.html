@@ -9,25 +9,36 @@
     <link rel="stylesheet" href="css/global_styles.css">
     <style>
         /* Theme-specific styles for Order Cancellation Request Workflow (Emerald/Green Theme) */
-        /* body.has-toc is handled by global_styles.css for responsive layout */
+        
+        :root { 
+            /* --top-bar-height is defined in global_styles.css */
+            --page-theme-color-main: #059669; /* Emerald-600 */
+            --page-theme-color-darker: #047857; /* Emerald-700 */
+            --page-theme-color-lighter: #a7f3d0; /* Emerald-200 */
+            --page-theme-color-lightest: #d1fae5; /* Emerald-100 */
+        }
+
+        .app-top-bar { 
+            background-color: var(--page-theme-color-main);
+        }
 
         #toc-sidebar h2 {
-            color: #059669; /* Emerald/Green */
+            color: var(--page-theme-color-main);
         }
         #toc-sidebar li a:hover,
         #toc-sidebar li a.active { 
-            background-color: #d1fae5; /* Light Emerald */
-            color: #059669; /* Emerald */
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
         }
-        /* No sub-levels in this TOC, but if added:
+        /* No sub-levels in this specific TOC, but if added:
          #toc-sidebar ul ul li a:hover,
          #toc-sidebar ul ul li a.active { 
-             color: #059669; 
-             background-color: #a7f3d0; 
+             color: var(--page-theme-color-main); 
+             background-color: var(--page-theme-color-lighter); 
         } */
 
         .step-header { /* Main step header color for this page */
-            background-color: #059669; /* Emerald/Green */
+            background-color: var(--page-theme-color-main);
         }
         /* Specific card header colors */
         .escalation-card .step-header { 
@@ -35,35 +46,38 @@
         }
         
         #scrollToTopBtn {
-            background-color: #059669; /* Emerald/Green */
+            background-color: var(--page-theme-color-main);
         }
         #scrollToTopBtn:hover {
-            background-color: #047857; /* Darker Emerald/Green */
+            background-color: var(--page-theme-color-darker);
         }
 
         /* Print-specific overrides for themed elements */
         @media print {
+            /* .app-top-bar is already display:none in global_styles.css for print */
             .step-header { 
-                background-color: #d1fae5 !important; /* Lighter Emerald for print */
-                color: #047857 !important; 
+                background-color: var(--page-theme-color-lightest) !important; 
+                color: var(--page-theme-color-darker) !important; 
             }
             .escalation-card .step-header { 
-                background-color: #ddd6fe !important; /* Keep violet for escalation */
+                background-color: #f0e6ff !important; /* Lighter violet for print */
                 color: #4c1d95 !important;
             }
-            #toc-sidebar h2 {
-                color: #059669 !important; 
+            #toc-sidebar h2 { /* This won't be visible due to TOC being hidden in print */
+                color: var(--page-theme-color-main) !important; 
             }
         }
     </style>
 </head>
 <body class="has-toc"> 
 
-    <button id="menu-toggle" aria-label="Open navigation menu">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-        </svg>
-    </button>
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </button>
+        </div>
     <div id="page-overlay"></div>
 
     <nav id="toc-sidebar">
@@ -84,8 +98,8 @@
         </ul>
     </nav>
 
-    <div class="main-content-area toc-active">
-        <header class="text-center mb-10">
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
             <h1 class="text-3xl font-bold text-gray-800">Order Cancellation Request Workflow</h1>
             <p class="text-lg text-gray-600">Visualized Logic for Handling Customer Cancellation Requests</p>
         </header>
@@ -212,18 +226,28 @@
         const tocSidebar = document.getElementById('toc-sidebar');
         const menuToggle = document.getElementById('menu-toggle');
         const pageOverlay = document.getElementById('page-overlay');
+        const mainContent = document.querySelector('.main-content-area');
+        const body = document.body;
         
+        function applyLayoutBasedOnScreenSize() {
+            if (window.innerWidth >= 1024 && body.classList.contains('has-toc')) {
+                if(mainContent) mainContent.classList.add('toc-active'); 
+                if(tocSidebar) tocSidebar.classList.add('open'); 
+            } else {
+                if(mainContent) mainContent.classList.remove('toc-active');
+                if(tocSidebar) tocSidebar.classList.remove('open'); 
+            }
+        }
+
         if (menuToggle && tocSidebar) {
             menuToggle.addEventListener('click', () => {
                 tocSidebar.classList.toggle('open');
-                menuToggle.classList.toggle('shifted'); 
                 if (pageOverlay) pageOverlay.classList.toggle('active'); 
             });
         }
         if (pageOverlay) {
             pageOverlay.addEventListener('click', () => { 
                 tocSidebar.classList.remove('open');
-                menuToggle.classList.remove('shifted');
                 pageOverlay.classList.remove('active');
             });
         }
@@ -235,10 +259,14 @@
                     e.preventDefault();
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        const topBarHeight = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - topBarHeight - 10; 
+
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+
                         if (window.innerWidth < 1024 && tocSidebar.classList.contains('open')) { 
                             tocSidebar.classList.remove('open');
-                            menuToggle.classList.remove('shifted');
                             if (pageOverlay) pageOverlay.classList.remove('active');
                         }
                         document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
@@ -250,7 +278,7 @@
 
         const sections = document.querySelectorAll('.content-section[id], .step-card[id]'); 
         const tocLinksJS = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
-
+        
         const makeActive = (linkId) => {
             tocLinksJS.forEach(l => l.classList.remove('active'));
             if (linkId) {
@@ -270,6 +298,7 @@
         
         const observer = new IntersectionObserver(entries => {
             let intersectingEntry = null;
+            const topBarHeightForObserver = (window.innerWidth < 1024) ? (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) : 0;
             for (let i = 0; i < entries.length; i++) { 
                  if (entries[i].isIntersecting) {
                     if (!intersectingEntry || entries[i].target.getBoundingClientRect().top < intersectingEntry.target.getBoundingClientRect().top) {
@@ -282,9 +311,15 @@
             if (intersectingEntry) {
                  makeActive(intersectingEntry.target.id);
             }
-        }, { threshold: [0.1, 0.5], rootMargin: "-40% 0px -50% 0px" });
+        }, { 
+            threshold: [0.1, 0.5], 
+            rootMargin: `-${(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--top-bar-height')) || 60) + 20}px 0px -60% 0px` 
+        });
 
         sections.forEach(section => { if (section.id) { observer.observe(section); } });
+        
+        window.addEventListener('resize', applyLayoutBasedOnScreenSize);
+        applyLayoutBasedOnScreenSize(); // Initial call
     </script>
 
 </body>
