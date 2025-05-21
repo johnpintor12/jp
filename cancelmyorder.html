@@ -9,47 +9,46 @@
     <link rel="stylesheet" href="css/global_styles.css">
     <style>
         /* Theme-specific styles for Order Cancellation Request Workflow (Emerald/Green Theme) */
-        body {
-            display: flex; /* Apply flex display for TOC sidebar layout */
-        }
+        /* body.has-toc is handled by global_styles.css for responsive layout */
 
- #toc-sidebar h2 {
-            color: #4f46e5; /* Indigo to match step headers */
+        #toc-sidebar h2 {
+            color: #059669; /* Emerald/Green */
         }
         #toc-sidebar li a:hover,
-        #toc-sidebar li a.active {
-            background-color: #eef2ff; /* Light indigo */
-            color: #4f46e5; /* Indigo */
+        #toc-sidebar li a.active { 
+            background-color: #d1fae5; /* Light Emerald */
+            color: #059669; /* Emerald */
         }
+        /* No sub-levels in this TOC, but if added:
          #toc-sidebar ul ul li a:hover,
-         #toc-sidebar ul ul li a.active { /* Sub-level active/hover */
-             color: #4f46e5; /* Indigo */
-             background-color: #e0e7ff; /* Slightly darker light indigo for sub-items if desired */
-        }
+         #toc-sidebar ul ul li a.active { 
+             color: #059669; 
+             background-color: #a7f3d0; 
+        } */
 
-        .step-header {
-            background-color: #059669; /* Emerald/Green - Main theme for this workflow's steps */
+        .step-header { /* Main step header color for this page */
+            background-color: #059669; /* Emerald/Green */
         }
-        /* Specific card header colors if they differ from the main step-header */
+        /* Specific card header colors */
         .escalation-card .step-header { 
-             background-color: #8b5cf6 !important; /* Violet for escalations, ensure it overrides global if any */
+             background-color: #8b5cf6 !important; /* Violet for escalations, ensure it overrides global */
         }
         
         #scrollToTopBtn {
-            background-color: #059669; /* Emerald/Green - Main theme for this workflow's scroll button */
+            background-color: #059669; /* Emerald/Green */
         }
         #scrollToTopBtn:hover {
-            background-color: #047857; /* Darker Emerald/Green on hover */
+            background-color: #047857; /* Darker Emerald/Green */
         }
 
-        /* Print-specific overrides for themed elements if global print styles are too generic */
+        /* Print-specific overrides for themed elements */
         @media print {
             .step-header { 
                 background-color: #d1fae5 !important; /* Lighter Emerald for print */
                 color: #047857 !important; 
             }
             .escalation-card .step-header { 
-                background-color: #ddd6fe !important; 
+                background-color: #ddd6fe !important; /* Keep violet for escalation */
                 color: #4c1d95 !important;
             }
             #toc-sidebar h2 {
@@ -58,7 +57,14 @@
         }
     </style>
 </head>
-<body> 
+<body class="has-toc"> 
+
+    <button id="menu-toggle" aria-label="Open navigation menu">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+    </button>
+    <div id="page-overlay"></div>
 
     <nav id="toc-sidebar">
         <h2>Workflow Navigation</h2>
@@ -78,7 +84,7 @@
         </ul>
     </nav>
 
-    <div class="main-content-area">
+    <div class="main-content-area toc-active">
         <header class="text-center mb-10">
             <h1 class="text-3xl font-bold text-gray-800">Order Cancellation Request Workflow</h1>
             <p class="text-lg text-gray-600">Visualized Logic for Handling Customer Cancellation Requests</p>
@@ -162,7 +168,8 @@
             <div class="connector">▼</div>
 
             <div id="step3" class="step-card escalation-card flow-element">
-                <div class="step-header"> <h3>Step 3: Get order information and escalate to an agent</h3>
+                <div class="step-header"> 
+                    <h3>Step 3: Get order information and escalate to an agent</h3>
                 </div>
                 <div class="step-content">
                     <div class="action-card">
@@ -201,7 +208,26 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // TOC smooth scrolling and active state
+        // TOC and Hamburger Menu Functionality
+        const tocSidebar = document.getElementById('toc-sidebar');
+        const menuToggle = document.getElementById('menu-toggle');
+        const pageOverlay = document.getElementById('page-overlay');
+        
+        if (menuToggle && tocSidebar) {
+            menuToggle.addEventListener('click', () => {
+                tocSidebar.classList.toggle('open');
+                menuToggle.classList.toggle('shifted'); 
+                if (pageOverlay) pageOverlay.classList.toggle('active'); 
+            });
+        }
+        if (pageOverlay) {
+            pageOverlay.addEventListener('click', () => { 
+                tocSidebar.classList.remove('open');
+                menuToggle.classList.remove('shifted');
+                pageOverlay.classList.remove('active');
+            });
+        }
+        
         document.querySelectorAll('#toc-sidebar a:not(.back-link)').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
@@ -209,10 +235,12 @@
                     e.preventDefault();
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (window.innerWidth < 1024 && tocSidebar.classList.contains('open')) { 
+                            tocSidebar.classList.remove('open');
+                            menuToggle.classList.remove('shifted');
+                            if (pageOverlay) pageOverlay.classList.remove('active');
+                        }
                         document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
                         this.classList.add('active');
                     }
@@ -220,35 +248,43 @@
             });
         });
 
-        const sections = document.querySelectorAll('.content-section[id], .step-card[id]');
-        const tocLinks = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
+        const sections = document.querySelectorAll('.content-section[id], .step-card[id]'); 
+        const tocLinksJS = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
 
         const makeActive = (linkId) => {
-            tocLinks.forEach(l => l.classList.remove('active'));
+            tocLinksJS.forEach(l => l.classList.remove('active'));
             if (linkId) {
                 const correspondingLink = document.querySelector(`#toc-sidebar a[href="#${linkId}"]`);
                 if (correspondingLink) {
                     correspondingLink.classList.add('active');
+                     const parentLi = correspondingLink.closest('ul')?.closest('li');
+                    if (parentLi) {
+                        const parentAnchor = parentLi.querySelector('a');
+                        if(parentAnchor && !parentAnchor.classList.contains('back-link') && parentAnchor.getAttribute('href').startsWith('#step')) { 
+                           parentAnchor.classList.add('active');
+                        }
+                    }
                 }
             }
         };
-
+        
         const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-                    makeActive(entry.target.id);
-                }
-            });
-        }, {
-            threshold: 0.5,
-            rootMargin: "-50px 0px -50% 0px" 
-        });
-
-        sections.forEach(section => {
-            if (section.id) {
-                 observer.observe(section);
+            let intersectingEntry = null;
+            for (let i = 0; i < entries.length; i++) { 
+                 if (entries[i].isIntersecting) {
+                    if (!intersectingEntry || entries[i].target.getBoundingClientRect().top < intersectingEntry.target.getBoundingClientRect().top) {
+                        if (entries[i].intersectionRatio >= 0.1) { 
+                           intersectingEntry = entries[i];
+                        }
+                    }
+                 }
             }
-        });
+            if (intersectingEntry) {
+                 makeActive(intersectingEntry.target.id);
+            }
+        }, { threshold: [0.1, 0.5], rootMargin: "-40% 0px -50% 0px" });
+
+        sections.forEach(section => { if (section.id) { observer.observe(section); } });
     </script>
 
 </body>

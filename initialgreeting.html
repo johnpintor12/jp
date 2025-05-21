@@ -9,45 +9,45 @@
     <link rel="stylesheet" href="css/global_styles.css">
     <style>
         /* Theme-specific styles for Initial Greeting Workflow (Blue Theme) */
-        body {
-            /* display: flex; /* Uncomment if TOC sidebar is used and not globally set in global_styles.css */
-        }
+        /* body.has-toc is handled by global_styles.css for responsive layout */
 
-#toc-sidebar h2 {
-            color: #4f46e5; /* Indigo to match step headers */
+        #toc-sidebar h2 {
+            color: #3b82f6; /* Blue-500 */
         }
         #toc-sidebar li a:hover,
         #toc-sidebar li a.active {
-            background-color: #eef2ff; /* Light indigo */
-            color: #4f46e5; /* Indigo */
+            background-color: #eff6ff; /* Blue-50 */
+            color: #3b82f6; /* Blue-500 */
         }
+         /* No sub-levels in this TOC, but if added:
          #toc-sidebar ul ul li a:hover,
-         #toc-sidebar ul ul li a.active { /* Sub-level active/hover */
-             color: #4f46e5; /* Indigo */
-             background-color: #e0e7ff; /* Slightly darker light indigo for sub-items if desired */
-        }
+         #toc-sidebar ul ul li a.active { 
+             color: #3b82f6; 
+             background-color: #dbeafe; 
+        } */
 
-        .step-header {
-            background-color: #3b82f6; /* Blue-500 - Main theme for this workflow's steps */
+        .step-header { /* Main step header color for this page */
+            background-color: #3b82f6; /* Blue-500 */
         }
-        /* Specific card header colors if they differ from the main step-header */
+        /* Specific card header colors */
+        /* .persona-card .step-header would be if persona was a step, but it's a .content-section */
+        /* We need to style the h2 within .persona-card if it uses .content-section structure */
+         .persona-card.content-section h2 { /* More specific selector for persona title */
+            color: #10b981; /* Emerald for persona heading */
+            border-bottom-color: #a7f3d0; /* Lighter emerald for border */
+        }
         .escalation-card .step-header { 
              background-color: #8b5cf6 !important; /* Violet for escalations */
         }
-        .persona-card .content-section h2 { /* Targeting h2 within persona-card specifically */
-            color: #10b981; /* Emerald for persona heading, distinct from TOC's h2 */
-            border-bottom-color: #a7f3d0; /* Lighter emerald for border */
-        }
-
-
+        
         #scrollToTopBtn {
-            background-color: #3b82f6; /* Blue-500 - Main theme for this workflow's scroll button */
+            background-color: #3b82f6; /* Blue-500 */
         }
         #scrollToTopBtn:hover {
-            background-color: #2563eb; /* Darker Blue-600 on hover */
+            background-color: #2563eb; /* Blue-600 */
         }
 
-        /* Print-specific overrides for themed elements if global print styles are too generic */
+        /* Print-specific overrides for themed elements */
         @media print {
             .step-header { 
                 background-color: #bfdbfe !important; /* Lighter Blue for print */
@@ -57,7 +57,7 @@
                 background-color: #ddd6fe !important; 
                 color: #4c1d95 !important;
             }
-            .persona-card .content-section h2 {
+            .persona-card.content-section h2 { /* Print style for persona title */
                 color: #10b981 !important;
             }
             #toc-sidebar h2 {
@@ -66,7 +66,14 @@
         }
     </style>
 </head>
-<body> 
+<body class="has-toc"> 
+
+    <button id="menu-toggle" aria-label="Open navigation menu">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+    </button>
+    <div id="page-overlay"></div>
 
     <nav id="toc-sidebar">
         <h2>Workflow Navigation</h2>
@@ -90,7 +97,7 @@
         </ul>
     </nav>
 
-    <div class="main-content-area">
+    <div class="main-content-area toc-active">
         <header class="text-center mb-10">
             <h1 class="text-3xl font-bold text-gray-800">Initial Greeting & Query Clarification Workflow</h1>
             <p class="text-lg text-gray-600">Visualized Logic for "Elisha Persona" Automation</p>
@@ -160,8 +167,7 @@
                 </div>
                 <div class="step-content">
                     <p class="mb-2">Based on the customer's response, identify keywords matching specific automation intents (e.g., "order status," "shipping," "ingredients," "return," etc.).</p>
-                    <div class="decision-card">
-                        <h4>If a clear match is identified:</h4>
+                    <div class="decision-card"> <h4>If a clear match is identified:</h4>
                         <ul class="list-disc pl-5 mt-1">
                             <li>Acknowledge their specific query (e.g., "Okay, I can certainly help with that!").</li>
                             <li>Transition smoothly (e.g., "Great, I can provide some information on that for you.").</li>
@@ -186,8 +192,7 @@
                             <li>Or, offer common categories: "Are you perhaps interested in learning more about how H2Tab works, checking on an order, or something else?"</li>
                         </ul>
                     </div>
-                    <div class="escalation-card">
-                        <h4>If, after a second attempt at clarification, intent is still unclear or seems complex/sensitive:</h4>
+                    <div class="escalation-card"> <h4>If, after a second attempt at clarification, intent is still unclear or seems complex/sensitive:</h4>
                         <ul class="list-disc pl-5 mt-1">
                             <li>Adhere to Elisha's escalation protocol (Confidence Threshold for Escalation).</li>
                             <li>Respond: "Thanks for providing that information. To make sure we address your query thoroughly and accurately, I'd like to connect you with a member of our team who can provide more specialized input."</li>
@@ -220,7 +225,8 @@
                     <h3>Step 6: Documentation</h3>
                 </div>
                 <div class="step-content">
-                    <div class="info-card"> <h4>(Internal Note)</h4>
+                    <div class="info-card"> 
+                        <h4>(Internal Note)</h4>
                         <ul class="list-disc pl-5 mt-1">
                             <li>Even if the query is quickly routed, ensure basic interaction details are logged for context.</li>
                             <li>If escalated, ensure all gathered information is passed on.</li>
@@ -254,7 +260,26 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // TOC smooth scrolling and active state
+        // TOC and Hamburger Menu Functionality
+        const tocSidebar = document.getElementById('toc-sidebar');
+        const menuToggle = document.getElementById('menu-toggle');
+        const pageOverlay = document.getElementById('page-overlay');
+        
+        if (menuToggle && tocSidebar) {
+            menuToggle.addEventListener('click', () => {
+                tocSidebar.classList.toggle('open');
+                menuToggle.classList.toggle('shifted'); 
+                if (pageOverlay) pageOverlay.classList.toggle('active'); 
+            });
+        }
+        if (pageOverlay) {
+            pageOverlay.addEventListener('click', () => { 
+                tocSidebar.classList.remove('open');
+                menuToggle.classList.remove('shifted');
+                pageOverlay.classList.remove('active');
+            });
+        }
+        
         document.querySelectorAll('#toc-sidebar a:not(.back-link)').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
@@ -262,10 +287,12 @@
                     e.preventDefault();
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (window.innerWidth < 1024 && tocSidebar.classList.contains('open')) { 
+                            tocSidebar.classList.remove('open');
+                            menuToggle.classList.remove('shifted');
+                            if (pageOverlay) pageOverlay.classList.remove('active');
+                        }
                         document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
                         this.classList.add('active');
                     }
@@ -273,35 +300,43 @@
             });
         });
 
-        const sections = document.querySelectorAll('.content-section[id], .step-card[id]');
-        const tocLinks = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
+        const sections = document.querySelectorAll('.content-section[id], .step-card[id]'); 
+        const tocLinksJS = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
 
         const makeActive = (linkId) => {
-            tocLinks.forEach(l => l.classList.remove('active'));
+            tocLinksJS.forEach(l => l.classList.remove('active'));
             if (linkId) {
                 const correspondingLink = document.querySelector(`#toc-sidebar a[href="#${linkId}"]`);
                 if (correspondingLink) {
                     correspondingLink.classList.add('active');
+                     const parentLi = correspondingLink.closest('ul')?.closest('li');
+                    if (parentLi) {
+                        const parentAnchor = parentLi.querySelector('a');
+                        if(parentAnchor && !parentAnchor.classList.contains('back-link') && parentAnchor.getAttribute('href').startsWith('#step')) { 
+                           parentAnchor.classList.add('active');
+                        }
+                    }
                 }
             }
         };
-
+        
         const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-                    makeActive(entry.target.id);
-                }
-            });
-        }, {
-            threshold: 0.5,
-            rootMargin: "-50px 0px -50% 0px" 
-        });
-
-        sections.forEach(section => {
-            if (section.id) {
-                 observer.observe(section);
+            let intersectingEntry = null;
+            for (let i = 0; i < entries.length; i++) { 
+                 if (entries[i].isIntersecting) {
+                    if (!intersectingEntry || entries[i].target.getBoundingClientRect().top < intersectingEntry.target.getBoundingClientRect().top) {
+                        if (entries[i].intersectionRatio >= 0.1) { 
+                           intersectingEntry = entries[i];
+                        }
+                    }
+                 }
             }
-        });
+            if (intersectingEntry) {
+                 makeActive(intersectingEntry.target.id);
+            }
+        }, { threshold: [0.1, 0.5], rootMargin: "-40% 0px -50% 0px" });
+
+        sections.forEach(section => { if (section.id) { observer.observe(section); } });
     </script>
 
 </body>

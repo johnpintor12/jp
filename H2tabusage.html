@@ -9,43 +9,39 @@
     <link rel="stylesheet" href="css/global_styles.css">
     <style>
         /* Theme-specific styles for H2Tab Usage Inquiry Workflow (Green Theme) */
-        body {
-            /* display: flex; /* Ensure this is active if global_styles.css doesn't set it by default for TOC layout */
-        }
+        /* body.has-toc is handled by global_styles.css for responsive layout */
 
-#toc-sidebar h2 {
-            color: #4f46e5; /* Indigo to match step headers */
+        #toc-sidebar h2 {
+            color: #22c55e; /* Green-500 */
         }
         #toc-sidebar li a:hover,
         #toc-sidebar li a.active {
-            background-color: #eef2ff; /* Light indigo */
-            color: #4f46e5; /* Indigo */
+            background-color: #f0fdf4; /* Green-50 */
+            color: #22c55e; /* Green-500 */
         }
          #toc-sidebar ul ul li a:hover,
-         #toc-sidebar ul ul li a.active { /* Sub-level active/hover */
-             color: #4f46e5; /* Indigo */
-             background-color: #e0e7ff; /* Slightly darker light indigo for sub-items if desired */
+         #toc-sidebar ul ul li a.active { 
+             color: #22c55e; /* Green-500 */
+             background-color: #dcfce7; /* Green-100 */
         }
 
-        .step-header {
-            background-color: #22c55e; /* Green-500 - Main theme for this workflow's steps */
+        .step-header { /* Main step header color for this page */
+            background-color: #22c55e; /* Green-500 */
         }
-        /* Specific card header colors if they differ (none in this workflow's design) */
+        /* No specific card header overrides needed for this workflow's design */
         
-        .link-style { /* Ensure this is themed if not already in global */
-            color: #22c55e; 
-            text-decoration: underline;
-            font-weight: 500;
+        .link-style { /* Theme for inline links if any */
+            color: #22c55e; /* Green-500 */
         }
         .link-style:hover {
             color: #16a34a; /* Green-600 */
         }
 
         #scrollToTopBtn {
-            background-color: #22c55e; /* Green-500 - Main theme for this workflow's scroll button */
+            background-color: #22c55e; /* Green-500 */
         }
         #scrollToTopBtn:hover {
-            background-color: #16a34a; /* Darker Green-600 on hover */
+            background-color: #16a34a; /* Green-600 */
         }
 
         /* Print-specific overrides for themed elements */
@@ -60,7 +56,14 @@
         }
     </style>
 </head>
-<body> 
+<body class="has-toc"> 
+
+    <button id="menu-toggle" aria-label="Open navigation menu">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+    </button>
+    <div id="page-overlay"></div>
 
     <nav id="toc-sidebar">
         <h2>Workflow Navigation</h2>
@@ -91,7 +94,7 @@
         </ul>
     </nav>
 
-    <div class="main-content-area">
+    <div class="main-content-area toc-active">
         <header class="text-center mb-10">
             <h1 class="text-3xl font-bold text-gray-800">H2Tab Usage Inquiry Workflow</h1>
             <p class="text-lg text-gray-600">Visualized Logic for Guiding Customers on Proper H2Tab Use</p>
@@ -219,7 +222,26 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // TOC smooth scrolling and active state
+        // TOC and Hamburger Menu Functionality
+        const tocSidebar = document.getElementById('toc-sidebar');
+        const menuToggle = document.getElementById('menu-toggle');
+        const pageOverlay = document.getElementById('page-overlay');
+        
+        if (menuToggle && tocSidebar) {
+            menuToggle.addEventListener('click', () => {
+                tocSidebar.classList.toggle('open');
+                menuToggle.classList.toggle('shifted'); 
+                if (pageOverlay) pageOverlay.classList.toggle('active'); 
+            });
+        }
+        if (pageOverlay) {
+            pageOverlay.addEventListener('click', () => { 
+                tocSidebar.classList.remove('open');
+                menuToggle.classList.remove('shifted');
+                pageOverlay.classList.remove('active');
+            });
+        }
+        
         document.querySelectorAll('#toc-sidebar a:not(.back-link)').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
@@ -227,10 +249,12 @@
                     e.preventDefault();
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (window.innerWidth < 1024 && tocSidebar.classList.contains('open')) { 
+                            tocSidebar.classList.remove('open');
+                            menuToggle.classList.remove('shifted');
+                            if (pageOverlay) pageOverlay.classList.remove('active');
+                        }
                         document.querySelectorAll('#toc-sidebar a').forEach(link => link.classList.remove('active'));
                         this.classList.add('active');
                     }
@@ -238,47 +262,43 @@
             });
         });
 
-        const sections = document.querySelectorAll('.content-section[id], .step-card[id], .info-card[id]'); // Added .info-card[id] for sub-sections
-        const tocLinks = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
+        const sections = document.querySelectorAll('.content-section[id], .step-card[id], .info-card[id]'); 
+        const tocLinksJS = document.querySelectorAll('#toc-sidebar a:not(.back-link)');
 
         const makeActive = (linkId) => {
-            tocLinks.forEach(l => l.classList.remove('active'));
+            tocLinksJS.forEach(l => l.classList.remove('active'));
             if (linkId) {
                 const correspondingLink = document.querySelector(`#toc-sidebar a[href="#${linkId}"]`);
                 if (correspondingLink) {
                     correspondingLink.classList.add('active');
-                    // If it's a sub-link, also activate its parent
-                    const parentLi = correspondingLink.closest('ul')?.closest('li');
+                     const parentLi = correspondingLink.closest('ul')?.closest('li');
                     if (parentLi) {
                         const parentAnchor = parentLi.querySelector('a');
-                        if(parentAnchor) parentAnchor.classList.add('active');
+                        if(parentAnchor && !parentAnchor.classList.contains('back-link') && parentAnchor.getAttribute('href').startsWith('#step')) { 
+                           parentAnchor.classList.add('active');
+                        }
                     }
                 }
             }
         };
-
+        
         const observer = new IntersectionObserver(entries => {
             let intersectingEntry = null;
-            for (let i = entries.length -1; i >=0; i--) { // Prioritize the last one in view (usually lowest on screen)
-                 if (entries[i].isIntersecting && entries[i].intersectionRatio >= 0.1) { // Lowered ratio a bit
-                    intersectingEntry = entries[i];
-                    break;
+            for (let i = 0; i < entries.length; i++) { 
+                 if (entries[i].isIntersecting) {
+                    if (!intersectingEntry || entries[i].target.getBoundingClientRect().top < intersectingEntry.target.getBoundingClientRect().top) {
+                        if (entries[i].intersectionRatio >= 0.1) { 
+                           intersectingEntry = entries[i];
+                        }
+                    }
                  }
             }
             if (intersectingEntry) {
                  makeActive(intersectingEntry.target.id);
             }
+        }, { threshold: [0.1, 0.5], rootMargin: "-40% 0px -50% 0px" });
 
-        }, {
-            threshold: [0.1, 0.5, 1.0], // Multiple thresholds
-            rootMargin: "-50px 0px -40% 0px" // Adjust viewport focus
-        });
-
-        sections.forEach(section => {
-            if (section.id) {
-                 observer.observe(section);
-            }
-        });
+        sections.forEach(section => { if (section.id) { observer.observe(section); } });
     </script>
 
 </body>
