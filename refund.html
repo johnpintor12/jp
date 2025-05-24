@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydrogen Bath Bomb Inquiry Workflow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global_styles.css">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <style>
+        /* Theme-specific styles for Hydrogen Bath Bomb Inquiry Workflow (Teal Theme) */
+        
+        :root { 
+            /* --top-bar-height is defined in global_styles.css */
+            --page-theme-color-main: #0d9488; /* Teal-600 */
+            --page-theme-color-darker: #0f766e; /* Teal-700 */
+            --page-theme-color-lighter: #99f6e4; /* Teal-200 */
+            --page-theme-color-lightest: #ccfbf1; /* Teal-100 */
+        }
+
+        .app-top-bar { 
+            background-color: var(--page-theme-color-main);
+        }
+        /* #menu-toggle color is white by default in global_styles if top bar is dark */
+
+        #toc-sidebar h2 {
+            color: var(--page-theme-color-main);
+        }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active {
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
+        }
+         #toc-sidebar ul ul li a:hover,
+         #toc-sidebar ul ul li a.active { 
+             color: var(--page-theme-color-main);
+             background-color: var(--page-theme-color-lighter);
+        }
+
+        .step-header { /* Main step header color for this page */
+            background-color: var(--page-theme-color-main);
+        }
+        /* No specific card header overrides in this workflow's design */
+        
+        .link-style { /* Theme for inline links if any */
+            color: var(--page-theme-color-main);
+        }
+        .link-style:hover {
+            color: var(--page-theme-color-darker);
+        }
+
+        #scrollToTopBtn {
+            background-color: var(--page-theme-color-main);
+        }
+        #scrollToTopBtn:hover {
+            background-color: var(--page-theme-color-darker);
+        }
+
+        /* Print-specific overrides for themed elements */
+        @media print {
+            /* .app-top-bar is already display:none in global_styles.css for print */
+            .step-header { 
+                background-color: var(--page-theme-color-lightest) !important; 
+                color: var(--page-theme-color-darker) !important; 
+            }
+            #toc-sidebar h2 { /* This won't be visible due to TOC being hidden in print */
+                color: var(--page-theme-color-main) !important; 
+            }
+        }
+    </style>
+</head>
+<body class="has-toc"> 
+
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </button>
+        </div>
+    <div id="page-overlay"></div>
+
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align: text-bottom;">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#step1">Step 1: Acknowledge & Announce</a></li>
+            <li><a href="#step2">Step 2: Direct to Sign-up</a></li>
+            <li><a href="#step3">Step 3: Address Specifics</a></li>
+            <li><a href="#step4">Step 4: Conclude Positively</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
+            <h1 class="text-3xl font-bold text-gray-800">Hydrogen Bath Bomb Inquiry Workflow</h1>
+            <p class="text-lg text-gray-600">Visualized Logic for Handling Customer Questions about Upcoming Launch</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto">
+
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>Customers are reaching out to inquire about the availability in the website, release date, or details of the upcoming hydrogen bath bombs. Your role is to generate excitement by announcing the upcoming launch, provide the direct link for customers to sign up for early access and updates, and manage expectations regarding the exact release date or full ingredient list by explaining that those aren't available just yet as the product is pre-launch.</p>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step1" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 1: Acknowledge the customer's interest and share the exciting news</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Response:</h4>
+                        <ul class="list-disc pl-5 mt-1">
+                            <li>Begin by thanking the customer for their interest in the new hydrogen bath bomb.</li>
+                            <li>Deliver the positive news using this revised statement: <br><em>"Thank you for reaching out. Our team is working hard behind the scenes to bring you our latest innovations. And we have great news - our hydrogen bath bombs are launching soon!"</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step2" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 2: Direct the customer to sign up for early access and updates</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Action & Response:</h4>
+                         <ul class="list-disc pl-5 mt-1">
+                            <li>Encourage them to be among the first to know and shop by guiding them to the sign-up page: <br><em>"For updates and to be one of the first to shop, you can sign up for early access here: <a href="https://drinkh2tab.com/pages/hydrogen-bath-bomb-notification" target="_blank" class="link-style">https://drinkh2tab.com/pages/hydrogen-bath-bomb-notification</a>"</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step3" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 3: Address inquiries about a specific release date or ingredients</h3>
+                </div>
+                <div class="step-content">
+                    <div class="response-card mb-3"> 
+                        <h4>If customer asks for a specific release date (or proactively set expectations):</h4>
+                        <ul class="list-disc pl-5 mt-1 space-y-1">
+                            <li><em>"I understand you're eager for a specific timeframe, and we'd love to give you one!"</em></li>
+                            <li><em>"However, for new developments like the hydrogen bath bombs, while the team is working hard to bring them out as soon as possible, we don't have an exact anticipated release date that we can announce just yet. Apologies we can't be more specific right now!"</em></li>
+                            <li>Reinforce sign-up value: <em>"The best way to know right away when a launch date is set is definitely by signing up for notifications via the link I shared."</em></li>
+                        </ul>
+                    </div>
+
+                    <div class="response-card"> 
+                        <h4>If the customer asks about the ingredients:</h4>
+                         <ul class="list-disc pl-5 mt-1 space-y-1">
+                            <li><em>"That's a great question! Since the hydrogen bath bomb is not yet launched, we aren't sharing the full list of specific ingredients publicly at this moment."</em></li>
+                            <li><em>"Detailed product information, including the complete ingredient list, will be made available closer to or at the official launch. By signing up on the early access page I mentioned (<a href="https://drinkh2tab.com/pages/hydrogen-bath-bomb-notification" target="_blank" class="link-style">https://drinkh2tab.com/pages/hydrogen-bath-bomb-notification</a>), you'll be among the first to receive all these details as soon as they are released."</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step4" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 4: Offer further assistance and conclude positively</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Concluding Interaction:</h4>
+                        <ul class="list-disc pl-5 mt-1 space-y-1">
+                            <li>Close on a positive and appreciative note: <br><em>"Thanks so much for your patience and excitement for this new launch!"</em></li>
+                            <li>Offer to answer any other questions they might have: <br><em>"Let me know if you have any other questions!"</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+            <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" />
+        </svg>
+    </button>
+
+    <script src="js/global_scripts.js"></script> </body>
+</html>
