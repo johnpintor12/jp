@@ -31,15 +31,71 @@
              background-color: var(--page-theme-color-lighter);
         }
         .step-header { background-color: var(--page-theme-color-main); }
-        .persona-card.content-section h2 { /* For the Persona section if styled as content-section */
-            color: #10b981; /* Emerald for persona heading, distinct from TOC's h2 */
+        .persona-card.content-section h2 { 
+            color: #10b981; 
             border-bottom-color: #a7f3d0; 
         }
-        .escalation-card .step-header { background-color: #8b5cf6 !important; } /* Violet for escalations */
-        .documentation-card .step-header { background-color: #60a5fa !important; } /* Lighter Blue for documentation */
+        .escalation-card .step-header { background-color: #8b5cf6 !important; } 
+        .documentation-card .step-header { background-color: #60a5fa !important; } 
         
         #scrollToTopBtn { background-color: var(--page-theme-color-main); }
         #scrollToTopBtn:hover { background-color: var(--page-theme-color-darker); }
+
+        .example-note {
+            background-color: #f3f4f6; 
+            border: 1px dashed #d1d5db; 
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 6px;
+        }
+        .example-note h5 {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem; /* Slightly larger for example title */
+        }
+        .example-note p, .example-note li {
+            font-size: 0.875rem; 
+            color: #374151;
+        }
+        .example-note strong { /* For field names in the example */
+            color: #111827; /* Darker gray */
+        }
+
+        /* Styles for improved readability of Step 6-B fields */
+        .escalation-field {
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .escalation-field:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .escalation-field strong { /* For "Instruction:" and "Siena Value:" labels */
+            display: block;
+            font-weight: 600;
+            color: #4b5563; /* Slate-600 */
+            font-size: 0.8rem;
+            margin-bottom: 0.15rem;
+        }
+        .escalation-field .field-name { /* For the actual field name like "Note Title/Subject" */
+             font-weight: 600;
+             color: #1f2937; /* Slate-800 */
+             display: block;
+             margin-bottom: 0.25rem;
+        }
+        .escalation-field .siena-value-text {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #eef2ff; /* Indigo-50 for Siena values */
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #3730a3; /* Indigo-800 */
+            display: inline-block; /* Or block if you want them on new lines always */
+        }
+
 
         @media print {
             .step-header { 
@@ -254,6 +310,7 @@
                         <li>Use Positive and Helpful Language.</li>
                         <li>Focus on Accuracy.</li>
                         <li>Avoid Medical Claims or Overpromising.</li>
+                         <li>Do NOT include any AI signature.</li>
                     </ul>
                 </div>
             </div>
@@ -265,27 +322,84 @@
                     <h3>Step 6: Documentation for Escalation (Summary for Agent)</h3>
                 </div>
                 <div class="step-content">
-                    <p class="font-semibold mb-2">Important: When escalation is triggered from Step 4, Siena Automation MUST generate and log the following concise summary.</p>
+                    <p class="font-semibold mb-2">Important: When an escalation to an internal H2Tab team member is triggered from this "Initial Greeting & Query Clarification" intent (as per Step 4), Siena Automation MUST generate and log the following concise summary.</p>
                     <div class="action-card">
                         <h4>A. Escalation Record Generation Trigger:</h4>
                         <p>Initiated when the escalation path within this intent is activated by Elisha.</p>
                         
                         <h4 class="mt-3">B. Action: Create Internal Escalation Note/Record:</h4>
-                        <p>Siena Automation will generate and log a structured internal note. Fields to include:</p>
-                        <ol class="list-decimal pl-5 mt-1 space-y-1 text-sm">
-                            <li><strong>Note Title/Subject:</strong> <em>Siena Value: "Siena Escalation: `{{session.conversationId}}` - Initial Greeting & Query Clarification"</em></li>
-                            <li><strong>Date & Time of Escalation:</strong> <em>Siena Value: `{{system.currentTimeISO}}`</em></li>
-                            <li><strong>Siena Conversation ID:</strong> <em>Siena Value: `{{session.conversationId}}`</em></li>
-                            <li><strong>Escalated From Intent:</strong> <em>Siena Value: "Initial Greeting & Query Clarification (Elisha Persona)" (or `{{intent.currentName}}`)</em></li>
-                            <li><strong>Suspected Issue & Context:</strong>
-                                <ul class="list-disc pl-5">
-                                    <li>Reason for Escalation: <em>Siena Value: `{{context.escalationReason}}` (e.g., "Intent unclear after 2 clarification attempts")</em></li>
-                                    <li>Key Information/Keywords Identified: <em>Siena Value: `{{context.identifiedKeywordsList.join(', ')}}`</em></li>
+                        <p class="mb-2">Siena Automation will generate and log a structured internal note. Fields to include:</p>
+                        
+                        <div class="space-y-3">
+                            <div class="escalation-field">
+                                <span class="field-name">1. Note Title/Subject (Recommended):</span>
+                                <strong>Instruction:</strong> Populate with a standardized subject line.
+                                <p><span class="siena-value-text">Siena Escalation: {{session.conversationId}} - Initial Greeting & Query Clarification</span></p>
+                            </div>
+                            <div class="escalation-field">
+                                <span class="field-name">2. Date & Time of Escalation:</span>
+                                <strong>Instruction:</strong> Capture the precise moment of escalation.
+                                <p><span class="siena-value-text">{{system.currentTimeISO}}</span></p>
+                            </div>
+                            <div class="escalation-field">
+                                <span class="field-name">3. Siena Conversation ID:</span>
+                                <strong>Instruction:</strong> Include Siena's unique identifier for the conversation.
+                                <p><span class="siena-value-text">{{session.conversationId}}</span></p>
+                            </div>
+                            <div class="escalation-field">
+                                <span class="field-name">4. Escalated From Intent:</span>
+                                <strong>Instruction:</strong> Specify the intent that triggered the escalation.
+                                <p><span class="siena-value-text">Initial Greeting & Query Clarification (Elisha Persona)</span> or <span class="siena-value-text">{{intent.currentName}}</span></p>
+                            </div>
+                            <div class="escalation-field">
+                                <span class="field-name">5. Suspected Issue & Context (Key Indicators):</span>
+                                <ul class="list-none pl-0 mt-1">
+                                    <li class="mb-1">
+                                        <strong>Reason for Escalation (Internal System Note):</strong>
+                                        <p class="ml-2"><strong>Instruction:</strong> The intent logic (Step 4) must set a context variable indicating the specific condition that triggered the escalation.</p>
+                                        <p class="ml-2"><span class="siena-value-text">{{context.escalationReason}}</span> (e.g., "Intent unclear after 2 clarification attempts," "Customer indicated a complex/sensitive issue")</p>
+                                    </li>
+                                    <li>
+                                        <strong>Key Information/Keywords Identified by Elisha:</strong>
+                                        <p class="ml-2"><strong>Instruction:</strong> If Elisha's NLU or intent logic identified potential keywords, store and list them.</p>
+                                        <p class="ml-2"><span class="siena-value-text">{{context.identifiedKeywordsList.join(', ')}}</span></p>
+                                    </li>
                                 </ul>
-                            </li>
-                            <li><strong>(Optional) AI-Generated Summary of Unclear Inquiry:</strong> 1-sentence summary of customer's likely issue. <br><em>Siena Value (Conceptual): `{{llm.generateIssueSummary(transcript=session.getTranscriptTurns(count=10), objective="Identify customer's core unresolved query")}}`</em></li>
-                            <li><strong>Agent Action Guidance:</strong> <em>Siena Value: "Review available information to understand the core issue and determine how to best assist the customer."</em></li>
-                        </ol>
+                            </div>
+                            <div class="escalation-field">
+                                <span class="field-name">6. (Optional) AI-Generated Summary of Unclear Inquiry:</span>
+                                <strong>Instruction:</strong> If Siena's generative AI can process the preceding dialogue, instruct it to create a 1-sentence summary of the customer's likely underlying issue based on the interaction before escalation.
+                                <p><span class="siena-value-text">(Highly Conceptual: {{llm.generateIssueSummary(transcript=session.getTranscriptTurns(count=10), objective="Identify customer's core unresolved query")}})</span></p>
+                            </div>
+                            <div class="escalation-field">
+                                <span class="field-name">7. Agent Action Guidance:</span>
+                                <strong>Instruction:</strong> Add static text to guide the agent.
+                                <p><span class="siena-value-text">Review available information to understand the core issue and determine how to best assist the customer.</span></p>
+                            </div>
+                        </div>
+
+                        <div class="example-note">
+                            <h5>Sample Escalation Note (Generated by Siena Automation)</h5>
+                            <p><strong>Customer's first message:</strong> "Hi Elisha"</p>
+                            <p><strong>Elisha's generated greeting (Step 1):</strong> "Hi there! I'm Elisha from H2Tab. Great to connect with you! What can I help you with today?"</p>
+                            <p><strong>Customer's response:</strong> "I have an issue with my recent order, and also something about the tablets themselves that I'm a bit worried about."</p>
+                            <p><strong>Elisha's clarifying question (Step 2):</strong> "Okay, I can look into that. To make sure I get you to the right place, could you let me know if your question is about our products, an order you've placed, or perhaps something else?"</p>
+                            <p><strong>Customer's response:</strong> "It's both. I had a strange reaction to the tablets from my last order, and it's a bit personal and sensitive."</p>
+                            <p><em>(Elisha's logic in Step 4 identifies this as a sensitive issue requiring human attention and escalates).</em></p>
+                            <hr class="my-2 border-gray-300">
+                            <p><strong>Note Title/Subject:</strong> Siena Escalation: CX123459876 - Initial Greeting & Query Clarification</p>
+                            <p><strong>Date & Time of Escalation:</strong> 2025-05-25 04:11:33 AM PST</p>
+                            <p><strong>Siena Conversation ID:</strong> CX123459876</p>
+                            <p><strong>Escalated From Intent:</strong> Initial Greeting & Query Clarification (Elisha Persona)</p>
+                            <p><strong>Suspected Issue & Context (Key Indicators):</strong></p>
+                            <ul class="list-disc pl-5">
+                                <li><strong>Reason for Escalation:</strong> Customer reported a sensitive personal reaction to tablets from a recent order.</li>
+                                <li><strong>Key Information/Keywords Identified by Elisha:</strong> issue, recent order, tablets, worried, strange reaction, personal, sensitive</li>
+                            </ul>
+                            <p><strong>(Optional) AI-Generated Summary of Unclear Inquiry:</strong> Customer reports experiencing a sensitive personal reaction to H2Tab tablets associated with their recent order and requires specialized assistance.</p>
+                            <p><strong>Agent Action Guidance:</strong> Review available information to understand the core issue and determine how to best assist the customer. Exercise particular care given the sensitive nature of the report.</p>
+                            <p class="text-xs italic mt-2">This sample demonstrates how the concise escalation note for the "Initial Greeting & Query Clarification" intent would look, providing the human agent with essential information to take over the conversation effectively.</p>
+                        </div>
 
                         <h4 class="mt-3">C. Implementation Notes for Siena Configuration:</h4>
                         <ul class="list-disc pl-5 mt-1 text-sm">
