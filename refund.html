@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hydrogen Bath Bomb Inquiry Workflow</title>
+    <title>Refund Request Workflow</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/global_styles.css">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <style>
-        /* Theme-specific styles for Hydrogen Bath Bomb Inquiry Workflow (Teal Theme) */
+        /* Theme-specific styles for Refund Request Workflow (Rose/Pink Theme) */
         
         :root { 
             /* --top-bar-height is defined in global_styles.css */
-            --page-theme-color-main: #0d9488; /* Teal-600 */
-            --page-theme-color-darker: #0f766e; /* Teal-700 */
-            --page-theme-color-lighter: #99f6e4; /* Teal-200 */
-            --page-theme-color-lightest: #ccfbf1; /* Teal-100 */
+            --page-theme-color-main: #e11d48; /* Rose-600 */
+            --page-theme-color-darker: #be123c; /* Rose-700 */
+            --page-theme-color-lighter: #fecdd3; /* Rose-200 */
+            --page-theme-color-lightest: #ffe4e6; /* Rose-50 */
         }
 
         .app-top-bar { 
             background-color: var(--page-theme-color-main);
         }
-        /* #menu-toggle color is white by default in global_styles if top bar is dark */
 
         #toc-sidebar h2 {
             color: var(--page-theme-color-main);
@@ -41,15 +40,11 @@
         .step-header { /* Main step header color for this page */
             background-color: var(--page-theme-color-main);
         }
-        /* No specific card header overrides in this workflow's design */
+        /* Specific card header colors */
+        .documentation-card .step-header { /* This class is from global_styles.css */
+             background-color: #60a5fa !important; /* Lighter Blue for documentation step header (from global) */
+        }
         
-        .link-style { /* Theme for inline links if any */
-            color: var(--page-theme-color-main);
-        }
-        .link-style:hover {
-            color: var(--page-theme-color-darker);
-        }
-
         #scrollToTopBtn {
             background-color: var(--page-theme-color-main);
         }
@@ -61,8 +56,12 @@
         @media print {
             /* .app-top-bar is already display:none in global_styles.css for print */
             .step-header { 
-                background-color: var(--page-theme-color-lightest) !important; 
+                background-color: var(--page-theme-color-lighter) !important; 
                 color: var(--page-theme-color-darker) !important; 
+            }
+            .documentation-card .step-header {
+                 background-color: #bfdbfe !important; 
+                 color: #1e40af !important;
             }
             #toc-sidebar h2 { /* This won't be visible due to TOC being hidden in print */
                 color: var(--page-theme-color-main) !important; 
@@ -93,38 +92,50 @@
                 </a>
             </li>
             <li><a href="#context">Context</a></li>
-            <li><a href="#step1">Step 1: Acknowledge & Announce</a></li>
-            <li><a href="#step2">Step 2: Direct to Sign-up</a></li>
-            <li><a href="#step3">Step 3: Address Specifics</a></li>
-            <li><a href="#step4">Step 4: Conclude Positively</a></li>
+            <li><a href="#step1">Step 1: Identify Order & Reason</a></li>
+            <li>
+                <a href="#step2">Step 2: Evaluate Eligibility</a>
+                <ul>
+                    <li><a href="#step2-returned-item">Returned Item</a></li>
+                    <li><a href="#step2-non-delivery">Non-Delivery</a></li>
+                    <li><a href="#step2-dissatisfaction">Product Dissatisfaction</a></li>
+                    <li><a href="#step2-cancelled-order">Cancelled Order (Pre-Ship)</a></li>
+                    <li><a href="#step2-not-eligible">Not Eligible by Policy</a></li>
+                </ul>
+            </li>
+            <li><a href="#step3">Step 3: Process Refund (If Eligible)</a></li>
+            <li><a href="#step4">Step 4: Offer Alternatives (If Not Eligible)</a></li>
+            <li><a href="#step5-internal">Step 5: Document & Tag (Internal)</a></li>
         </ul>
     </nav>
 
     <div class="main-content-area"> 
         <header class="text-center mb-10 pt-4 md:pt-0"> 
-            <h1 class="text-3xl font-bold text-gray-800">Hydrogen Bath Bomb Inquiry Workflow</h1>
-            <p class="text-lg text-gray-600">Visualized Logic for Handling Customer Questions about Upcoming Launch</p>
+            <h1 class="text-3xl font-bold text-gray-800">Refund Request Workflow</h1>
+            <p class="text-lg text-gray-600">Guiding Customers Through the Refund Process</p>
         </header>
 
         <div class="max-w-4xl mx-auto">
 
             <div id="context" class="content-section flow-element">
                 <h2>Context</h2>
-                <p>Customers are reaching out to inquire about the availability in the website, release date, or details of the upcoming hydrogen bath bombs. Your role is to generate excitement by announcing the upcoming launch, provide the direct link for customers to sign up for early access and updates, and manage expectations regarding the exact release date or full ingredient list by explaining that those aren't available just yet as the product is pre-launch.</p>
+                <p>Customers reaching out with this intent are requesting a monetary refund for a product or service they have purchased. Your objective is to understand the specific reason behind their refund request, determine if the request is eligible according to our company policies, and then guide them through the appropriate next steps, which may include processing the refund, explaining why it cannot be issued, or offering an alternative solution.</p>
             </div>
 
             <div class="connector">▼</div>
 
             <div id="step1" class="step-card flow-element">
                 <div class="step-header">
-                    <h3>Step 1: Acknowledge the customer's interest and share the exciting news</h3>
+                    <h3>Step 1: Identify the relevant order and understand the reason for the refund request</h3>
                 </div>
                 <div class="step-content">
                     <div class="action-card">
-                        <h4>Response:</h4>
-                        <ul class="list-disc pl-5 mt-1">
-                            <li>Begin by thanking the customer for their interest in the new hydrogen bath bomb.</li>
-                            <li>Deliver the positive news using this revised statement: <br><em>"Thank you for reaching out. Our team is working hard behind the scenes to bring you our latest innovations. And we have great news - our hydrogen bath bombs are launching soon!"</em></li>
+                        <h4>Actions:</h4>
+                        <ul class="list-disc pl-5 mt-1 space-y-1">
+                            <li>If the customer provides an order number, use that to locate the order details.</li>
+                            <li>If an order number is not provided, ask for the email address they used for the purchase to find the order.</li>
+                            <li>If the customer has multiple recent orders, ask clarifying questions to ensure you are addressing the correct order.</li>
+                            <li>Once the order is identified, ask the customer to explain why they are requesting a refund. (e.g., "I've located your order. Could you please tell me the reason you're requesting a refund for this order?")</li>
                         </ul>
                     </div>
                 </div>
@@ -134,14 +145,65 @@
 
             <div id="step2" class="step-card flow-element">
                 <div class="step-header">
-                    <h3>Step 2: Direct the customer to sign up for early access and updates</h3>
+                    <h3>Step 2: Evaluate refund eligibility based on the reason provided and our policies</h3>
                 </div>
                 <div class="step-content">
-                    <div class="action-card">
-                        <h4>Action & Response:</h4>
-                         <ul class="list-disc pl-5 mt-1">
-                            <li>Encourage them to be among the first to know and shop by guiding them to the sign-up page: <br><em>"For updates and to be one of the first to shop, you can sign up for early access here: <a href="https://drinkh2tab.com/pages/hydrogen-bath-bomb-notification" target="_blank" class="link-style">https://drinkh2tab.com/pages/hydrogen-bath-bomb-notification</a>"</em></li>
-                        </ul>
+                    <div id="step2-returned-item" class="condition-card mb-3">
+                        <h4>If refund request is for an item already returned/being returned:</h4>
+                        <div class="action-card mt-2">
+                             <h4>Action & Response:</h4>
+                            <ul class="list-disc pl-5 mt-1">
+                                <li>Check the status of that return in the system.</li>
+                                <li><strong>If return received & approved:</strong> Inform customer refund will be processed per policy, confirm timeframe. (e.g., "I see your return for order #[Order Number] has been received and approved. Your refund will be processed within [X-Y business days] to your original payment method.")</li>
+                                <li><strong>If return pending/not received:</strong> Update on return status; explain refund follows return completion. (e.g., "Our records show your return is still on its way to us/being processed. Once it's received and inspected, we'll address your refund.")</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="step2-non-delivery" class="condition-card mb-3">
+                        <h4>If refund request is due to non-delivery of an order:</h4>
+                        <div class="action-card mt-2">
+                            <h4>Action & Response:</h4>
+                            <ul class="list-disc pl-5 mt-1">
+                                <li>Verify shipping status using tracking information (refer to "Where is my order?" guidance if needed).</li>
+                                <li><strong>If order confirmed lost by carrier OR delivery exceeded max timeframe without update:</strong> Proceed to process the refund (Step 3).</li>
+                                <li><strong>If still in transit within expected timeframe:</strong> Provide tracking and reassure.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="step2-dissatisfaction" class="condition-card mb-3">
+                        <h4>If customer requests refund due to dissatisfaction with a received product:</h4>
+                        <div class="action-card mt-2">
+                            <h4>Action & Response:</h4>
+                            <ul class="list-disc pl-5 mt-1">
+                                <li>Inquire further about specific issues.</li>
+                                <li>Check satisfaction guarantee/product policies.</li>
+                                <li><strong>If policy allows refund (with/without return):</strong> Proceed accordingly.</li>
+                                <li><strong>If return is required for refund:</strong> Guide through "I want to return what I received" workflow.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div id="step2-cancelled-order" class="condition-card mb-3">
+                        <h4>If refund request is for an order successfully cancelled before shipment/service rendered:</h4>
+                        <div class="action-card mt-2">
+                            <h4>Action & Response:</h4>
+                            <ul class="list-disc pl-5 mt-1">
+                                <li>Verify cancellation in the system.</li>
+                                <li><strong>If confirmed:</strong> Proceed to process the refund (Step 3) and inform customer. (e.g., "I can confirm your order #[Order Number] was successfully cancelled. I'll process your refund now.")</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="step2-not-eligible" class="condition-card">
+                        <h4>If reason does not meet standard refund/return policies:</h4>
+                         <div class="info-card mt-2"> <h4>Response & Action:</h4>
+                            <ul class="list-disc pl-5 mt-1">
+                                <li>Clearly and politely explain why the request cannot be approved under current policy. (e.g., "I understand your request for a refund for order #[Order Number]. Based on our policy, returns/refunds are accepted within [X days] / for [specific conditions]. Unfortunately, this order falls outside of that policy because [reason].")</li>
+                                <li><strong>If customer disputes or asks for an exception:</strong> Let them know their request will be passed to an agent for further review. <span class="badge badge-yellow">EXCEPTION? -> AGENT</span></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -150,23 +212,16 @@
 
             <div id="step3" class="step-card flow-element">
                 <div class="step-header">
-                    <h3>Step 3: Address inquiries about a specific release date or ingredients</h3>
+                    <h3>Step 3: Process the refund and communicate with the customer (if eligible)</h3>
                 </div>
                 <div class="step-content">
-                    <div class="response-card mb-3"> 
-                        <h4>If customer asks for a specific release date (or proactively set expectations):</h4>
+                    <div class="action-card">
+                        <h4>Actions & Response:</h4>
                         <ul class="list-disc pl-5 mt-1 space-y-1">
-                            <li><em>"I understand you're eager for a specific timeframe, and we'd love to give you one!"</em></li>
-                            <li><em>"However, for new developments like the hydrogen bath bombs, while the team is working hard to bring them out as soon as possible, we don't have an exact anticipated release date that we can announce just yet. Apologies we can't be more specific right now!"</em></li>
-                            <li>Reinforce sign-up value: <em>"The best way to know right away when a launch date is set is definitely by signing up for notifications via the link I shared."</em></li>
-                        </ul>
-                    </div>
-
-                    <div class="response-card"> 
-                        <h4>If the customer asks about the ingredients:</h4>
-                         <ul class="list-disc pl-5 mt-1 space-y-1">
-                            <li><em>"That's a great question! Since the hydrogen bath bomb is not yet launched, we aren't sharing the full list of specific ingredients publicly at this moment."</em></li>
-                            <li><em>"Detailed product information, including the complete ingredient list, will be made available closer to or at the official launch. By signing up on the early access page I mentioned (<a href="https://drinkh2tab.com/pages/hydrogen-bath-bomb-notification" target="_blank" class="link-style">https://drinkh2tab.com/pages/hydrogen-bath-bomb-notification</a>), you'll be among the first to receive all these details as soon as they are released."</em></li>
+                            <li>Clearly inform the customer of the exact amount to be refunded.</li>
+                            <li>Confirm the original payment method for the refund.</li>
+                            <li>Provide estimated timeframe for refund reflection (e.g., "Your refund of [Amount] has been processed to your original payment method. You can typically expect to see this reflected in your account within 5-10 business days, depending on your bank.").</li>
+                            <li>If partial refund, clearly explain the calculation.</li>
                         </ul>
                     </div>
                 </div>
@@ -176,14 +231,38 @@
 
             <div id="step4" class="step-card flow-element">
                 <div class="step-header">
-                    <h3>Step 4: Offer further assistance and conclude positively</h3>
+                    <h3>Step 4: Offer alternative solutions (if a full monetary refund is not approved)</h3>
                 </div>
                 <div class="step-content">
                     <div class="action-card">
-                        <h4>Concluding Interaction:</h4>
+                        <h4>Actions & Response:</h4>
                         <ul class="list-disc pl-5 mt-1 space-y-1">
-                            <li>Close on a positive and appreciative note: <br><em>"Thanks so much for your patience and excitement for this new launch!"</em></li>
-                            <li>Offer to answer any other questions they might have: <br><em>"Let me know if you have any other questions!"</em></li>
+                            <li>If direct refund not approved, explain reasoning clearly (as per Step 2).</li>
+                            <li>Where appropriate, explore and offer alternatives:
+                                <ul class="list-disc pl-5 mt-1">
+                                    <li>Store credit (equivalent or partial value).</li>
+                                    <li>Exchange for a different product.</li>
+                                    <li>Specific troubleshooting assistance if product-related.</li>
+                                </ul>
+                                (e.g., "While I'm unable to process a full monetary refund for this specific situation due to [policy reason], I'd be happy to offer you [Store Credit Amount] in store credit, or we could explore an exchange for another product you might enjoy. Would either of those options work for you?")
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+            
+            <div id="step5-internal" class="step-card documentation-card flow-element">
+                 <div class="step-header"> 
+                    <h3>Step 5: Document the interaction and tag the ticket (Internal)</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Internal Actions:</h4>
+                        <ul class="list-disc pl-5 mt-1 space-y-1">
+                            <li>Tag the conversation (e.g., "Refund Request," "Refund Processed - Non-Delivery," "Refund Declined - Policy," "Refund Processed - Return," "Alternative Offered - Store Credit"). <span class="badge badge-blue">TAG</span></li>
+                            <li>Document: customer's reason, order/items involved, policy points reviewed, outcome, refund amounts/transaction IDs, alternative offered/accepted.</li>
                         </ul>
                     </div>
                 </div>
@@ -197,5 +276,6 @@
         </svg>
     </button>
 
-    <script src="global_scripts.js"></script> </body>
+    <script src="global_scripts.js"></script> 
+</body>
 </html>
