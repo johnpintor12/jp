@@ -6,31 +6,141 @@
     <title>Initial Greeting & Query Clarification v2 (Elisha Persona)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/global_styles.css">
+    <link rel="stylesheet" href="css/global_styles.css"> 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <style>
         /* Theme-specific styles for Initial Greeting Workflow v2 (Blue Theme) */
         :root {
-            /* --top-bar-height is defined in global_styles.css */
+            /* --top-bar-height is defined in global_styles.css or can be defined here if needed */
+            --top-bar-height: 60px; 
             --page-theme-color-main: #3b82f6; /* Blue-500 */
             --page-theme-color-darker: #2563eb; /* Blue-600 */
             --page-theme-color-lighter: #bfdbfe; /* Blue-200 */
             --page-theme-color-lightest: #eff6ff; /* Blue-50 */
         }
 
-        .app-top-bar { background-color: var(--page-theme-color-main); }
-        #toc-sidebar h2 { color: var(--page-theme-color-main); }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
+
+        /* Replicating key structural styles from global_styles.css for context if it's not loaded */
+        @media (min-width: 1024px) { /* lg breakpoint */
+            body.has-toc { display: flex; }
+            #toc-sidebar {
+                transform: translateX(0);
+                position: sticky; top: 0; height: 100vh;
+                box-shadow: none; border-right: 1px solid #e5e7eb;
+            }
+            .main-content-area { padding-top: 1.5rem; }
+            .app-top-bar, #menu-toggle, #page-overlay { display: none !important; }
+        }
+
+        .app-top-bar { 
+            background-color: var(--page-theme-color-main); 
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--top-bar-height);
+            color: white; display: flex; align-items: center; padding: 0 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 150;
+        }
+        #menu-toggle { 
+            background: transparent; border: none; color: white; padding: 0.5rem; cursor: pointer;
+        }
+        #menu-toggle svg { width: 1.75rem; height: 1.75rem; }
+        .library-title-mobile { margin-left: 0.75rem; font-weight: 600; font-size: 1.125rem; }
+
+
+        #toc-sidebar {
+            width: 280px; background-color: #ffffff; padding: 1.5rem; 
+            position: fixed; left: 0; top: var(--top-bar-height); height: calc(100vh - var(--top-bar-height));
+            overflow-y: auto; z-index: 100; transform: translateX(-100%); transition: transform 0.3s ease-in-out;
+            border-right: 1px solid #e5e7eb;
+        }
+        #toc-sidebar.open { transform: translateX(0); }
+        #toc-sidebar h2 { /* Workflow Navigation title */
+            color: var(--page-theme-color-main); 
+            font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb;
+        }
+        #toc-sidebar ul { list-style: none; padding: 0; }
+        #toc-sidebar li a {
+            display: block; padding: 0.5rem 0.5rem; color: #374151;
+            text-decoration: none; font-size: 0.9rem; border-radius: 4px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
         #toc-sidebar li a:hover,
         #toc-sidebar li a.active {
             background-color: var(--page-theme-color-lightest);
             color: var(--page-theme-color-main);
+            font-weight: 500; 
         }
+        #toc-sidebar li a.back-link {
+            color: var(--page-theme-color-main); font-weight: 500; margin-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb; padding-bottom: 0.75rem;
+            display: inline-flex; align-items: center;
+        }
+        #toc-sidebar li a.back-link svg { margin-right: 0.5rem; }
+        #toc-sidebar li a.back-link:hover { color: var(--page-theme-color-darker); background-color: transparent; }
+        #toc-sidebar ul ul { padding-left: 1rem; margin-top: 0.25rem; }
+        #toc-sidebar ul ul li a { font-size: 0.85rem; color: #6b7280; }
         #toc-sidebar ul ul li a:hover,
         #toc-sidebar ul ul li a.active { 
-             color: var(--page-theme-color-main);
-             background-color: var(--page-theme-color-lighter);
+            color: var(--page-theme-color-main);
+            background-color: var(--page-theme-color-lighter);
         }
-        .step-header { background-color: var(--page-theme-color-main); }
+        
+        .main-content-area {
+            padding: 1.5rem; 
+            padding-top: calc(var(--top-bar-height) + 1.5rem);
+        }
+        @media (min-width: 1024px) {
+            .main-content-area { 
+               /* margin-left: 280px; */
+                padding-top: 1.5rem; }
+        }
+
+        /* General Content Sections from global_styles.css */
+        .content-section {
+            background-color: white; border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 1.5rem; padding: 1.5rem; 
+            scroll-margin-top: calc(var(--top-bar-height) + 20px);
+        }
+        .content-section h2 { 
+            font-size: 1.5rem; font-weight: 600; color: #1f2937; 
+            margin-bottom: 1rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem;
+        }
+
+        /* Step Card Styling from global_styles.css */
+        .step-card {
+            background-color: white; border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 1.5rem; overflow: hidden; 
+            scroll-margin-top: calc(var(--top-bar-height) + 20px);
+        }
+        .step-header { 
+            background-color: var(--page-theme-color-main); /* Theme color for step headers */
+            color: white; padding: 1rem 1.5rem; border-bottom: 1px solid var(--page-theme-color-lighter);
+        }
+        .step-header h3 { font-size: 1.25rem; font-weight: 600; }
+        .step-header .sub-persona { font-size: 0.875rem; opacity: 0.9; }
+        .step-content { padding: 1.5rem; }
+
+        /* Inner Card Styles from global_styles.css */
+        .action-card, .decision-card, .info-card, .persona-card, .escalation-card, .documentation-card {
+            border: 1px solid #e5e7eb; border-radius: 6px; padding: 1rem;
+            margin-top: 1rem; background-color: #f9fafb;
+            scroll-margin-top: calc(var(--top-bar-height) + 20px);
+        }
+        .action-card h4, .decision-card h4, .info-card h4, .persona-card h4, .escalation-card h4, .documentation-card h4 {
+            font-size: 1rem; font-weight: 600; color: #374151; margin-bottom: 0.5rem;
+        }
+
+        /* Specific Card Border Styles & Backgrounds from global_styles.css */
+        .decision-card { border-left: 4px solid #f59e0b; background-color: #fffbeb; }
+        .escalation-card { border-left: 4px solid #8b5cf6; background-color: #f5f3ff; }
+        .documentation-card { border-left: 4px solid #60a5fa; background-color: #eff6ff; }
+        .persona-card { border-left: 4px solid #10b981; background-color: #f0fdfa; }
+        .info-card { border-left: 4px solid #3b82f6; background-color: #eff6ff; }
+        
+        /* Specific overrides for this page's theme */
         .persona-card.content-section h2 { 
             color: #10b981; 
             border-bottom-color: #a7f3d0; 
@@ -38,80 +148,69 @@
         .escalation-card .step-header { background-color: #8b5cf6 !important; } 
         .documentation-card .step-header { background-color: #60a5fa !important; } 
         
-        #scrollToTopBtn { background-color: var(--page-theme-color-main); }
+        #scrollToTopBtn { 
+            background-color: var(--page-theme-color-main); 
+            display: none; position: fixed; bottom: 30px; right: 30px; z-index: 99;
+            border: none; outline: none; color: white; cursor: pointer;
+            padding: 12px 15px; border-radius: 50%; font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
         #scrollToTopBtn:hover { background-color: var(--page-theme-color-darker); }
 
         .example-note {
             background-color: #f3f4f6; 
             border: 1px dashed #d1d5db; 
-            padding: 1rem;
-            margin-top: 1rem;
-            border-radius: 6px;
+            padding: 1rem; margin-top: 1rem; border-radius: 6px;
         }
         .example-note h5 {
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem; /* Slightly larger for example title */
+            font-weight: 600; color: #1f2937; margin-bottom: 0.5rem; font-size: 1.1rem;
         }
-        .example-note p, .example-note li {
-            font-size: 0.875rem; 
-            color: #374151;
-        }
-        .example-note strong { /* For field names in the example */
-            color: #111827; /* Darker gray */
-        }
+        .example-note p, .example-note li { font-size: 0.875rem; color: #374151; }
+        .example-note strong { color: #111827; }
 
-        /* Styles for improved readability of Step 6-B fields */
         .escalation-field {
-            margin-bottom: 0.75rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid #e5e7eb;
         }
-        .escalation-field:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
+        .escalation-field:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         .escalation-field strong { /* For "Instruction:" and "Siena Value:" labels */
-            display: block;
-            font-weight: 600;
-            color: #4b5563; /* Slate-600 */
-            font-size: 0.8rem;
-            margin-bottom: 0.15rem;
+            display: block; font-weight: 600; color: #4b5563; 
+            font-size: 0.8rem; margin-bottom: 0.15rem;
         }
-        .escalation-field .field-name { /* For the actual field name like "Note Title/Subject" */
-             font-weight: 600;
-             color: #1f2937; /* Slate-800 */
-             display: block;
-             margin-bottom: 0.25rem;
+        .escalation-field .field-name { /* For the actual field name */
+            font-weight: 600; color: #1f2937; display: block; margin-bottom: 0.25rem;
         }
         .escalation-field .siena-value-text {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #eef2ff; /* Indigo-50 for Siena values */
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            color: #3730a3; /* Indigo-800 */
-            display: inline-block; /* Or block if you want them on new lines always */
+            font-family: 'Courier New', Courier, monospace; background-color: #eef2ff; 
+            padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;
+            color: #3730a3; display: inline-block; 
         }
+        .connector { text-align: center; margin: 1rem 0; font-size: 1.5rem; color: #9ca3af; }
+        ul { list-style-type: disc; padding-left: 1.5rem; } /* From global_styles.css */
+        #toc-sidebar ul ul { list-style: none; } /* Override for TOC sub-bullets */
+        li { margin-bottom: 0.5rem; } /* From global_styles.css */
+        .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 500; margin-left: 0.5rem; }
+        .badge-purple { background-color: #ede9fe; color: #5b21b6; } /* From global_styles.css */
+        .flow-element { position: relative; margin-bottom: 20px; }
+        .flow-element:not(:last-child)::after { content: ''; position: absolute; left: 50%; bottom: -20px; transform: translateX(-50%); width: 2px; height: 20px; background-color: #cbd5e1; z-index: -1; }
 
 
         @media print {
             .step-header { 
                 background-color: var(--page-theme-color-lighter) !important; 
                 color: #1e40af !important; 
+                -webkit-print-color-adjust: exact; print-color-adjust: exact;
             }
             .escalation-card .step-header { 
                 background-color: #f0e6ff !important; 
                 color: #4c1d95 !important;
             }
             .documentation-card .step-header {
-                 background-color: #bfdbfe !important; 
-                 color: #1e40af !important;
+                background-color: #bfdbfe !important; 
+                color: #1e40af !important;
             }
             .persona-card.content-section h2 { color: #10b981 !important; }
             #toc-sidebar h2 { color: var(--page-theme-color-main) !important; }
+            /* Other print styles from global_styles.css would apply */
         }
     </style>
 </head>
@@ -119,10 +218,11 @@
 
     <div class="app-top-bar">
         <button id="menu-toggle" aria-label="Open navigation menu">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
         </button>
+        <span class="library-title-mobile">Initial Greeting v2</span>
     </div>
     <div id="page-overlay"></div>
 
@@ -130,191 +230,285 @@
         <h2>Workflow Navigation</h2>
         <ul>
             <li>
-                <a href="index.html" class="back-link">
-                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align: text-bottom;">
+                <a href="index.html" class="back-link"> <svg class="inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                     </svg>
                     Back to Library
                 </a>
             </li>
-            <li><a href="#purpose">1. Purpose</a></li>
-            <li><a href="#scope">2. Scope</a></li>
-            <li><a href="#definitions">3. Definitions</a></li>
-            <li><a href="#responsibilities">4. Responsibilities</a></li>
-            <li><a href="#guiding-principles">5. Guiding Principles</a></li>
-            <li>
-                <a href="#procedure">6. Procedure for Design & Structure</a>
-                <ul>
-                    <li><a href="#phase1-concept">Phase 1: Conceptualization</a></li>
-                    <li><a href="#phase2-drafting">Phase 2: Drafting Instructions</a></li>
-                    <li><a href="#phase3-generative">Phase 3: Handling Generative AI</a></li>
-                    <li><a href="#phase4-flow">Phase 4: Conversational Flow</a></li>
-                    <li><a href="#phase5-escalations">Phase 5: Handling Escalations</a></li>
-                    <li><a href="#phase6-review">Phase 6: Review & Iteration</a></li>
-                </ul>
-            </li>
-            <li><a href="#monitoring-review-sop">7. Monitoring and Review of SOP</a></li>
+            <li><a href="#context-objective">Context & Objective</a></li>
+            <li><a href="#persona-details">Persona: Elisha</a></li>
+            <li><a href="#step1">Step 1: Generative Greeting</a></li>
+            <li><a href="#step2">Step 2: Guide Conversation</a></li>
+            <li><a href="#step3">Step 3: Match Intent</a></li>
+            <li><a href="#step4">Step 4: Handle Ambiguity</a></li>
+            <li><a href="#step5">Step 5: Best Practices</a></li>
+            <li><a href="#step6">Step 6: Escalation Documentation</a></li>
         </ul>
     </nav>
 
-   <div class="main-content-area">
-        <div class="container"> <header style="text-align: center; margin-bottom: 1rem;">
-                <h1>Standard Operating Procedure (SOP)</h1>
-                <p style="font-size: 1.2em; color: #555; margin-bottom: 2rem;">Title: SOP for Designing and Structuring Siena Intent Automations at H2Tab</p>
-            </header>
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
+            <h1 class="text-3xl font-bold text-gray-800">Initial Greeting & Query Clarification Workflow (v2)</h1>
+            <p class="text-lg text-gray-600">Elisha Persona - Leveraging Generative AI for Opening</p>
+        </header>
 
-            <div class="content-section" id="purpose">
-                <h2>1. Purpose</h2>
-                <p>This Standard Operating Procedure (SOP) provides guidelines and a consistent methodology for designing, developing, implementing, and maintaining customer-facing intent automations within the Siena platform for H2Tab. Its purpose is to ensure all automations:</p>
+        <div class="max-w-4xl mx-auto">
+
+            <div id="context-objective" class="content-section flow-element">
+                <h2>Context & Objective</h2>
+                <p class="mb-2">This automation is triggered when a customer initiates a conversation with a general greeting (e.g., "Hi," "Hello," "Hey") or a very vague statement that doesn't immediately indicate a specific need or match an existing, more detailed automation intent.</p>
+                <p class="mb-2">For this crucial first interaction (Step 1), Elisha's primary objective is to leverage Siena's generative AI module. Upon the customer's initiation, this module will craft and deliver a unique, warm, and welcoming opening in Elisha's defined persona. This initial, improvised greeting must be designed to smoothly transition towards understanding the customer's needs.</p>
+                <p class="mb-2">Following this generative opening, Elisha's broader role within this "Initial Greeting & Query Clarification" intent is to then understand the customer's underlying reason for contact and subsequently route the conversation to the appropriate specific automation or escalate if necessary, as detailed in the subsequent steps.</p>
+                <p class="font-semibold text-red-600">Important: Do not include any signature (like "Sent by Siena AI") in responses or any signatures when automation is triggered.</p> </div>
+
+            <div class="connector">▼</div>
+            
+            <div id="persona-details" class="content-section persona-card flow-element">
+                <h2>Persona to Embody: Elisha - CX Support Specialist</h2>
                 <ul>
-                    <li>Align with Siena's core operational capabilities and intent classification model.</li>
-                    <li>Effectively embody the Elisha persona.</li>
-                    <li>Are clear for Siena (as Elisha, an AI team member) to execute.</li>
-                    <li>Promote a positive and efficient customer experience.</li>
-                    <li>Are understandable and maintainable by the H2Tab team.</li>
+                    <li><strong>Attributes:</strong> Friendly, Professional, Personal, Confident, Informative.</li>
+                    <li><strong>Brand Voice:</strong> Approachable, Science-backed, Clear, Warm.</li>
+                    <li><strong>Communication Style:</strong> Thoughtful, trustworthy, conversational, science-backed yet easy to understand, sleek, and professional. Avoid overusing emojis, ALL CAPS, or multiple exclamation points.</li>
                 </ul>
             </div>
 
-            <div class="content-section" id="scope">
-                <h2>2. Scope</h2>
-                <p>This SOP applies to all H2Tab team members involved in the conceptualization, design, creation, testing, deployment, and ongoing refinement of Siena intent automations.</p>
+            <div class="connector">▼</div>
+
+            <div id="step1" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 1: When a customer initiates a conversation, generate a greeting that:</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Siena Generative AI Directive for Greeting:</h4>
+                        <ul class="list-disc pl-5 mt-1">
+                            <li><strong>Is Warm and Welcoming:</strong> Make the customer feel acknowledged and comfortable.</li>
+                            <li><strong>Embodies Your Persona:</strong> Strictly adhere to all aspects of Elisha's defined persona, voice, and communication style.</li>
+                            <li><strong>Introduces Yourself and H2Tab:</strong> Clearly state your name ("Elisha") and the company ("H2Tab").</li>
+                            <li><strong>Offers Assistance:</strong> Clearly express your willingness to help.</li>
+                            <li><strong>Invites Inquiry:</strong> Naturally lead to the question of how you can assist the customer or what they need.</li>
+                            <li><strong>Contextualizes (if available & relevant – integrate naturally):</strong>
+                                <ul class="list-disc pl-5 mt-1">
+                                    <li>If <code>{{system.timeOfDay}}</code> is available, subtly incorporate it.</li>
+                                    <li>If <code>{{user.isReturning}}</code> is true, and <code>{{user.name}}</code> is available, acknowledge them (e.g., "Welcome back, <code>{{user.name}}</code>!"). If just <code>isReturning</code> is true, a general "Welcome back!" is fine.</li>
+                                    <li>If new user or context unavailable, provide a general warm welcome.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Maintains Brevity:</strong> Entire greeting typically 1-2 short sentences.</li>
+                            <li><strong>Adheres to Constraints:</strong>
+                                <ul class="list-disc pl-5 mt-1">
+                                    <li>Do NOT use emojis.</li>
+                                    <li>Do NOT use ALL CAPS.</li>
+                                    <li>Do NOT use multiple exclamation points.</li>
+                                    <li>Do NOT make any medical claims or overpromise.</li>
+                                    <li>Do NOT include any AI signature.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Example Guiding Patterns (for style/content, not verbatim):</strong>
+                                <ul class="list-disc pl-5 mt-1 italic">
+                                    <li>"Good morning! Thanks for reaching out to H2Tab. I'm Elisha, and I'm here to help. How can I assist you today?"</li>
+                                    <li>"Hello there, and welcome to H2Tab! My name is Elisha. It's great to connect with you. What can I do for you today?"</li>
+                                    <li>"Welcome back to H2Tab, <code>{{user.name}}</code>! I'm Elisha. I'm ready to help with any questions you have – what's on your mind?"</li>
+                                </ul>
+                            </li>
+                            <li><strong>Output Quality Checks & Guardrails (Siena System Configuration):</strong>
+                                <ul class="list-disc pl-5 mt-1">
+                                    <li><strong>Fallback:</strong> If AI fails or quality check fails, Siena MUST revert to a predefined default Elisha greeting (e.g., "Hello! I'm Elisha from H2Tab. How can I help you today?").</li>
+                                    <li><strong>Monitoring:</strong> Generated greetings logged and periodically reviewed. Consider A/B testing.</li>
+                                    <li><strong>Keyword Presence:</strong> Ensure "Elisha" and "H2Tab" are in the output.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
-            <div class="content-section" id="definitions">
-                <h2>3. Definitions</h2>
-                <ul>
-                    <li><strong>Siena:</strong> H2Tab's AI platform for customer interaction.</li>
-                    <li><strong>Elisha:</strong> The AI persona implemented within Siena, acting as an AI team member.</li>
-                    <li><strong>Intent (Automation):</strong> A defined set of instructions within Siena designed to handle a specific type of customer query or situation. Siena's core classifier matches a customer's message to an Intent (automation) to trigger it.</li>
-                    <li><strong>Plain English Instructions:</strong> Directives for Elisha written in natural, operational language, as one would instruct a capable human team member, without technical syntax like <code>{{placeholders}}</code> or explicit trigger rule definitions within the instruction draft.</li>
-                    <li><strong>Siena's Core Classifier:</strong> The central Siena mechanism that receives every new customer message and attempts to match it to a defined Intent (automation) based on its configured title or associated training phrases.</li>
-                    <li><strong>Automation Turn:</strong> A single execution cycle of an automation, where it performs its instructed actions and sends a response to the customer, after which it concludes its current activity.</li>
-                    <li><strong>Generative AI Component:</strong> Any part of an automation that instructs Elisha to generate content dynamically (e.g., greetings).</li>
-                    <li><strong>Fallback Message:</strong> A predefined, standard message used if a generative AI component fails or its output is unsuitable.</li>
-                    <li><strong>Collaborative AI Routing:</strong> Siena's feature for creating explanatory notes during handoffs or escalations to human team members.</li>
-                </ul>
+            <div class="connector">▼</div>
+
+            <div id="step2" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 2: Proactively Guide the Conversation to Understand Intent</h3>
+                </div>
+                <div class="step-content">
+                    <p class="mb-2">After the initial greeting (from Step 1), if the customer's need is still unclear, Elisha will ask one of the following open-ended yet guiding questions. Siena will rotate these options:</p>
+                    <div class="action-card">
+                        <h4>Guiding Question Options (Rotated by Siena):</h4>
+                        <ol class="list-decimal pl-5 mt-1 space-y-2">
+                            <li><strong>Option 1 (Broad Categories):</strong> <em>"I'm here to help! Are you looking for information about our H2Tab molecular hydrogen tablets, have a question about an existing order, or is there another way I can assist you today?"</em> (Focus: Main pillars, friendly catch-all)</li>
+                            <li><strong>Option 2 (Direct Guidance):</strong> <em>"To make sure I get you to the right place, could you let me know if your question is about our products, an order you've placed, or perhaps something else?"</em> (Focus: Empathetic clarification for routing)</li>
+                            <li><strong>Option 3 (Exploratory/Learning):</strong> <em>"I'm happy to share more! Feel free to ask any questions you might have about molecular hydrogen, our H2Tab products, or how they could fit into your wellness routine."</em> (Focus: Information gathering phase, wellness aspect)</li>
+                            <li><strong>Option 4 (Topic-Specific):</strong> <em>"I can certainly help with that! To get started, could you give me an idea of what you're looking into? For example, is it about product details, an order query, the science behind H2Tab, or something different?"</em> (Focus: Introduces "science," reinforces brand)</li>
+                            <li><strong>Option 5 (Technical/Account):</strong> <em>"I'm ready to assist! To best direct your query, are you needing help with information on H2Tab, support for an order you've made, or perhaps assistance with using our website or managing your account details?"</em> (Focus: Adds website/account management)</li>
+                            <li><strong>Option 6 (Problem-Solving):</strong> <em>"I understand you need some assistance. To ensure I provide the right support, could you give me a little more context on what you're hoping to achieve today? For instance, are you trying to learn something new, resolve an issue, or explore different options?"</em> (Focus: Clarification around user's desired outcome)</li>
+                        </ol>
+                    </div>
+                </div>
             </div>
 
-            <div class="content-section" id="responsibilities">
-                <h2>4. Responsibilities</h2>
-                <ul>
-                    <li><strong>H2Tab Team Members (Designers/Developers):</strong> Responsible for understanding and applying this SOP when creating or modifying Siena automations, including defining the context, Elisha's role, and her step-by-step instructions. Also responsible for configuring the actual Intents (automations) within the Siena platform, including their titles/training phrases for triggering.</li>
-                    <li><strong>Siena (as Elisha):</strong> Responsible for executing the plain English instructions provided within a triggered automation, adhering to persona and operational guidelines.</li>
-                    <li><strong>H2Tab Management/Review Team:</strong> Responsible for periodically reviewing the effectiveness of automations, adherence to this SOP, and overseeing the quality of generative AI outputs and customer interactions.</li>
-                </ul>
+            <div class="connector">▼</div>
+
+            <div id="step3" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 3: Listen for Keywords and Attempt to Match to Specific Automation Intents</h3>
+                </div>
+                <div class="step-content">
+                    <p class="mb-2">Based on customer's response (to Step 2), analyze input for keywords/phrases indicating a specific need, matching to defined Siena intents.</p>
+                    <p class="text-sm text-gray-600 mb-2">Examples of keywords/phrases (trained in NLU): "cancel my order," "where is my order?", "H2Tab ingredients," "international shipping," "business proposal," "military discount," etc.</p>
+                    <div class="decision-card">
+                        <h4>If a clear match to a specific automation intent is identified with high NLU confidence:</h4>
+                        <ul class="list-disc pl-5 mt-1">
+                            <li>Elisha acknowledges the query (e.g., <em>"Okay, I can certainly help with that!"</em>).</li>
+                            <li>Transitions smoothly (e.g., <em>"Understood, let me get the details for your query on [recognized topic/intent name]."</em>).</li>
+                            <li><strong>(Internal Action):</strong> Siena triggers and hands over to the relevant specific automation intent (e.g., `where_is_my_order_v2`, `cancel_my_order`, `h2tab_ingredients_reactions_inquiry_v1`, etc.). <span class="badge badge-blue">ROUTE TO SPECIFIC INTENT</span></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
-            <div class="content-section" id="guiding-principles">
-                <h2>5. Guiding Principles for Automation Design</h2>
-                <ul>
-                    <li><strong>Alignment with Siena's Core Classifier:</strong> All automation design must respect Siena's fundamental process: customer messages are matched to Intent (automation) titles/training phrases. Instructions within an automation do not influence this matching for subsequent turns.</li>
-                    <li><strong>Single-Turn Focus per Automation:</strong> Each automation should primarily focus on the actions and responses for a single conversational turn. After an automation delivers its message (which may include a question to the customer), its current execution concludes.</li>
-                    <li><strong>Customer Response Drives Next Steps:</strong> The customer's subsequent message will always be processed anew by Siena's Core Classifier to determine the next appropriate automation.</li>
-                    <li><strong>Plain English for Elisha:</strong> Instructions for Elisha must be drafted in clear, direct, natural language, as if briefing a capable human team member. Avoid technical syntax for variables or triggers in the instruction drafts.</li>
-                    <li><strong>Clarity and Maintainability:</strong> Automations should be structured logically to be easily understood, tested, and maintained.</li>
-                </ul>
+            <div class="connector">▼</div>
+
+            <div id="step4" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 4: Handle Ambiguous Responses or Unclear Intent</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card mb-3">
+                        <h4>If customer's response is still vague after Step 2:</h4>
+                        <p class="font-semibold mt-1">Ask for more specific clarification (rotate options):</p>
+                        <ul class="list-disc pl-5 mt-1">
+                            <li><em>"Thanks for clarifying! To make sure I provide the most relevant information, could you tell me a little more about what you're looking for today?"</em></li>
+                            <li><em>"I'm still working to pinpoint exactly what you need. Could you perhaps try explaining it in a different way?"</em></li>
+                            <li><em>"To ensure I'm on the right track, could you offer a bit more detail on the main thing you're hoping to achieve or find out today?"</em></li>
+                            <li>Alternatively (final attempt): <em>"Are you perhaps interested in learning more about how H2Tab works, checking on an order, or is there something else entirely that I can help you look into?"</em></li>
+                        </ul>
+                    </div>
+                    <div class="escalation-card">
+                        <h4>If, after this second clarification attempt, intent is still unclear or seems complex/sensitive:</h4>
+                        <ul class="list-disc pl-5 mt-1">
+                            <li>Adhere to Elisha's escalation protocol (Confidence Threshold for Escalation).</li>
+                            <li>Respond: <em>"Thanks for sharing those details. To make sure we address your query thoroughly and accurately, I'll connect you with a colleague on our team who has specific expertise in this area. They'll be able to provide the best guidance from here and will have everything we've discussed."</em></li>
+                            <li><strong>(Internal Action):</strong> Flag response, escalate to human H2Tab team, generate detailed escalation summary (per Step 6). <span class="badge badge-purple">ESCALATE TO HUMAN TEAM</span></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
-            <h2 style="font-size: 1.75rem; font-weight: 600; color: #1f2937; margin-top: 2.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.75rem;" id="procedure">6. Procedure for Designing and Structuring an Automation</h2>
+            <div class="connector">▼</div>
 
-            <div class="content-section" id="phase1-concept">
-                <h2>Phase 1: Conceptualization & Role Definition</h2>
-                <ol>
-                    <li><strong>Identify Customer Situation:</strong> Clearly define the specific customer scenario, message type (e.g., initial greeting, specific query, vague follow-up), or event that this automation is intended to handle.</li>
-                    <li><strong>Define Elisha's Role & Objective:</strong> For this specific situation, clearly articulate Elisha's primary job and what the automation aims to achieve. This should be documented as "Context & Elisha's Role" at the beginning of the automation's instruction set.
-                        <div class="example-note-custom">
-                            <strong>Example (for an initial greeting automation):</strong><br>
-                            "Context: Customers might start a conversation with H2Tab with a simple greeting or a vague general question..."<br>
-                            "Elisha's Role (Your Job in this Situation): When you, Elisha, receive these kinds of initial messages, your main task is to... 1. Provide a Welcoming Opening... 2. Initiate Query Clarification..."
+            <div id="step5" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 5: General Best Practices (Throughout this Initial Interaction)</h3>
+                </div>
+                <div class="step-content">
+                    <ul class="list-disc pl-5">
+                        <li>Maintain Elisha's Persona: Friendly, professional, personal, confident, informative, approachable, clear, warm.</li>
+                        <li>Demonstrate Empathy and Patience.</li>
+                        <li>Strive for Efficiency.</li>
+                        <li>Use Positive and Helpful Language.</li>
+                        <li>Focus on Accuracy.</li>
+                        <li>Avoid Medical Claims or Overpromising.</li>
+                        <li>Do NOT include any AI signature.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step6" class="step-card documentation-card flow-element">
+                 <div class="step-header"> 
+                    <h3>Step 6: Documentation for Escalation (Summary for Agent)</h3>
+                </div>
+                <div class="step-content">
+                    <p class="font-semibold mb-2">Important: When an escalation to an internal H2Tab team member is triggered from this "Initial Greeting & Query Clarification" intent (as per Step 4), Siena Automation MUST generate and log the following concise summary.</p>
+                    <div class="action-card">
+                        <h4>A. Escalation Record Generation Trigger:</h4>
+                        <p>Initiated when the escalation path within this intent is activated by Elisha.</p>
+                        
+                        <h4 class="mt-3">B. Action: Create Internal Escalation Note/Record:</h4>
+                        <p class="mb-2">Siena Automation will generate and log a structured internal note. Fields to include:</p>
+                        
+                        <div class="space-y-3">
+                            <div class="escalation-field">
+                                <span class="field-name">1. Note Title/Subject (Recommended):</span>
+                                <strong>Instruction:</strong> Populate with a standardized subject line.
+                                <p><span class="siena-value-text">Siena Escalation: {{session.conversationId}} - Initial Greeting & Query Clarification</span></p>
+                            </div>
+                            <div class="escalation-field">
+                                <span class="field-name">2. Date & Time of Escalation:</span>
+                                <strong>Instruction:</strong> Capture the precise moment of escalation.
+                                <p><span class="siena-value-text">{{system.currentTimeISO}}</span></p>
+                            </div>
+                            <div class="escalation-field">
+                                <span class="field-name">3. Siena Conversation ID:</span>
+                                <strong>Instruction:</strong> Include Siena's unique identifier for the conversation.
+                                <p><span class="siena-value-text">{{session.conversationId}}</span></p>
+                            </div>
+                            <div class="escalation-field">
+                                <span class="field-name">4. Escalated From Intent:</span>
+                                <strong>Instruction:</strong> Specify the intent that triggered the escalation.
+                                <p><span class="siena-value-text">Initial Greeting & Query Clarification (Elisha Persona)</span> or <span class="siena-value-text">{{intent.currentName}}</span></p>
+                            </div>
+                            <div class="escalation-field">
+                                <span class="field-name">5. Suspected Issue & Context (Key Indicators):</span>
+                                <ul class="list-none pl-0 mt-1">
+                                    <li class="mb-1">
+                                        <strong>Reason for Escalation (Internal System Note):</strong>
+                                        <p class="ml-2"><strong>Instruction:</strong> The intent logic (Step 4) must set a context variable indicating the specific condition that triggered the escalation.</p>
+                                        <p class="ml-2"><span class="siena-value-text">{{context.escalationReason}}</span> (e.g., "Intent unclear after 2 clarification attempts," "Customer indicated a complex/sensitive issue")</p>
+                                    </li>
+                                    <li>
+                                        <strong>Key Information/Keywords Identified by Elisha:</strong>
+                                        <p class="ml-2"><strong>Instruction:</strong> If Elisha's NLU or intent logic identified potential keywords, store and list them.</p>
+                                        <p class="ml-2"><span class="siena-value-text">{{context.identifiedKeywordsList.join(', ')}}</span></p>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="escalation-field">
+                                <span class="field-name">6. (Optional) AI-Generated Summary of Unclear Inquiry:</span>
+                                <strong>Instruction:</strong> If Siena's generative AI can process the preceding dialogue, instruct it to create a 1-sentence summary of the customer's likely underlying issue based on the interaction before escalation.
+                                <p><span class="siena-value-text">(Highly Conceptual: {{llm.generateIssueSummary(transcript=session.getTranscriptTurns(count=10), objective="Identify customer's core unresolved query")}})</span></p>
+                            </div>
+                            <div class="escalation-field">
+                                <span class="field-name">7. Agent Action Guidance:</span>
+                                <strong>Instruction:</strong> Add static text to guide the agent.
+                                <p><span class="siena-value-text">Review available information to understand the core issue and determine how to best assist the customer.</span></p>
+                            </div>
                         </div>
-                    </li>
-                    <li><strong>Determine Automation Boundaries:</strong> Define where this automation's responsibility begins (i.e., what triggers it, conceptually) and where it ends (i.e., what message it sends before awaiting the next customer reply for re-classification by Siena).</li>
-                </ol>
-            </div>
 
-            <div class="content-section" id="phase2-drafting">
-                <h2>Phase 2: Drafting Elisha's Step-by-Step Instructions</h2>
-                <ol>
-                    <li><strong>Structure:</strong> Organize instructions under a clear heading like "Elisha's Instructions (What to do when this situation occurs)."</li>
-                    <li><strong>Sequential Steps:</strong> Break down Elisha's tasks into logical, numbered steps.</li>
-                    <li><strong>Plain English Wording:</strong> Write each instruction as a clear, direct sentence understandable by an AI team member.
-                        <div class="example-note-custom"><strong>Example:</strong> "Please introduce yourself by your name, 'Elisha,' and mention our company, 'H2Tab.'"</div>
-                    </li>
-                    <li><strong>Describing Dynamic Data:</strong> If Elisha needs to use contextual or dynamic information, describe it naturally.
-                        <div class="example-note-custom"><strong>Example:</strong> "If you recognize that the customer has interacted with H2Tab before, and if their name is available to you, you could say something like, 'Welcome back, [customer's name]!'" (The H2Tab team will ensure Siena is configured to provide this data if Elisha is instructed to use it).</div>
-                    </li>
-                    <li><strong>Conditional Logic:</strong> Describe any decision-making or branching logic in plain English.
-                        <div class="example-note-custom"><strong>Example:</strong> "If the customer expresses interest in product details, proceed to provide a brief overview. Otherwise, if they ask about an order, ask for their order number."</div>
-                    </li>
-                    <li><strong>Concluding the Turn:</strong> Clearly state the final action of the automation for its current turn, usually sending a message and then concluding.
-                        <div class="example-note-custom"><strong>Example:</strong> "Once you have composed and sent this complete message to the customer..., your specific task in this initial interaction scenario is finished."</div>
-                    </li>
-                    <li><strong>General Guidance:</strong> Include a section for "General Guidance for Elisha" to reinforce persona, tone, and important constraints (e.g., empathy, accuracy, no medical claims), as relevant to the automation.</li>
-                    <li><strong>"What Happens Next" Clarification:</strong> Briefly state that after Elisha completes her task, Siena's core system will process the next customer reply to determine subsequent steps. This reinforces the single-turn nature.</li>
-                </ol>
-            </div>
-
-            <div class="content-section" id="phase3-generative">
-                <h2>Phase 3: Handling Generative AI Components (if applicable)</h2>
-                <ol>
-                    <li><strong>Instruction to Generate:</strong> Clearly instruct Elisha when to use a generative AI component (e.g., "please generate a greeting that is warm and welcoming...").</li>
-                    <li><strong>Define Constraints & Persona:</strong> Provide clear guidelines for the generative AI regarding Elisha's persona, tone, style, and any content constraints (e.g., no emojis, mandatory keywords like "Elisha" and "H2Tab").</li>
-                    <li><strong>Mandatory Fallback:</strong> Crucially, for generative components like greetings, instruct that "it's important that Siena uses a standard, high-quality predefined Elisha greeting instead" if the generative AI fails or its output is unsuitable. Provide an example of this fallback message.</li>
-                    <li><strong>Logging for Review (System Note):</strong> Include a note indicating that generative attempts and fallback instances should be logged by the system (if technically feasible within Siena) for the H2Tab team to review for quality assurance and optimization.</li>
-                </ol>
-            </div>
-
-            <div class="content-section" id="phase4-flow">
-                <h2>Phase 4: Designing for Conversational Flow (Multi-Turn Interactions)</h2>
-                <ol>
-                    <li><strong>Acknowledge Re-classification:</strong> Recognize that each customer reply following an automation's turn will be re-processed by Siena's Core Classifier.</li>
-                    <li><strong>Design Focused Automations:</strong> Create separate, focused automations for distinct stages of a potential conversation.
-                        <div class="example-note-custom">
-                            <strong>Example Flow:</strong><br>
-                            <strong>Automation 1</strong> (e.g., "Initial Greeting & First Clarification Prompt") handles the first contact and asks an initial question.<br>
-                            The customer's reply is classified by Siena.<br>
-                            This can lead to:<br>
-                            <strong>Automation 2A</strong> (e.g., "Product Information Request") if the intent is now clear.<br>
-                            <strong>Automation 2B</strong> (e.g., "Secondary Clarification & Potential Escalation") if the intent is still vague.
+                        <div class="example-note">
+                            <h5>Sample Escalation Note (Generated by Siena Automation)</h5>
+                            <p><strong>Customer's first message:</strong> "Hi Elisha"</p>
+                            <p><strong>Elisha's generated greeting (Step 1):</strong> "Hi there! I'm Elisha from H2Tab. Great to connect with you! What can I help you with today?"</p>
+                            <p><strong>Customer's response:</strong> "I have an issue with my recent order, and also something about the tablets themselves that I'm a bit worried about."</p>
+                            <p><strong>Elisha's clarifying question (Step 2):</strong> "Okay, I can look into that. To make sure I get you to the right place, could you let me know if your question is about our products, an order you've placed, or perhaps something else?"</p>
+                            <p><strong>Customer's response:</strong> "It's both. I had a strange reaction to the tablets from my last order, and it's a bit personal and sensitive."</p>
+                            <p><em>(Elisha's logic in Step 4 identifies this as a sensitive issue requiring human attention and escalates).</em></p>
+                            <hr class="my-2 border-gray-300">
+                            <p><strong>Note Title/Subject:</strong> Siena Escalation: CX123459876 - Initial Greeting & Query Clarification</p>
+                            <p><strong>Date & Time of Escalation:</strong> 2025-05-25 04:11:33 AM PST</p>
+                            <p><strong>Siena Conversation ID:</strong> CX123459876</p>
+                            <p><strong>Escalated From Intent:</strong> Initial Greeting & Query Clarification (Elisha Persona)</p>
+                            <p><strong>Suspected Issue & Context (Key Indicators):</strong></p>
+                            <ul class="list-disc pl-5">
+                                <li><strong>Reason for Escalation:</strong> Customer reported a sensitive personal reaction to tablets from a recent order.</li>
+                                <li><strong>Key Information/Keywords Identified by Elisha:</strong> issue, recent order, tablets, worried, strange reaction, personal, sensitive</li>
+                            </ul>
+                            <p><strong>(Optional) AI-Generated Summary of Unclear Inquiry:</strong> Customer reports experiencing a sensitive personal reaction to H2Tab tablets associated with their recent order and requires specialized assistance.</p>
+                            <p><strong>Agent Action Guidance:</strong> Review available information to understand the core issue and determine how to best assist the customer. Exercise particular care given the sensitive nature of the report.</p>
+                            <p class="text-xs italic mt-2">This sample demonstrates how the concise escalation note for the "Initial Greeting & Query Clarification" intent would look, providing the human agent with essential information to take over the conversation effectively.</p>
                         </div>
-                    </li>
-                    <li><strong>Prompt Engineering:</strong> Ensure questions asked by Elisha are designed to elicit responses that help Siena's Core Classifier accurately determine the next appropriate automation.</li>
-                </ol>
+
+                        <h4 class="mt-3">C. Implementation Notes for Siena Configuration:</h4>
+                        <ul class="list-disc pl-5 mt-1 text-sm">
+                            <li>Ensure context variables (<code>{{context.escalationReason}}</code>, <code>{{context.identifiedKeywordsList}}</code>) are populated.</li>
+                            <li>Verify ticketing system integration for full transcript access via Conversation ID.</li>
+                            <li>Test escalation scenarios to confirm note generation.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-
-            <div class="content-section" id="phase5-escalations">
-                <h2>Phase 5: Handling Escalations to Human Team Members</h2>
-                <ol>
-                    <li><strong>Define Escalation Conditions:</strong> Within the relevant automation (e.g., "Secondary Clarification & Potential Escalation"), clearly define the conditions under which Elisha should escalate the conversation to a human.</li>
-                    <li><strong>Elisha's Escalation Message:</strong> Instruct Elisha what to say to the customer when an escalation occurs.
-                        <div class="example-note-custom"><strong>Example:</strong> "Thanks for sharing those details. To make sure we address your query thoroughly... I'll connect you with a colleague..."</div>
-                    </li>
-                    <li><strong>Preparing Information for Handoff Note:</strong> Instruct Elisha to prepare or identify the key pieces of information needed for the handoff note. Siena's "Collaborative AI Routing" feature will use this information. Describe these pieces of information in plain English.
-                        <div class="example-note-custom">
-                            <strong>Example for Elisha's internal preparation:</strong> "For the handoff note, please ensure the following information is available: the reason this conversation is being escalated (e.g., 'customer's need remains unclear after two clarification attempts'), any main topics or keywords the customer mentioned, the unique identifier for this current conversation, the date and time of this escalation, and the name of the automation you are escalating from."<br>
-                            Include any standard guidance for the receiving agent.
-                        </div>
-                    </li>
-                </ol>
-            </div>
-
-            <div class="content-section" id="phase6-review">
-                <h2>Phase 6: Review, Testing, and Iteration</h2>
-                <ol>
-                    <li><strong>Internal Review:</strong> Before deployment, automation designs and instructions should be reviewed by team members for clarity, adherence to this SOP, and persona alignment.</li>
-                    <li><strong>Testing:</strong> Thoroughly test automations with various inputs and scenarios to ensure they function as expected, including generative AI fallbacks and escalation paths.</li>
-                    <li><strong>Monitoring & Iteration:</strong> After deployment, monitor automation performance, customer feedback, and logs (especially for generative AI). Use this data to iteratively refine and improve automations.</li>
-                </ol>
-            </div>
-
-            <div class="content-section" id="monitoring-review-sop">
-                <h2>7. Monitoring and Review of SOP</h2>
-                <p>This SOP will be reviewed at least annually, or as needed when significant changes to the Siena platform or H2Tab's customer engagement strategy occur. Feedback from team members is encouraged to ensure this SOP remains relevant and effective.</p>
-            </div>
-
-        </div> </div> 
-
-    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
+        </div> </div> <button id="scrollToTopBtn" title="Go to top" class="hidden fixed bottom-8 right-8 z-50 p-3 rounded-full shadow-lg focus:outline-none">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
             <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" />
         </svg>
