@@ -4,11 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOP: Designing and Structuring Siena Intent Automations at H2Tab</title>
-    <link rel="stylesheet" href="css/global_styles.css">
+    <link rel="stylesheet" href="global_styles.css">
+    <style>
+        /* Example: Page-specific theme for the top bar and TOC H2 */
+        /* .app-top-bar { background-color: #3182CE; } /* Blue */
+        /* #toc-sidebar h2 { color: #2C5282; } /* Darker Blue */
+        /* #toc-sidebar li a.active, #toc-sidebar li a:hover { background-color: #EBF8FF; color: #2C5282; } */
+        /* #scrollToTopBtn { background-color: #3182CE; } */
+
+        /* Custom styles for example notes if not in global_styles.css */
+        .example-note-custom {
+            background-color: #f0fdfa; /* Light Green from .persona-card */
+            border: 1px dashed #10b981;
+            padding: 0.75rem; margin-top: 0.5rem; margin-bottom: 0.5rem; border-radius: 4px; font-size: 0.9em;
+        }
+        .example-note-custom strong { font-weight: 600; }
+    </style>
 </head>
-<body>
-    <nav class="toc-nav">
-        <h4>Table of Contents</h4>
+<body class="has-toc">
+
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open menu">
+             <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.75rem; height: 1.75rem; fill: none;">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        <span class="library-title-mobile">SOP: Siena Automations</span>
+    </div>
+
+    <nav id="toc-sidebar">
+        <h2>Table of Contents</h2>
         <ul>
             <li><a href="#purpose">1. Purpose</a></li>
             <li><a href="#scope">2. Scope</a></li>
@@ -30,13 +57,16 @@
         </ul>
     </nav>
 
-    <div class="main-content-container">
-        <div class="container">
-            <h2>Standard Operating Procedure (SOP)</h2>
-            <p style="text-align:center; font-size: 1.2em; color: #555; margin-bottom: 30px;">Title: SOP for Designing and Structuring Siena Intent Automations at H2Tab</p>
+    <div id="page-overlay"></div>
 
-            <div class="section-card" id="purpose">
-                <h4>1. Purpose</h4>
+    <div class="main-content-area">
+        <div class="container"> <header style="text-align: center; margin-bottom: 1rem;">
+                <h1>Standard Operating Procedure (SOP)</h1>
+                <p style="font-size: 1.2em; color: #555; margin-bottom: 2rem;">Title: SOP for Designing and Structuring Siena Intent Automations at H2Tab</p>
+            </header>
+
+            <div class="content-section" id="purpose">
+                <h2>1. Purpose</h2>
                 <p>This Standard Operating Procedure (SOP) provides guidelines and a consistent methodology for designing, developing, implementing, and maintaining customer-facing intent automations within the Siena platform for H2Tab. Its purpose is to ensure all automations:</p>
                 <ul>
                     <li>Align with Siena's core operational capabilities and intent classification model.</li>
@@ -47,13 +77,13 @@
                 </ul>
             </div>
 
-            <div class="section-card" id="scope">
-                <h4>2. Scope</h4>
+            <div class="content-section" id="scope">
+                <h2>2. Scope</h2>
                 <p>This SOP applies to all H2Tab team members involved in the conceptualization, design, creation, testing, deployment, and ongoing refinement of Siena intent automations.</p>
             </div>
 
-            <div class="section-card" id="definitions">
-                <h4>3. Definitions</h4>
+            <div class="content-section" id="definitions">
+                <h2>3. Definitions</h2>
                 <ul>
                     <li><strong>Siena:</strong> H2Tab's AI platform for customer interaction.</li>
                     <li><strong>Elisha:</strong> The AI persona implemented within Siena, acting as an AI team member.</li>
@@ -67,8 +97,8 @@
                 </ul>
             </div>
 
-            <div class="section-card" id="responsibilities">
-                <h4>4. Responsibilities</h4>
+            <div class="content-section" id="responsibilities">
+                <h2>4. Responsibilities</h2>
                 <ul>
                     <li><strong>H2Tab Team Members (Designers/Developers):</strong> Responsible for understanding and applying this SOP when creating or modifying Siena automations, including defining the context, Elisha's role, and her step-by-step instructions. Also responsible for configuring the actual Intents (automations) within the Siena platform, including their titles/training phrases for triggering.</li>
                     <li><strong>Siena (as Elisha):</strong> Responsible for executing the plain English instructions provided within a triggered automation, adhering to persona and operational guidelines.</li>
@@ -76,8 +106,8 @@
                 </ul>
             </div>
 
-            <div class="section-card" id="guiding-principles">
-                <h4>5. Guiding Principles for Automation Design</h4>
+            <div class="content-section" id="guiding-principles">
+                <h2>5. Guiding Principles for Automation Design</h2>
                 <ul>
                     <li><strong>Alignment with Siena's Core Classifier:</strong> All automation design must respect Siena's fundamental process: customer messages are matched to Intent (automation) titles/training phrases. Instructions within an automation do not influence this matching for subsequent turns.</li>
                     <li><strong>Single-Turn Focus per Automation:</strong> Each automation should primarily focus on the actions and responses for a single conversational turn. After an automation delivers its message (which may include a question to the customer), its current execution concludes.</li>
@@ -87,14 +117,14 @@
                 </ul>
             </div>
 
-            <h3 id="procedure">6. Procedure for Designing and Structuring an Automation</h3>
+            <h2 style="font-size: 1.75rem; font-weight: 600; color: #1f2937; margin-top: 2.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.75rem;" id="procedure">6. Procedure for Designing and Structuring an Automation</h2>
 
-            <div class="section-card" id="phase1-concept">
-                <h4>Phase 1: Conceptualization & Role Definition</h4>
+            <div class="content-section" id="phase1-concept">
+                <h2>Phase 1: Conceptualization & Role Definition</h2>
                 <ol>
                     <li><strong>Identify Customer Situation:</strong> Clearly define the specific customer scenario, message type (e.g., initial greeting, specific query, vague follow-up), or event that this automation is intended to handle.</li>
                     <li><strong>Define Elisha's Role & Objective:</strong> For this specific situation, clearly articulate Elisha's primary job and what the automation aims to achieve. This should be documented as "Context & Elisha's Role" at the beginning of the automation's instruction set.
-                        <div class="example-note">
+                        <div class="example-note-custom">
                             <strong>Example (for an initial greeting automation):</strong><br>
                             "Context: Customers might start a conversation with H2Tab with a simple greeting or a vague general question..."<br>
                             "Elisha's Role (Your Job in this Situation): When you, Elisha, receive these kinds of initial messages, your main task is to... 1. Provide a Welcoming Opening... 2. Initiate Query Clarification..."
@@ -104,30 +134,30 @@
                 </ol>
             </div>
 
-            <div class="section-card" id="phase2-drafting">
-                <h4>Phase 2: Drafting Elisha's Step-by-Step Instructions</h4>
+            <div class="content-section" id="phase2-drafting">
+                <h2>Phase 2: Drafting Elisha's Step-by-Step Instructions</h2>
                 <ol>
                     <li><strong>Structure:</strong> Organize instructions under a clear heading like "Elisha's Instructions (What to do when this situation occurs)."</li>
                     <li><strong>Sequential Steps:</strong> Break down Elisha's tasks into logical, numbered steps.</li>
                     <li><strong>Plain English Wording:</strong> Write each instruction as a clear, direct sentence understandable by an AI team member.
-                        <div class="example-note"><strong>Example:</strong> "Please introduce yourself by your name, 'Elisha,' and mention our company, 'H2Tab.'"</div>
+                        <div class="example-note-custom"><strong>Example:</strong> "Please introduce yourself by your name, 'Elisha,' and mention our company, 'H2Tab.'"</div>
                     </li>
                     <li><strong>Describing Dynamic Data:</strong> If Elisha needs to use contextual or dynamic information, describe it naturally.
-                        <div class="example-note"><strong>Example:</strong> "If you recognize that the customer has interacted with H2Tab before, and if their name is available to you, you could say something like, 'Welcome back, [customer's name]!'" (The H2Tab team will ensure Siena is configured to provide this data if Elisha is instructed to use it).</div>
+                        <div class="example-note-custom"><strong>Example:</strong> "If you recognize that the customer has interacted with H2Tab before, and if their name is available to you, you could say something like, 'Welcome back, [customer's name]!'" (The H2Tab team will ensure Siena is configured to provide this data if Elisha is instructed to use it).</div>
                     </li>
                     <li><strong>Conditional Logic:</strong> Describe any decision-making or branching logic in plain English.
-                        <div class="example-note"><strong>Example:</strong> "If the customer expresses interest in product details, proceed to provide a brief overview. Otherwise, if they ask about an order, ask for their order number."</div>
+                        <div class="example-note-custom"><strong>Example:</strong> "If the customer expresses interest in product details, proceed to provide a brief overview. Otherwise, if they ask about an order, ask for their order number."</div>
                     </li>
                     <li><strong>Concluding the Turn:</strong> Clearly state the final action of the automation for its current turn, usually sending a message and then concluding.
-                        <div class="example-note"><strong>Example:</strong> "Once you have composed and sent this complete message to the customer..., your specific task in this initial interaction scenario is finished."</div>
+                        <div class="example-note-custom"><strong>Example:</strong> "Once you have composed and sent this complete message to the customer..., your specific task in this initial interaction scenario is finished."</div>
                     </li>
                     <li><strong>General Guidance:</strong> Include a section for "General Guidance for Elisha" to reinforce persona, tone, and important constraints (e.g., empathy, accuracy, no medical claims), as relevant to the automation.</li>
                     <li><strong>"What Happens Next" Clarification:</strong> Briefly state that after Elisha completes her task, Siena's core system will process the next customer reply to determine subsequent steps. This reinforces the single-turn nature.</li>
                 </ol>
             </div>
 
-            <div class="section-card" id="phase3-generative">
-                <h4>Phase 3: Handling Generative AI Components (if applicable)</h4>
+            <div class="content-section" id="phase3-generative">
+                <h2>Phase 3: Handling Generative AI Components (if applicable)</h2>
                 <ol>
                     <li><strong>Instruction to Generate:</strong> Clearly instruct Elisha when to use a generative AI component (e.g., "please generate a greeting that is warm and welcoming...").</li>
                     <li><strong>Define Constraints & Persona:</strong> Provide clear guidelines for the generative AI regarding Elisha's persona, tone, style, and any content constraints (e.g., no emojis, mandatory keywords like "Elisha" and "H2Tab").</li>
@@ -136,12 +166,12 @@
                 </ol>
             </div>
 
-            <div class="section-card" id="phase4-flow">
-                <h4>Phase 4: Designing for Conversational Flow (Multi-Turn Interactions)</h4>
+            <div class="content-section" id="phase4-flow">
+                <h2>Phase 4: Designing for Conversational Flow (Multi-Turn Interactions)</h2>
                 <ol>
                     <li><strong>Acknowledge Re-classification:</strong> Recognize that each customer reply following an automation's turn will be re-processed by Siena's Core Classifier.</li>
                     <li><strong>Design Focused Automations:</strong> Create separate, focused automations for distinct stages of a potential conversation.
-                        <div class="example-note">
+                        <div class="example-note-custom">
                             <strong>Example Flow:</strong><br>
                             <strong>Automation 1</strong> (e.g., "Initial Greeting & First Clarification Prompt") handles the first contact and asks an initial question.<br>
                             The customer's reply is classified by Siena.<br>
@@ -154,15 +184,15 @@
                 </ol>
             </div>
 
-            <div class="section-card" id="phase5-escalations">
-                <h4>Phase 5: Handling Escalations to Human Team Members</h4>
+            <div class="content-section" id="phase5-escalations">
+                <h2>Phase 5: Handling Escalations to Human Team Members</h2>
                 <ol>
                     <li><strong>Define Escalation Conditions:</strong> Within the relevant automation (e.g., "Secondary Clarification & Potential Escalation"), clearly define the conditions under which Elisha should escalate the conversation to a human.</li>
                     <li><strong>Elisha's Escalation Message:</strong> Instruct Elisha what to say to the customer when an escalation occurs.
-                        <div class="example-note"><strong>Example:</strong> "Thanks for sharing those details. To make sure we address your query thoroughly... I'll connect you with a colleague..."</div>
+                        <div class="example-note-custom"><strong>Example:</strong> "Thanks for sharing those details. To make sure we address your query thoroughly... I'll connect you with a colleague..."</div>
                     </li>
                     <li><strong>Preparing Information for Handoff Note:</strong> Instruct Elisha to prepare or identify the key pieces of information needed for the handoff note. Siena's "Collaborative AI Routing" feature will use this information. Describe these pieces of information in plain English.
-                        <div class="example-note">
+                        <div class="example-note-custom">
                             <strong>Example for Elisha's internal preparation:</strong> "For the handoff note, please ensure the following information is available: the reason this conversation is being escalated (e.g., 'customer's need remains unclear after two clarification attempts'), any main topics or keywords the customer mentioned, the unique identifier for this current conversation, the date and time of this escalation, and the name of the automation you are escalating from."<br>
                             Include any standard guidance for the receiving agent.
                         </div>
@@ -170,8 +200,8 @@
                 </ol>
             </div>
 
-            <div class="section-card" id="phase6-review">
-                <h4>Phase 6: Review, Testing, and Iteration</h4>
+            <div class="content-section" id="phase6-review">
+                <h2>Phase 6: Review, Testing, and Iteration</h2>
                 <ol>
                     <li><strong>Internal Review:</strong> Before deployment, automation designs and instructions should be reviewed by team members for clarity, adherence to this SOP, and persona alignment.</li>
                     <li><strong>Testing:</strong> Thoroughly test automations with various inputs and scenarios to ensure they function as expected, including generative AI fallbacks and escalation paths.</li>
@@ -179,28 +209,15 @@
                 </ol>
             </div>
 
-            <div class="section-card" id="monitoring-review-sop">
-                <h4>7. Monitoring and Review of SOP</h4>
+            <div class="content-section" id="monitoring-review-sop">
+                <h2>7. Monitoring and Review of SOP</h2>
                 <p>This SOP will be reviewed at least annually, or as needed when significant changes to the Siena platform or H2Tab's customer engagement strategy occur. Feedback from team members is encouraged to ensure this SOP remains relevant and effective.</p>
             </div>
 
-        </div>
-    </div>
+        </div> </div> <button id="scrollToTopBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+
     <script src="global_scripts.js"></script>
-    <style>
-        /* Additional style for example notes, if not in global_styles.css */
-        .example-note {
-            background-color: #f0f8ff; /* AliceBlue */
-            border: 1px dashed #add8e6; /* LightBlue */
-            padding: 10px;
-            margin-top: 8px;
-            margin-bottom: 8px;
-            border-radius: 4px;
-            font-size: 0.9em;
-        }
-        .example-note strong {
-            font-weight: 600;
-        }
-    </style>
 </body>
 </html>
