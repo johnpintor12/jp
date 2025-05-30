@@ -9,79 +9,56 @@
     <link rel="stylesheet" href="css/global_styles.css"> 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <style>
-        /* Theme-specific styles for SOP Page (Light Slate/Gray Theme) */
+        /* Theme-specific styles for SOP Page (Blue Theme) */
         :root {
-            --page-theme-color-main: #64748b; /* Slate-500 */
-            --page-theme-color-darker: #475569; /* Slate-600 */
-            --page-theme-color-lighter: #cbd5e1; /* Slate-300 */
-            --page-theme-color-lightest: #f1f5f9; /* Slate-100 */
-            --top-bar-height: 60px; /* Defined here if not in linked global_styles.css */
+            --top-bar-height: 60px; 
+            --page-theme-color-main: #3b82f6; /* Blue-500 */
+            --page-theme-color-darker: #2563eb; /* Blue-600 */
+            --page-theme-color-lighter: #bfdbfe; /* Blue-200 */
+            --page-theme-color-lightest: #eff6ff; /* Blue-50 */
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f9fafb; /* Tailwind: bg-slate-50 */
-        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
         
-        /* Styles from global_styles.css might be here, replicating key structural ones if needed */
-        /* Forcing sidebar to be visible on desktop by default if global_styles.css handles mobile-first toggle */
-        @media (min-width: 1024px) { /* lg breakpoint from your global_styles.css example */
+        @media (min-width: 1024px) { /* lg breakpoint */
             body.has-toc { display: flex; }
             #toc-sidebar {
                 transform: translateX(0);
-                position: sticky;
-                top: 0; /* Align with the very top of the viewport */
-                height: 100vh;
-                box-shadow: none;
-                border-right: 1px solid #e5e7eb; /* Tailwind: border-slate-200 */
+                position: sticky; top: 0; height: 100vh;
+                box-shadow: none; border-right: 1px solid #e5e7eb;
             }
-            .main-content-area {
-                 padding-top: 1.5rem; /* Tailwind: pt-6 */
-            }
+            .main-content-area { padding-top: 1.5rem; }
             .app-top-bar, #menu-toggle, #page-overlay { display: none !important; }
         }
 
-
         .app-top-bar { 
-            background-color: var(--page-theme-color-main);
-            /* Other styles like position, height, display flex are assumed from your global_styles.css */
+            background-color: var(--page-theme-color-main); 
             position: fixed; top: 0; left: 0; width: 100%; height: var(--top-bar-height);
             color: white; display: flex; align-items: center; padding: 0 1rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 150;
         }
-         #menu-toggle { /* Ensure it's styled if global_styles.css isn't loaded/complete */
+        #menu-toggle { 
             background: transparent; border: none; color: white; padding: 0.5rem; cursor: pointer;
         }
         #menu-toggle svg { width: 1.75rem; height: 1.75rem; }
-
+        .library-title-mobile { margin-left: 0.75rem; font-weight: 600; font-size: 1.125rem; }
 
         #toc-sidebar {
-            width: 280px; /* Tailwind: w-72 approx */
-            background-color: #ffffff; /* Tailwind: bg-white */
-            padding: 1.5rem; /* Tailwind: p-6 */
-            /* Other styles like position, height, overflow are assumed from your global_styles.css */
+            width: 280px; background-color: #ffffff; padding: 1.5rem; 
             position: fixed; left: 0; top: var(--top-bar-height); height: calc(100vh - var(--top-bar-height));
             overflow-y: auto; z-index: 100; transform: translateX(-100%); transition: transform 0.3s ease-in-out;
-             border-right: 1px solid #e5e7eb;
+            border-right: 1px solid #e5e7eb;
         }
         #toc-sidebar.open { transform: translateX(0); }
-
         #toc-sidebar h2 { /* SOP Navigation title */
             color: var(--page-theme-color-main); 
-            font-size: 1.25rem; /* Tailwind: text-xl */
-            font-weight: 700; /* Tailwind: font-bold */
-            margin-bottom: 1.5rem; /* Tailwind: mb-6 */
-            padding-bottom: 0.5rem; /* Tailwind: pb-2 */
-            border-bottom: 1px solid #e5e7eb; /* Tailwind: border-slate-200 */
+            font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb;
         }
         #toc-sidebar ul { list-style: none; padding: 0; }
         #toc-sidebar li a {
-            display: block; padding: 0.5rem 0.5rem; /* Tailwind: py-2 px-2 */
-            color: #374151; /* Tailwind: text-slate-700 */
+            display: block; padding: 0.5rem 0.5rem; color: #374151;
             text-decoration: none; font-size: 0.9rem; border-radius: 4px;
             transition: background-color 0.2s ease, color 0.2s ease;
         }
@@ -89,7 +66,7 @@
         #toc-sidebar li a.active {
             background-color: var(--page-theme-color-lightest);
             color: var(--page-theme-color-main);
-            font-weight: 500; /* Tailwind: font-medium */
+            font-weight: 500; 
         }
         #toc-sidebar li a.back-link {
             color: var(--page-theme-color-main); font-weight: 500; margin-bottom: 1rem;
@@ -98,90 +75,73 @@
         }
         #toc-sidebar li a.back-link svg { margin-right: 0.5rem; }
         #toc-sidebar li a.back-link:hover { color: var(--page-theme-color-darker); background-color: transparent; }
-
-        #toc-sidebar ul ul { padding-left: 1rem; margin-top: 0.25rem; }
-        #toc-sidebar ul ul li a { 
-            font-size: 0.85rem; 
-            color: #6b7280; /* Tailwind: text-slate-500 */
-        }
-         #toc-sidebar ul ul li a:hover,
-         #toc-sidebar ul ul li a.active {
+        #toc-sidebar ul ul { padding-left: 1rem; margin-top: 0.25rem; list-style: none;}
+        #toc-sidebar ul ul li a { font-size: 0.85rem; color: #6b7280; }
+        #toc-sidebar ul ul li a:hover,
+        #toc-sidebar ul ul li a.active { 
             color: var(--page-theme-color-main);
             background-color: var(--page-theme-color-lighter);
-         }
+        }
         
         .main-content-area {
-            padding: 1.5rem; /* Tailwind: p-6 */
-            padding-top: calc(var(--top-bar-height) + 1.5rem); /* Space for fixed top bar on mobile */
+            padding: 1.5rem; 
+            padding-top: calc(var(--top-bar-height) + 1.5rem);
         }
         @media (min-width: 1024px) {
-            .main-content-area {
-              /*  margin-left: 280px; /* Width of sidebar */
-                padding-top: 1.5rem;
-            }
+            .main-content-area { /* margin-left: 280px; */ padding-top: 1.5rem; }
         }
 
-        .sop-section-header {
-            background-color: var(--page-theme-color-main);
-            color: white;
-            padding: 1rem 1.5rem; /* Tailwind: px-6 py-4 */
-            border-bottom: 1px solid #e2e8f0; /* Slate-200 */
-            border-radius: 8px 8px 0 0; /* Match card radius */
-        }
-        .sop-section-header h3 { font-size: 1.25rem; font-weight: 600; } /* Tailwind: text-xl font-semibold */
-        
-        .sop-content-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Tailwind: shadow-md */
-            margin-bottom: 1.5rem; /* Tailwind: mb-6 */
-            overflow: hidden;
+        /* Using .content-section for main SOP sections */
+        .content-section {
+            background-color: white; border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            margin-bottom: 1.5rem; padding: 1.5rem; 
             scroll-margin-top: calc(var(--top-bar-height) + 20px);
         }
-        .sop-content-card .content { padding: 1.5rem; } /* Tailwind: p-6 */
-        
-        .sop-content-card h4 { /* For sub-headings within SOP sections */
-            font-size: 1.125rem; /* Tailwind: text-lg */
-            font-weight: 600; /* Tailwind: font-semibold */
-            color: #334155; /* Slate-700 */
-            margin-top: 1rem; /* Tailwind: mt-4 */
-            margin-bottom: 0.5rem; /* Tailwind: mb-2 */
+        .content-section h2 { /* For "1. Purpose", "2. Scope", etc. */
+            font-size: 1.5rem; font-weight: 600; color: #1f2937; 
+            margin-bottom: 1rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem;
         }
-        .sop-content-card ul { list-style-type: disc; padding-left: 1.5rem; /* Tailwind: pl-6 */ }
-        .sop-content-card ul li { margin-bottom: 0.5rem; font-size: 0.9rem; } /* Tailwind: mb-2 */
-        .sop-content-card ol { list-style-type: decimal; padding-left: 1.5rem; }
-        .sop-content-card ol li { margin-bottom: 0.75rem; font-size: 0.9rem; }
+        .content-section h3 { /* For "Phase X: ..." titles */
+            font-size: 1.25rem; font-weight: 600; color: var(--page-theme-color-darker);
+            margin-top: 1.5rem; margin-bottom: 0.75rem;
+        }
+         .content-section h4 { /* For sub-headings within phases, e.g., "A. Escalation Record..." */
+            font-size: 1.1rem; font-weight: 600; color: #374151; 
+            margin-top: 1rem; margin-bottom: 0.5rem;
+        }
 
 
-        .example-note { /* Custom class for example notes */
-            background-color: #f0fdfa; /* Tailwind: bg-emerald-50 */
-            border: 1px dashed #10b981; /* Tailwind: border-emerald-500 */
-            padding: 0.75rem; /* Tailwind: p-3 */
-            margin-top: 0.5rem; /* Tailwind: mt-2 */
-            margin-bottom: 1rem; /* Tailwind: mb-4 */
-            border-radius: 0.375rem; /* Tailwind: rounded-md */
-            font-size: 0.875rem; /* Tailwind: text-sm */
+        .example-note {
+            background-color: #f3f4f6; 
+            border: 1px dashed #d1d5db; 
+            padding: 1rem; margin-top: 1rem; margin-bottom: 1rem; border-radius: 6px;
         }
-        .example-note strong { font-weight: 600; } /* Tailwind: font-semibold */
+        .example-note h5 { /* Title for example note block */
+            font-weight: 600; color: #1f2937; margin-bottom: 0.5rem; font-size: 1.1rem;
+        }
+        .example-note p, .example-note li { font-size: 0.875rem; color: #374151; }
+        .example-note strong { color: #111827; } /* For field names or emphasis in example */
 
         #scrollToTopBtn { 
             background-color: var(--page-theme-color-main); 
-            /* Other styles like position, display are assumed from your global_styles.css */
             display: none; position: fixed; bottom: 30px; right: 30px; z-index: 99;
             border: none; outline: none; color: white; cursor: pointer;
             padding: 12px 15px; border-radius: 50%; font-size: 18px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         #scrollToTopBtn:hover { background-color: var(--page-theme-color-darker); }
+        
+        ul, ol { padding-left: 1.5rem; } /* Default padding for lists */
+        #toc-sidebar ul, #toc-sidebar ul ul { padding-left: 0; } /* Reset for TOC */
+        li { margin-bottom: 0.5rem; }
+        .flow-element { position: relative; margin-bottom: 20px; }
+        .flow-element:not(:last-child)::after { content: ''; position: absolute; left: 50%; bottom: -20px; transform: translateX(-50%); width: 2px; height: 20px; background-color: #cbd5e1; z-index: -1; }
+
 
         @media print {
-            .sop-section-header { 
-                background-color: var(--page-theme-color-lighter) !important; 
-                color: var(--page-theme-color-darker) !important; 
-                -webkit-print-color-adjust: exact; print-color-adjust: exact;
-            }
+            .content-section h2 { color: var(--page-theme-color-darker) !important; }
             #toc-sidebar h2 { color: var(--page-theme-color-main) !important; }
-            /* Additional print styles from your global_styles.css would apply here */
         }
     </style>
 </head>
@@ -193,37 +153,37 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
         </button>
-        <span class="library-title-mobile ml-3 font-semibold text-lg">SOP: Siena Automations</span>
+        <span class="library-title-mobile">SOP: Siena Automations</span>
     </div>
     <div id="page-overlay"></div>
 
     <nav id="toc-sidebar">
-        <h2>SOP Navigation</h2>
-        <ul>
+        <h2>SOP Navigation</h2> <ul>
             <li>
-                <a href="index.html" class="back-link"> <svg class="inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <a href="index.html" class="back-link"> 
+                    <svg class="inline-block h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                     </svg>
                     Back to Library
                 </a>
             </li>
-            <li><a href="#sop-purpose">1. Purpose</a></li>
-            <li><a href="#sop-scope">2. Scope</a></li>
-            <li><a href="#sop-definitions">3. Definitions</a></li>
-            <li><a href="#sop-responsibilities">4. Responsibilities</a></li>
-            <li><a href="#sop-guiding-principles">5. Guiding Principles</a></li>
+            <li><a href="#purpose">1. Purpose</a></li>
+            <li><a href="#scope">2. Scope</a></li>
+            <li><a href="#definitions">3. Definitions</a></li>
+            <li><a href="#responsibilities">4. Responsibilities</a></li>
+            <li><a href="#guiding-principles">5. Guiding Principles</a></li>
             <li>
-                <a href="#sop-procedure">6. Procedure for Design & Structure</a>
+                <a href="#procedure">6. Procedure for Design & Structure</a>
                 <ul>
-                    <li><a href="#sop-phase1-concept">Phase 1: Conceptualization</a></li>
-                    <li><a href="#sop-phase2-drafting">Phase 2: Drafting Instructions</a></li>
-                    <li><a href="#sop-phase3-generative">Phase 3: Handling Generative AI</a></li>
-                    <li><a href="#sop-phase4-flow">Phase 4: Conversational Flow</a></li>
-                    <li><a href="#sop-phase5-escalations">Phase 5: Handling Escalations</a></li>
-                    <li><a href="#sop-phase6-review">Phase 6: Review & Iteration</a></li>
+                    <li><a href="#phase1-concept">Phase 1: Conceptualization</a></li>
+                    <li><a href="#phase2-drafting">Phase 2: Drafting Instructions</a></li>
+                    <li><a href="#phase3-generative">Phase 3: Handling Generative AI</a></li>
+                    <li><a href="#phase4-flow">Phase 4: Conversational Flow</a></li>
+                    <li><a href="#phase5-escalations">Phase 5: Handling Escalations</a></li>
+                    <li><a href="#phase6-review">Phase 6: Review & Iteration</a></li>
                 </ul>
             </li>
-            <li><a href="#sop-monitoring-review">7. Monitoring and Review of SOP</a></li>
+            <li><a href="#monitoring-review-sop">7. Monitoring and Review of SOP</a></li>
         </ul>
     </nav>
 
@@ -231,177 +191,169 @@
         <header class="text-center mb-10 pt-4 md:pt-0"> 
             <h1 class="text-3xl font-bold text-gray-800">Standard Operating Procedure (SOP)</h1>
             <p class="text-lg text-gray-600">Designing and Structuring Siena Intent Automations at H2Tab</p>
-            <p class="text-sm text-gray-500 mt-2">SOP Version: 2.0 | Date: May 30, 2025 | Last Reviewed: May 30, 2025</p> </header>
+            <p class="text-sm text-gray-500 mt-2">SOP Version: 2.0 | Date: May 30, 2025 | Last Reviewed: May 30, 2025</p>
+        </header>
 
         <div class="max-w-4xl mx-auto">
 
-            <div id="sop-purpose" class="sop-content-card flow-element">
-                <div class="sop-section-header"><h3>1. Purpose</h3></div>
-                <div class="content">
-                    <p>This Standard Operating Procedure (SOP) provides guidelines and a consistent methodology for designing, developing, implementing, and maintaining customer-facing intent automations within the Siena platform for H2Tab. Its purpose is to ensure all automations:</p>
-                    <ul>
-                        <li>Align with Siena's core operational capabilities and intent classification model.</li>
-                        <li>Effectively embody the Elisha persona.</li>
-                        <li>Are clear for Siena (as Elisha, an AI team member) to execute.</li>
-                        <li>Promote a positive and efficient customer experience.</li>
-                        <li>Are understandable and maintainable by the H2Tab team.</li>
-                    </ul>
-                </div>
+            <div id="purpose" class="content-section flow-element">
+                <h2>1. Purpose</h2>
+                <p>This Standard Operating Procedure (SOP) provides guidelines and a consistent methodology for designing, developing, implementing, and maintaining customer-facing intent automations within the Siena platform for H2Tab. Its purpose is to ensure all automations:</p>
+                <ul>
+                    <li>Align with Siena's core operational capabilities and intent classification model.</li>
+                    <li>Effectively embody the Elisha persona.</li>
+                    <li>Are clear for Siena (as Elisha, an AI team member) to execute.</li>
+                    <li>Promote a positive and efficient customer experience.</li>
+                    <li>Are understandable and maintainable by the H2Tab team.</li>
+                </ul>
             </div>
+            <div class="connector">▼</div>
 
-            <div id="sop-scope" class="sop-content-card flow-element">
-                <div class="sop-section-header"><h3>2. Scope</h3></div>
-                <div class="content">
-                    <p>This SOP applies to all H2Tab team members involved in the conceptualization, design, creation, testing, deployment, and ongoing refinement of Siena intent automations.</p>
-                </div>
+            <div id="scope" class="content-section flow-element">
+                <h2>2. Scope</h2>
+                <p>This SOP applies to all H2Tab team members involved in the conceptualization, design, creation, testing, deployment, and ongoing refinement of Siena intent automations.</p>
             </div>
+            <div class="connector">▼</div>
 
-            <div id="sop-definitions" class="sop-content-card flow-element">
-                <div class="sop-section-header"><h3>3. Definitions</h3></div>
-                <div class="content">
-                    <ul>
-                        <li><strong>Siena:</strong> H2Tab's AI platform for customer interaction.</li>
-                        <li><strong>Elisha:</strong> The AI persona implemented within Siena, acting as an AI team member.</li>
-                        <li><strong>Intent (Automation):</strong> A defined set of instructions within Siena designed to handle a specific type of customer query or situation. Siena's core classifier matches a customer's message to an Intent (automation) to trigger it.</li>
-                        <li><strong>Plain English Instructions:</strong> Directives for Elisha written in natural, operational language, as one would instruct a capable human team member, without technical syntax like <code>{{placeholders}}</code> or explicit trigger rule definitions within the instruction draft.</li>
-                        <li><strong>Siena's Core Classifier:</strong> The central Siena mechanism that receives every new customer message and attempts to match it to a defined Intent (automation) based on its configured title or associated training phrases.</li>
-                        <li><strong>Automation Turn:</strong> A single execution cycle of an automation, where it performs its instructed actions and sends a response to the customer, after which it concludes its current activity.</li>
-                        <li><strong>Generative AI Component:</strong> Any part of an automation that instructs Elisha to generate content dynamically (e.g., greetings).</li>
-                        <li><strong>Fallback Message:</strong> A predefined, standard message used if a generative AI component fails or its output is unsuitable.</li>
-                        <li><strong>Collaborative AI Routing:</strong> Siena's feature for creating explanatory notes during handoffs or escalations to human team members.</li>
-                    </ul>
-                </div>
+            <div id="definitions" class="content-section flow-element">
+                <h2>3. Definitions</h2>
+                <ul>
+                    <li><strong>Siena:</strong> H2Tab's AI platform for customer interaction.</li>
+                    <li><strong>Elisha:</strong> The AI persona implemented within Siena, acting as an AI team member.</li>
+                    <li><strong>Intent (Automation):</strong> A defined set of instructions within Siena designed to handle a specific type of customer query or situation. Siena's core classifier matches a customer's message to an Intent (automation) to trigger it.</li>
+                    <li><strong>Plain English Instructions:</strong> Directives for Elisha written in natural, operational language, as one would instruct a capable human team member, without technical syntax like <code>{{placeholders}}</code> or explicit trigger rule definitions within the instruction draft.</li>
+                    <li><strong>Siena's Core Classifier:</strong> The central Siena mechanism that receives every new customer message and attempts to match it to a defined Intent (automation) based on its configured title or associated training phrases.</li>
+                    <li><strong>Automation Turn:</strong> A single execution cycle of an automation, where it performs its instructed actions and sends a response to the customer, after which it concludes its current activity.</li>
+                    <li><strong>Generative AI Component:</strong> Any part of an automation that instructs Elisha to generate content dynamically (e.g., greetings).</li>
+                    <li><strong>Fallback Message:</strong> A predefined, standard message used if a generative AI component fails or its output is unsuitable.</li>
+                    <li><strong>Collaborative AI Routing:</strong> Siena's feature for creating explanatory notes during handoffs or escalations to human team members.</li>
+                </ul>
             </div>
+            <div class="connector">▼</div>
 
-            <div id="sop-responsibilities" class="sop-content-card flow-element">
-                <div class="sop-section-header"><h3>4. Responsibilities</h3></div>
-                <div class="content">
-                     <ul>
-                        <li><strong>H2Tab Team Members (Designers/Developers):</strong> Responsible for understanding and applying this SOP when creating or modifying Siena automations, including defining the context, Elisha's role, and her step-by-step instructions. Also responsible for configuring the actual Intents (automations) within the Siena platform, including their titles/training phrases for triggering.</li>
-                        <li><strong>Siena (as Elisha):</strong> Responsible for executing the plain English instructions provided within a triggered automation, adhering to persona and operational guidelines.</li>
-                        <li><strong>H2Tab Management/Review Team:</strong> Responsible for periodically reviewing the effectiveness of automations, adherence to this SOP, and overseeing the quality of generative AI outputs and customer interactions.</li>
-                    </ul>
-                </div>
+            <div id="responsibilities" class="content-section flow-element">
+                <h2>4. Responsibilities</h2>
+                 <ul>
+                    <li><strong>H2Tab Team Members (Designers/Developers):</strong> Responsible for understanding and applying this SOP when creating or modifying Siena automations, including defining the context, Elisha's role, and her step-by-step instructions. Also responsible for configuring the actual Intents (automations) within the Siena platform, including their titles/training phrases for triggering.</li>
+                    <li><strong>Siena (as Elisha):</strong> Responsible for executing the plain English instructions provided within a triggered automation, adhering to persona and operational guidelines.</li>
+                    <li><strong>H2Tab Management/Review Team:</strong> Responsible for periodically reviewing the effectiveness of automations, adherence to this SOP, and overseeing the quality of generative AI outputs and customer interactions.</li>
+                </ul>
             </div>
+            <div class="connector">▼</div>
 
-            <div id="sop-guiding-principles" class="sop-content-card flow-element">
-                <div class="sop-section-header"><h3>5. Guiding Principles for Automation Design</h3></div>
-                <div class="content">
-                    <ul>
-                        <li><strong>Alignment with Siena's Core Classifier:</strong> All automation design must respect Siena's fundamental process: customer messages are matched to Intent (automation) titles/training phrases. Instructions within an automation do not influence this matching for subsequent turns.</li>
-                        <li><strong>Single-Turn Focus per Automation:</strong> Each automation should primarily focus on the actions and responses for a single conversational turn. After an automation delivers its message (which may include a question to the customer), its current execution concludes.</li>
-                        <li><strong>Customer Response Drives Next Steps:</strong> The customer's subsequent message will always be processed anew by Siena's Core Classifier to determine the next appropriate automation.</li>
-                        <li><strong>Plain English for Elisha:</strong> Instructions for Elisha must be drafted in clear, direct, natural language, as if briefing a capable human team member. Avoid technical syntax for variables or triggers in the instruction drafts.</li>
-                        <li><strong>Clarity and Maintainability:</strong> Automations should be structured logically to be easily understood, tested, and maintained.</li>
-                    </ul>
-                </div>
+            <div id="guiding-principles" class="content-section flow-element">
+                <h2>5. Guiding Principles for Automation Design</h2>
+                <ul>
+                    <li><strong>Alignment with Siena's Core Classifier:</strong> All automation design must respect Siena's fundamental process: customer messages are matched to Intent (automation) titles/training phrases. Instructions within an automation do not influence this matching for subsequent turns.</li>
+                    <li><strong>Single-Turn Focus per Automation:</strong> Each automation should primarily focus on the actions and responses for a single conversational turn. After an automation delivers its message (which may include a question to the customer), its current execution concludes.</li>
+                    <li><strong>Customer Response Drives Next Steps:</strong> The customer's subsequent message will always be processed anew by Siena's Core Classifier to determine the next appropriate automation.</li>
+                    <li><strong>Plain English for Elisha:</strong> Instructions for Elisha must be drafted in clear, direct, natural language, as if briefing a capable human team member. Avoid technical syntax for variables or triggers in the instruction drafts.</li>
+                    <li><strong>Clarity and Maintainability:</strong> Automations should be structured logically to be easily understood, tested, and maintained.</li>
+                </ul>
             </div>
+            <div class="connector">▼</div>
             
-            <div id="sop-procedure" class="sop-content-card flow-element">
-                <div class="sop-section-header"><h3>6. Procedure for Designing and Structuring an Automation</h3></div>
-                <div class="content">
-                    <div id="sop-phase1-concept" class="mb-4">
-                        <h4>Phase 1: Conceptualization & Role Definition</h4>
-                        <ol>
-                            <li><strong>Identify Customer Situation:</strong> Clearly define the specific customer scenario, message type (e.g., initial greeting, specific query, vague follow-up), or event that this automation is intended to handle.</li>
-                            <li><strong>Define Elisha's Role & Objective:</strong> For this specific situation, clearly articulate Elisha's primary job and what the automation aims to achieve. This should be documented as "Context & Elisha's Role" at the beginning of the automation's instruction set.
-                                <div class="example-note">
-                                    <strong>Example (for an initial greeting automation):</strong><br>
-                                    "Context: Customers might start a conversation with H2Tab with a simple greeting or a vague general question..."<br>
-                                    "Elisha's Role (Your Job in this Situation): When you, Elisha, receive these kinds of initial messages, your main task is to... 1. Provide a Welcoming Opening... 2. Initiate Query Clarification..."
-                                </div>
-                            </li>
-                            <li><strong>Determine Automation Boundaries:</strong> Define where this automation's responsibility begins (i.e., what triggers it, conceptually) and where it ends (i.e., what message it sends before awaiting the next customer reply for re-classification by Siena).</li>
-                        </ol>
-                    </div>
-
-                    <div id="sop-phase2-drafting" class="mb-4">
-                        <h4>Phase 2: Drafting Elisha's Step-by-Step Instructions</h4>
-                        <ol>
-                            <li><strong>Structure:</strong> Organize instructions under a clear heading like "Elisha's Instructions (What to do when this situation occurs)."</li>
-                            <li><strong>Sequential Steps:</strong> Break down Elisha's tasks into logical, numbered steps.</li>
-                            <li><strong>Plain English Wording:</strong> Write each instruction as a clear, direct sentence understandable by an AI team member.
-                                <div class="example-note"><strong>Example:</strong> "Please introduce yourself by your name, 'Elisha,' and mention our company, 'H2Tab.'"</div>
-                            </li>
-                            <li><strong>Describing Dynamic Data:</strong> If Elisha needs to use contextual or dynamic information, describe it naturally.
-                                <div class="example-note"><strong>Example:</strong> "If you recognize that the customer has interacted with H2Tab before, and if their name is available to you, you could say something like, 'Welcome back, [customer's name]!'" (The H2Tab team will ensure Siena is configured to provide this data if Elisha is instructed to use it).</div>
-                            </li>
-                            <li><strong>Conditional Logic:</strong> Describe any decision-making or branching logic in plain English.
-                                <div class="example-note"><strong>Example:</strong> "If the customer expresses interest in product details, proceed to provide a brief overview. Otherwise, if they ask about an order, ask for their order number."</div>
-                            </li>
-                            <li><strong>Concluding the Turn:</strong> Clearly state the final action of the automation for its current turn, usually sending a message and then concluding.
-                                <div class="example-note"><strong>Example:</strong> "Once you have composed and sent this complete message to the customer..., your specific task in this initial interaction scenario is finished."</div>
-                            </li>
-                            <li><strong>General Guidance:</strong> Include a section for "General Guidance for Elisha" to reinforce persona, tone, and important constraints (e.g., empathy, accuracy, no medical claims), as relevant to the automation.</li>
-                            <li><strong>"What Happens Next" Clarification:</strong> Briefly state that after Elisha completes her task, Siena's core system will process the next customer reply to determine subsequent steps. This reinforces the single-turn nature.</li>
-                        </ol>
-                    </div>
-
-                    <div id="sop-phase3-generative" class="mb-4">
-                        <h4>Phase 3: Handling Generative AI Components (if applicable)</h4>
-                        <ol>
-                            <li><strong>Instruction to Generate:</strong> Clearly instruct Elisha when to use a generative AI component (e.g., "please generate a greeting that is warm and welcoming...").</li>
-                            <li><strong>Define Constraints & Persona:</strong> Provide clear guidelines for the generative AI regarding Elisha's persona, tone, style, and any content constraints (e.g., no emojis, mandatory keywords like "Elisha" and "H2Tab").</li>
-                            <li><strong>Mandatory Fallback:</strong> Crucially, for generative components like greetings, instruct that "it's important that Siena uses a standard, high-quality predefined Elisha greeting instead" if the generative AI fails or its output is unsuitable. Provide an example of this fallback message.</li>
-                            <li><strong>Logging for Review (System Note):</strong> Include a note indicating that generative attempts and fallback instances should be logged by the system (if technically feasible within Siena) for the H2Tab team to review for quality assurance and optimization.</li>
-                        </ol>
-                    </div>
-
-                    <div id="sop-phase4-flow" class="mb-4">
-                        <h4>Phase 4: Designing for Conversational Flow (Multi-Turn Interactions)</h4>
-                        <ol>
-                            <li><strong>Acknowledge Re-classification:</strong> Recognize that each customer reply following an automation's turn will be re-processed by Siena's Core Classifier.</li>
-                            <li><strong>Design Focused Automations:</strong> Create separate, focused automations for distinct stages of a potential conversation.
-                                <div class="example-note">
-                                    <strong>Example Flow:</strong><br>
-                                    <strong>Automation 1</strong> (e.g., "Initial Greeting & First Clarification Prompt") handles the first contact and asks an initial question.<br>
-                                    The customer's reply is classified by Siena.<br>
-                                    This can lead to:<br>
-                                    <strong>Automation 2A</strong> (e.g., "Product Information Request") if the intent is now clear.<br>
-                                    <strong>Automation 2B</strong> (e.g., "Secondary Clarification & Potential Escalation") if the intent is still vague.
-                                </div>
-                            </li>
-                            <li><strong>Prompt Engineering:</strong> Ensure questions asked by Elisha are designed to elicit responses that help Siena's Core Classifier accurately determine the next appropriate automation.</li>
-                        </ol>
-                    </div>
-                    
-                    <div id="sop-phase5-escalations" class="mb-4">
-                        <h4>Phase 5: Handling Escalations to Human Team Members</h4>
-                        <ol>
-                            <li><strong>Define Escalation Conditions:</strong> Within the relevant automation (e.g., "Secondary Clarification & Potential Escalation"), clearly define the conditions under which Elisha should escalate the conversation to a human.</li>
-                            <li><strong>Elisha's Escalation Message:</strong> Instruct Elisha what to say to the customer when an escalation occurs.
-                                <div class="example-note"><strong>Example:</strong> "Thanks for sharing those details. To make sure we address your query thoroughly... I'll connect you with a colleague..."</div>
-                            </li>
-                            <li><strong>Preparing Information for Handoff Note:</strong> Instruct Elisha to prepare or identify the key pieces of information needed for the handoff note. Siena's "Collaborative AI Routing" feature will use this information. Describe these pieces of information in plain English.
-                                <div class="example-note">
-                                    <strong>Example for Elisha's internal preparation:</strong> "For the handoff note, please ensure the following information is available: the reason this conversation is being escalated (e.g., 'customer's need remains unclear after two clarification attempts'), any main topics or keywords the customer mentioned, the unique identifier for this current conversation, the date and time of this escalation, and the name of the automation you are escalating from."<br>
-                                    Include any standard guidance for the receiving agent.
-                                </div>
-                            </li>
-                        </ol>
-                    </div>
-
-                    <div id="sop-phase6-review">
-                        <h4>Phase 6: Review, Testing, and Iteration</h4>
-                        <ol>
-                            <li><strong>Internal Review:</strong> Before deployment, automation designs and instructions should be reviewed by team members for clarity, adherence to this SOP, and persona alignment.</li>
-                            <li><strong>Testing:</strong> Thoroughly test automations with various inputs and scenarios to ensure they function as expected, including generative AI fallbacks and escalation paths.</li>
-                            <li><strong>Monitoring & Iteration:</strong> After deployment, monitor automation performance, customer feedback, and logs (especially for generative AI). Use this data to iteratively refine and improve automations.</li>
-                        </ol>
-                    </div>
+            <div id="procedure" class="content-section flow-element"> <h2>6. Procedure for Designing and Structuring an Automation</h2>
+                
+                <div id="phase1-concept" class="content-section"> <h3>Phase 1: Conceptualization & Role Definition</h3>
+                    <ol>
+                        <li><strong>Identify Customer Situation:</strong> Clearly define the specific customer scenario, message type (e.g., initial greeting, specific query, vague follow-up), or event that this automation is intended to handle.</li>
+                        <li><strong>Define Elisha's Role & Objective:</strong> For this specific situation, clearly articulate Elisha's primary job and what the automation aims to achieve. This should be documented as "Context & Elisha's Role" at the beginning of the automation's instruction set.
+                            <div class="example-note">
+                                <h5>Example (for an initial greeting automation):</h5>
+                                <p>"Context: Customers might start a conversation with H2Tab with a simple greeting or a vague general question..."</p>
+                                <p>"Elisha's Role (Your Job in this Situation): When you, Elisha, receive these kinds of initial messages, your main task is to... 1. Provide a Welcoming Opening... 2. Initiate Query Clarification..."</p>
+                            </div>
+                        </li>
+                        <li><strong>Determine Automation Boundaries:</strong> Define where this automation's responsibility begins (i.e., what triggers it, conceptually) and where it ends (i.e., what message it sends before awaiting the next customer reply for re-classification by Siena).</li>
+                    </ol>
                 </div>
+
+                <div id="phase2-drafting" class="content-section">
+                    <h3>Phase 2: Drafting Elisha's Step-by-Step Instructions</h3>
+                    <ol>
+                        <li><strong>Structure:</strong> Organize instructions under a clear heading like "Elisha's Instructions (What to do when this situation occurs)."</li>
+                        <li><strong>Sequential Steps:</strong> Break down Elisha's tasks into logical, numbered steps.</li>
+                        <li><strong>Plain English Wording:</strong> Write each instruction as a clear, direct sentence understandable by an AI team member.
+                            <div class="example-note"><h5>Example:</h5><p>"Please introduce yourself by your name, 'Elisha,' and mention our company, 'H2Tab.'"</p></div>
+                        </li>
+                        <li><strong>Describing Dynamic Data:</strong> If Elisha needs to use contextual or dynamic information, describe it naturally.
+                            <div class="example-note"><h5>Example:</h5><p>"If you recognize that the customer has interacted with H2Tab before, and if their name is available to you, you could say something like, 'Welcome back, [customer's name]!'" (The H2Tab team will ensure Siena is configured to provide this data if Elisha is instructed to use it).</p></div>
+                        </li>
+                        <li><strong>Conditional Logic:</strong> Describe any decision-making or branching logic in plain English.
+                            <div class="example-note"><h5>Example:</h5><p>"If the customer expresses interest in product details, proceed to provide a brief overview. Otherwise, if they ask about an order, ask for their order number."</p></div>
+                        </li>
+                        <li><strong>Concluding the Turn:</strong> Clearly state the final action of the automation for its current turn, usually sending a message and then concluding.
+                            <div class="example-note"><h5>Example:</h5><p>"Once you have composed and sent this complete message to the customer..., your specific task in this initial interaction scenario is finished."</p></div>
+                        </li>
+                        <li><strong>General Guidance:</strong> Include a section for "General Guidance for Elisha" to reinforce persona, tone, and important constraints (e.g., empathy, accuracy, no medical claims), as relevant to the automation.</li>
+                        <li><strong>"What Happens Next" Clarification:</strong> Briefly state that after Elisha completes her task, Siena's core system will process the next customer reply to determine subsequent steps. This reinforces the single-turn nature.</li>
+                    </ol>
+                </div>
+
+                <div id="phase3-generative" class="content-section">
+                    <h3>Phase 3: Handling Generative AI Components (if applicable)</h3>
+                    <ol>
+                        <li><strong>Instruction to Generate:</strong> Clearly instruct Elisha when to use a generative AI component (e.g., "please generate a greeting that is warm and welcoming...").</li>
+                        <li><strong>Define Constraints & Persona:</strong> Provide clear guidelines for the generative AI regarding Elisha's persona, tone, style, and any content constraints (e.g., no emojis, mandatory keywords like "Elisha" and "H2Tab").</li>
+                        <li><strong>Mandatory Fallback:</strong> Crucially, for generative components like greetings, instruct that "it's important that Siena uses a standard, high-quality predefined Elisha greeting instead" if the generative AI fails or its output is unsuitable. Provide an example of this fallback message.</li>
+                        <li><strong>Logging for Review (System Note):</strong> Include a note indicating that generative attempts and fallback instances should be logged by the system (if technically feasible within Siena) for the H2Tab team to review for quality assurance and optimization.</li>
+                    </ol>
+                </div>
+
+                <div id="phase4-flow" class="content-section">
+                    <h3>Phase 4: Designing for Conversational Flow (Multi-Turn Interactions)</h3>
+                    <ol>
+                        <li><strong>Acknowledge Re-classification:</strong> Recognize that each customer reply following an automation's turn will be re-processed by Siena's Core Classifier.</li>
+                        <li><strong>Design Focused Automations:</strong> Create separate, focused automations for distinct stages of a potential conversation.
+                            <div class="example-note">
+                                <h5>Example Flow:</h5>
+                                <p><strong>Automation 1</strong> (e.g., "Initial Greeting & First Clarification Prompt") handles the first contact and asks an initial question.</p>
+                                <p>The customer's reply is classified by Siena.</p>
+                                <p>This can lead to:</p>
+                                <ul>
+                                   <li><strong>Automation 2A</strong> (e.g., "Product Information Request") if the intent is now clear.</li>
+                                   <li><strong>Automation 2B</strong> (e.g., "Secondary Clarification & Potential Escalation") if the intent is still vague.</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><strong>Prompt Engineering:</strong> Ensure questions asked by Elisha are designed to elicit responses that help Siena's Core Classifier accurately determine the next appropriate automation.</li>
+                    </ol>
+                </div>
+                
+                <div id="phase5-escalations" class="content-section">
+                    <h3>Phase 5: Handling Escalations to Human Team Members</h3>
+                    <ol>
+                        <li><strong>Define Escalation Conditions:</strong> Within the relevant automation (e.g., "Secondary Clarification & Potential Escalation"), clearly define the conditions under which Elisha should escalate the conversation to a human.</li>
+                        <li><strong>Elisha's Escalation Message:</strong> Instruct Elisha what to say to the customer when an escalation occurs.
+                            <div class="example-note"><h5>Example:</h5><p>"Thanks for sharing those details. To make sure we address your query thoroughly... I'll connect you with a colleague..."</p></div>
+                        </li>
+                        <li><strong>Preparing Information for Handoff Note:</strong> Instruct Elisha to prepare or identify the key pieces of information needed for the handoff note. Siena's "Collaborative AI Routing" feature will use this information. Describe these pieces of information in plain English.
+                            <div class="example-note">
+                                <h5>Example for Elisha's internal preparation:</h5>
+                                <p>"For the handoff note, please ensure the following information is available: the reason this conversation is being escalated (e.g., 'customer's need remains unclear after two clarification attempts'), any main topics or keywords the customer mentioned, the unique identifier for this current conversation, the date and time of this escalation, and the name of the automation you are escalating from."</p>
+                                <p>Include any standard guidance for the receiving agent.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+
+                <div id="phase6-review" class="content-section">
+                    <h3>Phase 6: Review, Testing, and Iteration</h3>
+                    <ol>
+                        <li><strong>Internal Review:</strong> Before deployment, automation designs and instructions should be reviewed by team members for clarity, adherence to this SOP, and persona alignment.</li>
+                        <li><strong>Testing:</strong> Thoroughly test automations with various inputs and scenarios to ensure they function as expected, including generative AI fallbacks and escalation paths.</li>
+                        <li><strong>Monitoring & Iteration:</strong> After deployment, monitor automation performance, customer feedback, and logs (especially for generative AI). Use this data to iteratively refine and improve automations.</li>
+                    </ol>
+                </div>
+            </div> <div class="connector">▼</div>
+
+            <div id="monitoring-review-sop" class="content-section flow-element">
+                <h2>7. Monitoring and Review of SOP</h2>
+                <p>This SOP will be reviewed at least annually, or as needed when significant changes to the Siena platform or H2Tab's customer engagement strategy occur. Feedback from team members is encouraged to ensure this SOP remains relevant and effective.</p>
             </div>
 
-            <div id="sop-monitoring-review" class="sop-content-card flow-element">
-                <div class="sop-section-header"><h3>7. Monitoring and Review of SOP</h3></div>
-                <div class="content">
-                    <p>This SOP will be reviewed at least annually, or as needed when significant changes to the Siena platform or H2Tab's customer engagement strategy occur. Feedback from team members is encouraged to ensure this SOP remains relevant and effective.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <button id="scrollToTopBtn" title="Go to top" class="hidden fixed bottom-8 right-8 z-50 p-3 rounded-full shadow-lg focus:outline-none">
+        </div> </div> <button id="scrollToTopBtn" title="Go to top" class="hidden fixed bottom-8 right-8 z-50 p-3 rounded-full shadow-lg focus:outline-none">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
             <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" />
         </svg>
