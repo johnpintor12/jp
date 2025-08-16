@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H2Tab Ingredients & Reactions Inquiry - H2Tab Automation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global_styles.css">
+    <script src="global_scripts.js"></script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <style>
+        /* Theme-specific styles for this page (Indigo Theme) */
+        :root { 
+            --top-bar-height: 60px;
+            --page-theme-color-main: #4f46e5; /* Indigo-600 */
+            --page-theme-color-darker: #4338ca; /* Indigo-700 */
+            --page-theme-color-lighter: #c7d2fe; /* Indigo-200 */
+            --page-theme-color-lightest: #eef2ff; /* Indigo-50 */
+        }
+
+        .app-top-bar { background-color: var(--page-theme-color-main); }
+        #toc-sidebar h2 { color: var(--page-theme-color-main); }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active {
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
+        }
+        .step-header { background-color: var(--page-theme-color-main); }
+        .escalation-card .step-header { background-color: #8b5cf6 !important; }
+        #scrollToTopBtn { background-color: var(--page-theme-color-main); }
+        #scrollToTopBtn:hover { background-color: var(--page-theme-color-darker); }
+    </style>
+</head>
+<body class="has-toc"> 
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+        </button>
+        <span class="library-title-mobile ml-3 font-semibold text-lg">Ingredients Inquiry</span>
+    </div>
+    <div id="page-overlay"></div>
+
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#step1">Step 1: Identify Inquiry Type</a></li>
+            <li><a href="#step2">Step 2: Provide Information</a></li>
+            <li><a href="#step3">Step 3: Conclude</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
+            <h1 class="text-3xl font-bold text-gray-800">H2Tab Ingredients & Reactions Inquiry</h1>
+            <p class="text-lg text-gray-600">Category: Product Information</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto"> 
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>A customer is asking about the ingredients in H2Tab, potential side effects, or allergic reactions. Your job is to provide clear, accurate, and reassuring information based on pre-approved statements, addressing their specific concerns about ingredients like dextrose or magnesium, and explaining common, harmless sensations like a metallic taste.</p>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step1" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 1: Identify the Specific Type of Inquiry</h3>
+                </div>
+                <div class="step-content">
+                    <div class="decision-card">
+                        <h4>Decision Logic:</h4>
+                        <p>Analyze the customer's message for keywords to determine the primary nature of their question.</p>
+                        <ul class="list-disc pl-5 mt-2">
+                            <li>If keywords relate to **"dextrose," "sugar," "sweetener"**: Focus on the Dextrose explanation.</li>
+                            <li>If keywords relate to **"magnesium," "malic acid," "ingredients list"**: Focus on the full ingredient list.</li>
+                            <li>If keywords relate to **"metallic taste," "weird taste," "sensation"**: Focus on the Metallic Taste explanation.</li>
+                            <li>If keywords relate to **"safe," "side effects," "allergic reaction"**: Focus on the general safety statement.</li>
+                            <li>If the query is general, provide the full ingredient list first.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step2" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 2: Provide Pre-Approved Information Based on Inquiry Type</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card mb-4">
+                        <h4>If the customer asks about Dextrose:</h4>
+                        <p><em>"Thanks for asking! We include a very small, trace amount of dextrose in our tablets. It serves a critical role as a binder to hold the tablet together and helps to kickstart the hydrogen-producing reaction when it hits the water. The amount is minimal and is consumed during the reaction itself, so it doesn't contribute to the sugar content of the final hydrogen water you drink. However, we completely understand that some of our customers prefer to avoid dextrose entirely, and we've taken that feedback seriously. Our team is actively working on developing a dextrose-free version, and we hope to have it available in the future!"</em></p>
+                    </div>
+                    <div class="action-card mb-4">
+                        <h4>If the customer asks for the ingredient list:</h4>
+                        <p><em>"Of course! The ingredients in H2Tab are straightforward and selected for their purity and effectiveness. Each tablet contains a proprietary blend of: Magnesium, Malic Acid, Dextrose, Tartaric Acid, Adipic Acid, and Sodium Stearyl Fumarate. These ingredients work together to create the therapeutic molecular hydrogen when the tablet dissolves in water."</em></p>
+                    </div>
+                    <div class="action-card mb-4">
+                        <h4>If the customer asks about a metallic taste:</h4>
+                        <p><em>"That's a great question, and something a few of our customers notice! That slight metallic taste is caused by the high concentration of dissolved magnesium and molecular hydrogen—it’s totally natural and actually a sign the tablet is working effectively! If the taste isn’t your favorite, you can absolutely add lemon, nitric oxide boosters, or other natural flavors after the tablet has fully dissolved and the water is clear. This won’t reduce the effectiveness. For individuals with dental work like crowns or fillings, this taste might be slightly more noticeable due to the interaction between hydrogen and certain metals, but it's harmless. Waiting for the water to clear or using a straw might help minimize this sensation."</em></p>
+                    </div>
+                    <div class="action-card">
+                        <h4>If the customer asks about general safety:</h4>
+                        <p><em>"Yes, H2Tab is made from safe, high-quality ingredients and is designed to support your health without any harmful side effects. Molecular hydrogen itself has no known adverse effects and is considered extremely safe for daily use."</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step3" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 3: Offer Further Assistance and Conclude</h3>
+                </div>
+                <div class="step-content">
+                    <p>End the interaction with:</p>
+                    <p class="bg-gray-100 p-3 rounded-md text-sm font-mono mt-2">"Please let me know if you have any other questions or if there's anything else we can assist you with!"</p>
+                </div>
+            </div>
+        </div> 
+    </div> 
+
+    <button id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" /></svg>
+    </button>
+</body>
+</html>
