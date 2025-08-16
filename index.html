@@ -1,268 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siena Automation Library - H2Tab</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Assuming global_styles.css is in a 'css' subdirectory -->
-    <link rel="stylesheet" href="css/global_styles.css"> 
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <style>
-        :root {
-            --page-theme-color-main: #4f46e5; /* Indigo-600 */
-            --page-theme-color-darker: #4338ca; /* Indigo-700 */
-            --page-theme-color-lighter: #c7d2fe; /* Indigo-200 */
-            --page-theme-color-lightest: #eef2ff; /* Indigo-50 */
-        }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
-        .main-content-area { padding: 1.5rem; }
-        
-        /* Card Styles */
-        .automation-card {
-            background-color: white; border-radius: 0.75rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            display: flex; flex-direction: column; height: 100%;
-        }
-        .automation-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
-        }
-        .automation-card.is-clickable { cursor: pointer; }
-        .card-content { flex-grow: 1; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Siena Automation Library - H2Tab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <!-- Global library styles -->
+  <link rel="stylesheet" href="css/global_styles.css" />
+  <style>
+    /* Keep only component-specific styles not already handled by global_styles.css */
+    body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
+    .automation-card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+    .automation-card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px -4px rgba(0,0,0,0.12); }
+    .automation-card .card-content { flex-grow: 1; padding: 1.5rem; }
+    .automation-card .card-footer { background: #f9fafb; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
 
-        /* Modal Styles */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex; align-items: center; justify-content: center;
-            z-index: 200; opacity: 0; visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .modal-overlay.active {
-            opacity: 1; visibility: visible;
-        }
-        .modal-content {
-            background-color: white; padding: 2rem; border-radius: 0.75rem;
-            max-width: 500px; width: 90%;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-        }
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
-    </style>
+    /* Featured badge (not in global yet) */
+    .featured-badge { background-color: #fef3c7; color: #92400e; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 9999px; }
+
+    /* Optional: active filter chip state (uses brand Indigo) */
+    .filter-btn.active { color: white; background: #4f46e5; border-color: #4338ca; }
+  </style>
 </head>
-<body> 
-    <div class="main-content-area"> 
-        <header class="text-center mb-12 pt-4 md:pt-0"> 
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 tracking-tight">Siena Automation Library</h1>
-            <p class="text-lg text-gray-600 mt-3 max-w-2xl mx-auto">A comprehensive directory of all configured automations for the Elisha persona.</p>
-        </header>
+<body>
+  <div class="main-content-area p-6 max-w-7xl mx-auto"> 
+    <header class="text-center mb-12"> 
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Siena Automation Library</h1>
+      <p class="text-lg text-gray-600 mt-3 max-w-2xl mx-auto">A comprehensive directory of all configured automations for the Elisha persona.</p>
+    </header>
 
-        <div class="max-w-7xl mx-auto">
-            <!-- Search and Filter Controls -->
-            <div class="mb-10 p-4 bg-white rounded-xl shadow-sm border border-gray-200">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-center">
-                    <div class="lg:col-span-1">
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" /></svg>
-                            </div>
-                            <input type="text" id="searchInput" placeholder="Search automations..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md transition">
-                        </div>
-                    </div>
-                    <div class="lg:col-span-2">
-                        <div id="filter-container" class="flex flex-wrap gap-2 items-center justify-start lg:justify-end">
-                            <span class="font-semibold text-gray-600 mr-2 hidden sm:inline">Category:</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Featured Automations Section -->
-            <section id="featured-automations" class="mb-12">
-                <h2 class="text-2xl font-bold text-gray-700 mb-6 pb-2 border-b border-gray-300">Featured Automations</h2>
-                <div id="featured-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-            </section>
-
-            <!-- All Automations Section -->
-            <section id="all-automations">
-                <h2 class="text-2xl font-bold text-gray-700 mb-6 pb-2 border-b border-gray-300">All Automations with Pages</h2>
-                <div id="automation-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-            </section>
-            
-            <!-- Internal Routing Automations Section -->
-            <section id="internal-automations" class="mt-12">
-                <h2 class="text-2xl font-bold text-gray-700 mb-6 pb-2 border-b border-gray-300">"Skip Response" Automations (Training Only)</h2>
-                <div id="internal-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-            </section>
-
-            <p id="no-results" class="text-center py-10 text-gray-500 hidden">No automations found.</p>
-
-            <div class="mt-16 text-center">
-                <a href="sop.html" class="inline-block bg-slate-600 hover:bg-slate-700 text-white font-medium py-3 px-8 rounded-lg transition-transform hover:scale-105">View Automation Design SOP</a>
-            </div>
+    <!-- Search and Filter -->
+    <section class="mb-10 p-4 bg-white rounded-xl shadow-sm border border-gray-200">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-center">
+        <div>
+          <input type="text" id="searchInput" placeholder="Search automations..." class="w-full pl-3 pr-4 py-2 border border-gray-300 rounded-md" />
         </div>
-    </div>
+        <div class="lg:col-span-2 flex flex-wrap gap-2 justify-end" id="filter-container"></div>
+      </div>
+    </section>
 
-    <!-- Modal for Skip Response Info -->
-    <div id="skip-response-modal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold text-gray-800">"Skip Response" Automation</h3>
-                <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+    <!-- All Automations (Featured inline) -->
+    <section id="all-automations">
+      <h2 class="text-2xl font-bold text-gray-700 mb-6 pb-2 border-b border-gray-300">All Automations</h2>
+      <div id="automation-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </section>
+
+    <!-- Internal (Skip Response) -->
+    <section id="internal-automations" class="mt-12">
+      <h2 class="text-2xl font-bold text-gray-700 mb-6 pb-2 border-b border-gray-300">"Skip Response" Automations (Training Only)</h2>
+      <div id="internal-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </section>
+
+    <p id="no-results" class="text-center py-10 text-gray-500 hidden">No automations found.</p>
+
+    <div class="mt-16 text-center">
+      <a href="sop.html" class="inline-block bg-slate-600 hover:bg-slate-700 text-white font-medium py-3 px-8 rounded-lg">View Automation Design SOP</a>
+    </div>
+  </div>
+
+  <div id="skip-response-modal" class="modal-overlay hidden fixed inset-0 bg-black/60 flex items-center justify-center">
+    <div class="modal-content bg-white p-6 rounded-lg max-w-md w-full">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold text-gray-800">"Skip Response" Automation</h3>
+        <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+      </div>
+      <p class="text-sm text-gray-600">This automation is designated as <strong>"Skip Response."</strong></p>
+      <p class="text-sm text-gray-600 mt-2">If a customer's message matches this intent, the automation takes <strong>no action</strong>.</p>
+    </div>
+  </div>
+
+  <button id="scrollToTopBtn" title="Go to top">▲</button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const automationsData = [
+        { Automation: 'Initial Greeting & Query Clarification v2', Category: 'Other', Instructions: '...' },
+        { Automation: 'Where is my order?', Category: 'Order Management', Instructions: '...' },
+        { Automation: 'Cancel My Order', Category: 'Order Management', Instructions: '...' },
+        { Automation: 'Do you have a military discount?', Category: 'Promotions & Discounts', Instructions: '...' },
+        { Automation: 'H2Tab Ingredients & Reactions Inquiry', Category: 'Product Information', Instructions: '...' },
+        { Automation: 'International Shipping Inquiry', Category: 'Shipping & Delivery', Instructions: '...' },
+        { Automation: 'Business Proposal Inquiry', Category: 'Business Inquiries', Instructions: '...' },
+        { Automation: 'Metallic Taste or Sensation Inquiry', Category: 'Product Information', Instructions: '...' },
+        { Automation: 'Hydrogen Tabs Usage Inquiry', Category: 'Product Information', Instructions: 'Skip Response' },
+        { Automation: 'Job Application Inquiry', Category: 'Other', Instructions: 'Skip Response' }
+      ];
+
+      const featuredAutomations = ['Initial Greeting & Query Clarification v2','Where is my order?','Cancel My Order'];
+
+      const listContainer = document.getElementById('automation-list');
+      const internalContainer = document.getElementById('internal-list');
+      const searchInput = document.getElementById('searchInput');
+      const noResultsMsg = document.getElementById('no-results');
+      const filterContainer = document.getElementById('filter-container');
+
+      const slugify = (t) => t.toLowerCase().replace(/\s+/g,'-').replace(/[^\w-]/g,'');
+
+      const categoryClass = (category) => {
+        switch(category){
+          case 'Promotions & Discounts': return 'category-promotions-discounts';
+          case 'Order Management': return 'category-order-management';
+          case 'Product Information': return 'category-product-information';
+          case 'Shipping & Delivery': return 'category-shipping-delivery';
+          case 'Business Inquiries': return 'category-business-inquiries';
+          default: return 'category-other';
+        }
+      };
+
+      // Mapping automation names to their respective detail pages
+      const pageMapping = {
+        'Initial Greeting & Query Clarification v2': 'initial-greeting-v2.html',
+        'Where is my order?': 'where-is-my-order.html',
+        'Cancel My Order': 'cancel-my-order.html',
+        'Do you have a military discount?': 'military-discount.html',
+        'H2Tab Ingredients & Reactions Inquiry': 'h2tab-ingredients.html',
+        'International Shipping Inquiry': 'international-shipping.html',
+        'Business Proposal Inquiry': 'business-proposal.html',
+        'Metallic Taste or Sensation Inquiry': 'metallic-taste.html'
+        // Add more mappings as needed
+      };
+
+      const createCard = (item) => {
+        const isSkip = item.Instructions==='Skip Response';
+        const pageUrl = pageMapping[item.Automation] || slugify(item.Automation)+'.html';
+        const isFeatured = featuredAutomations.includes(item.Automation);
+        const card = document.createElement('div');
+        card.className='automation-card';
+        card.innerHTML=`
+          <div class="card-content">
+            <div class="flex justify-between items-start">
+              <span class="category-badge ${categoryClass(item.Category)}">${item.Category}</span>
+              ${isFeatured ? '<span class="featured-badge">⭐ Featured</span>' : ''}
             </div>
-            <p class="text-sm text-gray-600">This automation is designated as **"Skip Response."**</p>
-            <p class="text-sm text-gray-600 mt-2">This means that if a customer's message matches this intent, the automation takes **no action**. It does not send a reply, tag the ticket, or route it.</p>
-            <p class="text-sm text-gray-600 mt-2">The system simply logs that the match occurred, which helps to train and improve the AI's learning and accuracy over time.</p>
-        </div>
-    </div>
+            <h3 class="mt-4 text-lg font-semibold text-gray-800">${isSkip ? item.Automation : `<a href="${pageUrl}" class="hover:text-indigo-600">${item.Automation}</a>`}</h3>
+          </div>
+          <div class="card-footer">
+            ${isSkip ? '<span class="text-sm text-gray-500">Training Only</span>' : `<a href="${pageUrl}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">View Details →</a>`}
+          </div>
+        `;
+        return card;
+      };
 
-    <button id="scrollToTopBtn" title="Go to top">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" /></svg>
-    </button>
+      const categories = [...new Set(automationsData.map(i=>i.Category))];
+      const allBtn = document.createElement('button');
+      allBtn.textContent='All';
+      allBtn.className='filter-btn active px-3 py-1 border rounded-full';
+      allBtn.dataset.category='all';
+      filterContainer.appendChild(allBtn);
+      categories.forEach(c=>{
+        const btn=document.createElement('button');
+        btn.textContent=c;
+        btn.className='filter-btn px-3 py-1 border rounded-full';
+        btn.dataset.category=c;
+        filterContainer.appendChild(btn);
+      });
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const automationsData = [
-                {"Automation":"Initial Greeting & Query Clarification v2","Category":"Other","Instructions":"..."},
-                {"Automation":"Where is my order?","Category":"Order Management","Instructions":"..."},
-                {"Automation":"Cancel My Order","Category":"Order Management","Instructions":"..."},
-                {"Automation":"Do you have a military discount?","Category":"Promotions & Discounts","Instructions":"..."},
-                {"Automation":"H2Tab Ingredients & Reactions Inquiry","Category":"Product Information","Instructions":"..."},
-                {"Automation":"International Shipping Inquiry","Category":"Shipping & Delivery","Instructions":"..."},
-                {"Automation":"Business Proposal Inquiry","Category":"Business Inquiries","Instructions":"..."},
-                {"Automation":"Metallic Taste or Sensation Inquiry","Category":"Product Information","Instructions":"..."},
-                {"Automation":"Hydrogen Tabs Usage Inquiry","Category":"Product Information","Instructions":"Skip Response"},
-                {"Automation":"Job Application Inquiry","Category":"Other","Instructions":"Skip Response"}
-            ];
-
-            const featuredAutomations = ["Initial Greeting & Query Clarification v2", "Where is my order?", "Cancel My Order"];
-
-            const listContainer = document.getElementById('automation-list');
-            const featuredContainer = document.getElementById('featured-list');
-            const internalContainer = document.getElementById('internal-list');
-            const filterContainer = document.getElementById('filter-container');
-            const searchInput = document.getElementById('searchInput');
-            const noResultsMsg = document.getElementById('no-results');
-            const modal = document.getElementById('skip-response-modal');
-            const closeModalBtn = document.getElementById('close-modal-btn');
-            
-            const slugify = (text) => text.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-').replace(/^-+/, '').replace(/-+$/, '');
-
-            const createCard = (item) => {
-                const isSkipResponse = item.Instructions === 'Skip Response';
-                const automationSlug = slugify(item.Automation);
-                let pageUrl = `${automationSlug}.html`;
-                if (item.Automation.includes('Initial Greeting')) pageUrl = 'initial-greeting-v2.html';
-                
-                const card = document.createElement('div');
-                card.className = 'automation-card' + (isSkipResponse ? ' is-clickable' : '');
-                if (isSkipResponse) {
-                    card.addEventListener('click', () => modal.classList.add('active'));
-                }
-
-                card.innerHTML = `
-                    <div class="p-6 card-content">
-                        <span class="category-badge category-${slugify(item.Category)}">${item.Category}</span>
-                        <h3 class="mt-4 text-lg font-semibold text-gray-800">
-                            ${isSkipResponse ? item.Automation : `<a href="${pageUrl}" class="hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-sm">${item.Automation}</a>`}
-                        </h3>
-                    </div>
-                    <div class="bg-gray-50 p-4 mt-auto">
-                        ${isSkipResponse 
-                            ? `<span class="text-sm font-semibold text-gray-500">Training Only &rarr;</span>`
-                            : `<a href="${pageUrl}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">View Details &rarr;</a>`
-                        }
-                    </div>
-                `;
-                return card;
-            };
-
-            const categories = [...new Set(automationsData.map(item => item.Category))];
-            
-            const allButton = document.createElement('button');
-            allButton.textContent = 'All';
-            allButton.className = 'filter-btn active px-4 py-1.5 border rounded-full text-sm font-medium';
-            allButton.dataset.category = 'all';
-            filterContainer.appendChild(allButton);
-
-            categories.forEach(category => {
-                const button = document.createElement('button');
-                button.textContent = category;
-                button.className = 'filter-btn px-4 py-1.5 border rounded-full text-sm font-medium';
-                button.dataset.category = category;
-                filterContainer.appendChild(button);
-            });
-
-            const renderLists = (filter = 'all', searchTerm = '') => {
-                const lowerSearchTerm = searchTerm.toLowerCase();
-                const allFilteredData = automationsData.filter(item => 
-                    (filter === 'all' || item.Category === filter) && 
-                    item.Automation.toLowerCase().includes(lowerSearchTerm)
-                );
-
-                listContainer.innerHTML = '';
-                featuredContainer.innerHTML = '';
-                internalContainer.innerHTML = '';
-                
-                allFilteredData.forEach(item => {
-                    const card = createCard(item);
-                    const isSkip = item.Instructions === 'Skip Response';
-                    
-                    if (featuredAutomations.includes(item.Automation) && filter === 'all' && searchTerm === '') {
-                        featuredContainer.appendChild(card);
-                    } else if (isSkip) {
-                        internalContainer.appendChild(card);
-                    } else {
-                        listContainer.appendChild(card);
-                    }
-                });
-
-                noResultsMsg.style.display = (allFilteredData.length === 0) ? 'block' : 'none';
-                document.getElementById('all-automations').style.display = (listContainer.children.length > 0) ? 'block' : 'none';
-                document.getElementById('internal-automations').style.display = (internalContainer.children.length > 0) ? 'block' : 'none';
-
-            };
-
-            filterContainer.addEventListener('click', (e) => {
-                if (e.target.tagName === 'BUTTON') {
-                    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-                    e.target.classList.add('active');
-                    const category = e.target.dataset.category;
-                    renderLists(category, searchInput.value);
-                }
-            });
-
-            searchInput.addEventListener('input', () => {
-                const activeFilter = document.querySelector('.filter-btn.active').dataset.category;
-                renderLists(activeFilter, searchInput.value);
-            });
-            
-            closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                }
-            });
-
-            renderLists();
-
-            const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-            window.onscroll = () => {
-                if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                    scrollToTopBtn.style.display = "block";
-                } else {
-                    scrollToTopBtn.style.display = "none";
-                }
-            };
-            scrollToTopBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
+      const renderLists = (filter='all', searchTerm='') => {
+        const q = searchTerm.toLowerCase();
+        const filtered = automationsData.filter(i=>(filter==='all'||i.Category===filter)&&i.Automation.toLowerCase().includes(q));
+        listContainer.innerHTML='';
+        internalContainer.innerHTML='';
+        filtered.forEach(item=>{
+          const card=createCard(item);
+          if(item.Instructions==='Skip Response') internalContainer.appendChild(card);
+          else listContainer.appendChild(card);
         });
-    </script>
+        noResultsMsg.style.display=filtered.length? 'none':'block';
+      };
+
+      filterContainer.addEventListener('click', e=>{
+        if(e.target.tagName==='BUTTON'){
+          document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+          e.target.classList.add('active');
+          renderLists(e.target.dataset.category, searchInput.value);
+        }
+      });
+      searchInput.addEventListener('input', ()=>{
+        const active=document.querySelector('.filter-btn.active').dataset.category;
+        renderLists(active, searchInput.value);
+      });
+
+      renderLists();
+
+      const scrollBtn=document.getElementById('scrollToTopBtn');
+      window.addEventListener('scroll',()=>{scrollBtn.style.display=(window.scrollY>100)?'block':'none';});
+      scrollBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+    });
+  </script>
 </body>
 </html>
