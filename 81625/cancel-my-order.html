@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Cancellation Request Workflow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global_styles.css">
+    <script src="global_scripts.js"></script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <style>
+        /* Theme-specific styles for Order Cancellation Request Workflow (Emerald/Green Theme) */
+        
+        :root { 
+            /* --top-bar-height is defined in global_styles.css */
+            --page-theme-color-main: #059669; /* Emerald-600 */
+            --page-theme-color-darker: #047857; /* Emerald-700 */
+            --page-theme-color-lighter: #a7f3d0; /* Emerald-200 */
+            --page-theme-color-lightest: #d1fae5; /* Emerald-100 */
+        }
+
+        .app-top-bar { 
+            background-color: var(--page-theme-color-main);
+        }
+
+        #toc-sidebar h2 {
+            color: var(--page-theme-color-main);
+        }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active { 
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
+        }
+        /* No sub-levels in this specific TOC, but if added:
+         #toc-sidebar ul ul li a:hover,
+         #toc-sidebar ul ul li a.active { 
+             color: var(--page-theme-color-main); 
+             background-color: var(--page-theme-color-lighter); 
+        } */
+
+        .step-header { /* Main step header color for this page */
+            background-color: var(--page-theme-color-main);
+        }
+        /* Specific card header colors */
+        .escalation-card .step-header { 
+             background-color: #8b5cf6 !important; /* Violet for escalations, ensure it overrides global */
+        }
+        
+        #scrollToTopBtn {
+            background-color: var(--page-theme-color-main);
+        }
+        #scrollToTopBtn:hover {
+            background-color: var(--page-theme-color-darker);
+        }
+
+        /* Print-specific overrides for themed elements */
+        @media print {
+            /* .app-top-bar is already display:none in global_styles.css for print */
+            .step-header { 
+                background-color: var(--page-theme-color-lightest) !important; 
+                color: var(--page-theme-color-darker) !important; 
+            }
+            .escalation-card .step-header { 
+                background-color: #f0e6ff !important; /* Lighter violet for print */
+                color: #4c1d95 !important;
+            }
+            #toc-sidebar h2 { /* This won't be visible due to TOC being hidden in print */
+                color: var(--page-theme-color-main) !important; 
+            }
+        }
+    </style>
+</head>
+<body class="has-toc"> 
+
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+        </button>
+        </div>
+    <div id="page-overlay"></div>
+
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align: text-bottom;">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#step1">Step 1: Determine Order</a></li>
+            <li><a href="#step2">Step 2: Identify Cancel Reason</a></li>
+            <li><a href="#step3">Step 3: Escalate to Agent</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
+            <h1 class="text-3xl font-bold text-gray-800">Order Cancellation Request Workflow</h1>
+            <p class="text-lg text-gray-600">Visualized Logic for Handling Customer Cancellation Requests</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto">
+
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>Customers will reach out to request for order cancellation. Your job is to look up their order details and assist them by providing information. If the order has been fulfilled, ask question why they want to cancel it.</p>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step1" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 1: Determine the order that the customer is referring to</h3>
+                </div>
+                <div class="step-content">
+                    <div class="scenario-card">
+                        <h4>Order Identification Methods:</h4>
+                        <ul class="list-disc pl-5 mt-1 space-y-2">
+                            <li>
+                                <strong>Customer provides an order number:</strong>
+                                <ul class="list-disc pl-5">
+                                    <li>This is the order they are referring to.</li>
+                                    <li>If that order does not exist, ask the customer for the email address associated with the order.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>No orders associated with a provided customer email address:</strong>
+                                <ul class="list-disc pl-5">
+                                    <li>Ask them for the correct email address associated with their order.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Customer forwards the order confirmation email while requesting cancellation:</strong>
+                                <ul class="list-disc pl-5">
+                                    <li>Try to examine the email content for the order number.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step2" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 2: Identify the reason for cancel</h3>
+                </div>
+                <div class="step-content">
+                    <p class="mb-2">Note: The context mentions asking for the reason "If the order has been fulfilled." This step should ideally be triggered after confirming fulfillment status (which isn't explicitly detailed before this step in the provided instructions, but is implied by the context).</p>
+                    <div class="condition-card"> 
+                        <h4>Handling Customer Reasons:</h4>
+                        <ul class="list-disc pl-5 mt-1 space-y-2">
+                            <li>
+                                <strong>If the customer provides no reason:</strong>
+                                <ul class="list-disc pl-5">
+                                    <li>Ask the customer for the reason for the cancellation. (Especially if order is fulfilled)</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>If the customer provides a reason "waiting too long for order":</strong>
+                                <ul class="list-disc pl-5">
+                                    <li>Apologize to the customer for the delay.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>If the customer provides a reason "I found cheaper":</strong>
+                                <ul class="list-disc pl-5">
+                                    <li>Apologize to the customer. (Maintain helpful tone, avoid defensiveness).</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step3" class="step-card escalation-card flow-element">
+                <div class="step-header"> 
+                    <h3>Step 3: Get order information and escalate to an agent</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Actions:</h4>
+                        <ul class="list-disc pl-5 mt-1">
+                            <li>Retrieve and confirm all relevant details for the identified order.</li>
+                            <li>Based on the instructions, the next step is to escalate. (Further details on *how* to escalate, what information to pass, or specific agent assignment were not provided in this workflow's instructions but would typically be defined).</li>
+                            <li>Inform the customer: "Thank you for that information. I will now pass your cancellation request and order details to our support team who will review it and get back to you shortly." <span class="badge badge-purple">ESCALATE TO AGENT</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+            <path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" />
+        </svg>
+    </button>
+
+
+</body>
+</html>

@@ -10,137 +10,51 @@
     <link rel="stylesheet" href="css/global_styles.css"> 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <style>
-        /* Theme-specific styles for Library Index Page (Neutral Gray/Indigo Theme) */
         :root {
             --page-theme-color-main: #4f46e5; /* Indigo-600 */
             --page-theme-color-darker: #4338ca; /* Indigo-700 */
             --page-theme-color-lighter: #c7d2fe; /* Indigo-200 */
             --page-theme-color-lightest: #eef2ff; /* Indigo-50 */
         }
-
         html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; } /* bg-gray-100 */
-
-        .main-content-area {
-            padding: 1.5rem;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .main-content-area { padding: 1.5rem; }
         
-        /* Category Badge Styles */
-        .category-badge {
-            display: inline-flex; /* Use flex for icon alignment */
-            align-items: center;
-            gap: 0.375rem; /* space between icon and text */
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            text-transform: capitalize;
-        }
-        .category-badge svg {
-            width: 0.875rem;
-            height: 0.875rem;
-        }
-
-        /* Color mapping for categories */
-        .category-promotions-discounts { background-color: #dbeafe; color: #1e40af; } /* Blue */
-        .category-order-management { background-color: #ede9fe; color: #5b21b6; } /* Purple */
-        .category-product-information { background-color: #d1fae5; color: #065f46; } /* Green */
-        .category-other { background-color: #e5e7eb; color: #374151; } /* Gray */
-        .category-shipping-delivery { background-color: #fef3c7; color: #92400e; } /* Yellow */
-        .category-business-inquiries { background-color: #fee2e2; color: #991b1b; } /* Red */
-        
-        /* Search input focus style */
-        #searchInput:focus {
-            border-color: var(--page-theme-color-main);
-            box-shadow: 0 0 0 2px var(--page-theme-color-lighter);
-            outline: none;
-        }
-        
-        .filter-btn {
-            transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-        }
-        .filter-btn.active {
-            background-color: var(--page-theme-color-main);
-            color: white;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-        }
-
-        #scrollToTopBtn { 
-            background-color: var(--page-theme-color-main); 
-            display: none; position: fixed; bottom: 30px; right: 30px; z-index: 99;
-            border: none; outline: none; color: white; cursor: pointer;
-            padding: 12px; /* Adjusted padding */
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: background-color 0.3s, transform 0.3s;
-        }
-        #scrollToTopBtn:hover { 
-            background-color: var(--page-theme-color-darker); 
-            transform: scale(1.1);
-        }
-
         /* Card Styles */
         .automation-card {
-            background-color: white;
-            border-radius: 0.75rem; /* lg */
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); /* shadow-md */
+            background-color: white; border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            display: flex;
-            flex-direction: column;
-            height: 100%; /* Make cards in a row equal height */
+            display: flex; flex-direction: column; height: 100%;
         }
         .automation-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1); /* shadow-lg */
-        }
-        .card-content {
-            flex-grow: 1;
-        }
-        
-        /* Insights Summary Section Styles */
-        .insights-container {
-            background-color: white;
-            border-radius: 0.75rem;
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
-            padding: 2rem 2.5rem;
-            border: 1px solid #e5e7eb;
-            margin-top: 4rem; /* Added margin-top */
         }
-        .insights-container h2 {
-            color: #1f2937;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        .insights-container h3 {
-            color: #374151;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-            font-size: 1.125rem;
-            font-weight: 600;
-        }
-        .insights-container ul {
-            list-style-position: inside;
-        }
-        .insights-container li {
-            margin-bottom: 0.5rem;
-            padding-left: 0.5rem;
-        }
-        .highlight-text {
-            background-color: #eff6ff;
-            color: #1e40af;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-weight: 500;
-        }
-        .recommendation-list li::marker {
-            color: #3b82f6;
-            font-weight: bold;
-        }
-        .improvement-list strong {
-            color: #111827;
-        }
+        .automation-card.is-clickable { cursor: pointer; }
+        .card-content { flex-grow: 1; }
 
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 200; opacity: 0; visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1; visibility: visible;
+        }
+        .modal-content {
+            background-color: white; padding: 2rem; border-radius: 0.75rem;
+            max-width: 500px; width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
     </style>
 </head>
 <body> 
@@ -157,9 +71,7 @@
                     <div class="lg:col-span-1">
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-                                </svg>
+                                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" /></svg>
                             </div>
                             <input type="text" id="searchInput" placeholder="Search automations..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md transition">
                         </div>
@@ -167,7 +79,6 @@
                     <div class="lg:col-span-2">
                         <div id="filter-container" class="flex flex-wrap gap-2 items-center justify-start lg:justify-end">
                             <span class="font-semibold text-gray-600 mr-2 hidden sm:inline">Category:</span>
-                            <!-- Filter buttons will be dynamically inserted here by JS -->
                         </div>
                     </div>
                 </div>
@@ -176,146 +87,98 @@
             <!-- Featured Automations Section -->
             <section id="featured-automations" class="mb-12">
                 <h2 class="text-2xl font-bold text-gray-700 mb-6 pb-2 border-b border-gray-300">Featured Automations</h2>
-                <div id="featured-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Featured cards will be dynamically inserted here -->
-                </div>
+                <div id="featured-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
             </section>
 
             <!-- All Automations Section -->
             <section id="all-automations">
-                <h2 class="text-2xl font-bold text-gray-700 mb-6 pb-2 border-b border-gray-300">All Automations</h2>
-                <div id="automation-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Automation cards will be dynamically inserted here by JS -->
-                </div>
-                <p id="no-results" class="text-center py-10 text-gray-500 hidden">No automations found.</p>
+                <h2 class="text-2xl font-bold text-gray-700 mb-6 pb-2 border-b border-gray-300">All Automations with Pages</h2>
+                <div id="automation-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
             </section>
+            
+            <!-- Internal Routing Automations Section -->
+            <section id="internal-automations" class="mt-12">
+                <h2 class="text-2xl font-bold text-gray-700 mb-6 pb-2 border-b border-gray-300">"Skip Response" Automations (Training Only)</h2>
+                <div id="internal-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            </section>
+
+            <p id="no-results" class="text-center py-10 text-gray-500 hidden">No automations found.</p>
 
             <div class="mt-16 text-center">
                 <a href="sop.html" class="inline-block bg-slate-600 hover:bg-slate-700 text-white font-medium py-3 px-8 rounded-lg transition-transform hover:scale-105">View Automation Design SOP</a>
             </div>
+        </div>
+    </div>
 
-            <!-- Key Customer Insights Section -->
-            <section class="insights-container">
-                <header class="text-center mb-8">
-                    <h2 class="tracking-tight">Key Customer Insights & Recommendations Summary</h2>
-                    <p class="text-sm text-gray-500 mt-1">Derived from the Siena Memory Insights Report (May 17 - May 20, 2025)</p>
-                </header>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
-                    <!-- Left Column -->
-                    <div>
-                        <h3 class="font-semibold">Overall Customer Sentiment</h3>
-                        <p class="text-gray-600 text-sm mb-4">
-                            Analysis of 146 customer interactions reveals strong product enthusiasm for H2Tab products. However, this positive sentiment is often tempered by significant operational challenges. Addressing these friction points in <span class="highlight-text">ordering</span>, <span class="highlight-text">subscription management</span>, <span class="highlight-text">delivery</span>, and <span class="highlight-text">customer service responsiveness</span> is a substantial opportunity to improve retention and capitalize on the product's positive reception.
-                        </p>
-
-                        <h3 class="font-semibold mt-6">Key Recommendations</h3>
-                        <ul class="list-disc text-gray-600 space-y-2 recommendation-list text-sm">
-                            <li>Overhaul the shipping and delivery system to address widespread delays and tracking issues.</li>
-                            <li>Fix technical issues with the subscription service, particularly focusing on discount application at checkout and account management functionality.</li>
-                            <li>Develop a dextrose-free formula option to address health-conscious customers' concerns about sweeteners.</li>
-                            <li>Implement a more responsive customer service protocol with clear SLAs for email response times and order issue resolution.</li>
-                            <li>Expand international shipping capabilities with transparent delivery timeframes to capitalize on global demand.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Right Column -->
-                    <div>
-                        <h3 class="font-semibold">Primary Areas for Improvement Identified</h3>
-                        <ul class="list-none text-gray-600 space-y-3 improvement-list text-sm">
-                            <li>
-                                <strong>Shipping and Delivery System:</strong>
-                                <p class="pl-4">Extended delivery times, tracking issues, partial orders.</p>
-                            </li>
-                            <li>
-                                <strong>Subscription Service Technical Issues:</strong>
-                                <p class="pl-4">Discount failures, account management difficulties, login problems.</p>
-                            </li>
-                            <li>
-                                <strong>Product Formulation (Dextrose):</strong>
-                                <p class="pl-4">Concerns from health-conscious customers.</p>
-                            </li>
-                            <li>
-                                <strong>Customer Service Responsiveness:</strong>
-                                <p class="pl-4">Unanswered emails, inconsistent resolution.</p>
-                            </li>
-                            <li>
-                                <strong>International Market Expansion:</strong>
-                                <p class="pl-4">Clear demand, limited current capabilities.</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="text-center mt-8 pt-4 border-t border-gray-200">
-                    <p class="text-xs italic text-gray-500">Prioritizing automations that address these specific pain points can significantly enhance customer satisfaction and operational efficiency.</p>
-                </div>
-            </section>
+    <!-- Modal for Skip Response Info -->
+    <div id="skip-response-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">"Skip Response" Automation</h3>
+                <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+            </div>
+            <p class="text-sm text-gray-600">This automation is designated as **"Skip Response."**</p>
+            <p class="text-sm text-gray-600 mt-2">This means that if a customer's message matches this intent, the automation takes **no action**. It does not send a reply, tag the ticket, or route it.</p>
+            <p class="text-sm text-gray-600 mt-2">The system simply logs that the match occurred, which helps to train and improve the AI's learning and accuracy over time.</p>
         </div>
     </div>
 
     <button id="scrollToTopBtn" title="Go to top">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" /></svg>
     </button>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const automationsData = [
-                {"Automation":"Initial Greeting & Query Clarification v2","Category":"Other","Labels":"None","Instructions":"..."},
-                {"Automation":"Where is my order?","Category":"Order Management","Labels":"None","Instructions":"..."},
-                {"Automation":"Cancel My Order","Category":"Order Management","Labels":"None","Instructions":"..."},
-                {"Automation":"Do you have a military discount?","Category":"Promotions & Discounts","Labels":"None","Instructions":"..."},
-                {"Automation":"H2Tab Ingredients & Reactions Inquiry","Category":"Product Information","Labels":"None","Instructions":"..."},
-                {"Automation":"International Shipping Inquiry","Category":"Shipping & Delivery","Labels":"None","Instructions":"..."},
-                {"Automation":"Business Proposal Inquiry","Category":"Business Inquiries","Labels":"None","Instructions":"..."},
-                {"Automation":"Metallic Taste or Sensation Inquiry","Category":"Product Information","Labels":"None","Instructions":"..."},
-                {"Automation":"Hydrogen Tabs Usage Inquiry","Category":"Product Information","Labels":"None","Instructions":"..."},
-                {"Automation":"Job Application Inquiry","Category":"Other","Labels":"None","Instructions":"..."}
+                {"Automation":"Initial Greeting & Query Clarification v2","Category":"Other","Instructions":"..."},
+                {"Automation":"Where is my order?","Category":"Order Management","Instructions":"..."},
+                {"Automation":"Cancel My Order","Category":"Order Management","Instructions":"..."},
+                {"Automation":"Do you have a military discount?","Category":"Promotions & Discounts","Instructions":"..."},
+                {"Automation":"H2Tab Ingredients & Reactions Inquiry","Category":"Product Information","Instructions":"..."},
+                {"Automation":"International Shipping Inquiry","Category":"Shipping & Delivery","Instructions":"..."},
+                {"Automation":"Business Proposal Inquiry","Category":"Business Inquiries","Instructions":"..."},
+                {"Automation":"Metallic Taste or Sensation Inquiry","Category":"Product Information","Instructions":"..."},
+                {"Automation":"Hydrogen Tabs Usage Inquiry","Category":"Product Information","Instructions":"Skip Response"},
+                {"Automation":"Job Application Inquiry","Category":"Other","Instructions":"Skip Response"}
             ];
 
             const featuredAutomations = ["Initial Greeting & Query Clarification v2", "Where is my order?", "Cancel My Order"];
 
             const listContainer = document.getElementById('automation-list');
             const featuredContainer = document.getElementById('featured-list');
+            const internalContainer = document.getElementById('internal-list');
             const filterContainer = document.getElementById('filter-container');
             const searchInput = document.getElementById('searchInput');
             const noResultsMsg = document.getElementById('no-results');
-
-            const categoryIcons = {
-                'Promotions & Discounts': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10.75 2.75a.75.75 0 00-1.5 0v8.586l-1.24-1.24a.75.75 0 00-1.06 1.06l2.5 2.5a.75.75 0 001.06 0l2.5-2.5a.75.75 0 10-1.06-1.06l-1.24 1.24V2.75z" /><path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" /></svg>`,
-                'Order Management': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H4zm10.5 5.75a.75.75 0 00-1.5 0v2.5H10a.75.75 0 000 1.5h2.5V14a.75.75 0 001.5 0v-2.5H16a.75.75 0 000-1.5h-2.5V7.75zM6 7a1 1 0 011-1h2a1 1 0 110 2H7a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>`,
-                'Product Information': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd" /></svg>`,
-                'Other': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" /></svg>`,
-                'Shipping & Delivery': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.5 2A3.5 3.5 0 002 5.5v2.879a.75.75 0 00.44.693l4.5 2.25a.75.75 0 00.62 0l4.5-2.25A.75.75 0 0012 8.38V5.5A3.5 3.5 0 008.5 2h-3zM13.5 8.38a.75.75 0 00.44.693l4.5 2.25a.75.75 0 00.62 0l4.5-2.25a.75.75 0 00.44-.693V5.5A3.5 3.5 0 0018.5 2h-3A3.5 3.5 0 0012 5.5v2.88zM4 12.5a.75.75 0 00-1.5 0v2.879a.75.75 0 00.44.693l4.5 2.25a.75.75 0 00.62 0l4.5-2.25a.75.75 0 00.44-.693V12.5a.75.75 0 00-1.5 0v2.02l-3.75 1.875L4 14.52V12.5z" clip-rule="evenodd" /></svg>`,
-                'Business Inquiries': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M3.5 2.75a.75.75 0 00-1.5 0v14.5a.75.75 0 001.5 0v-4.392l1.657-.348a6.449 6.449 0 014.271.572 7.948 7.948 0 005.965.524l2.078-.64A.75.75 0 0018.5 12V2.75a.75.75 0 00-1.5 0v7.852l-2.078.64a6.448 6.448 0 01-4.86-2.074 7.947 7.947 0 00-5.212-2.282L3.5 6.648V2.75z" /></svg>`
-            };
+            const modal = document.getElementById('skip-response-modal');
+            const closeModalBtn = document.getElementById('close-modal-btn');
             
             const slugify = (text) => text.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-').replace(/^-+/, '').replace(/-+$/, '');
 
             const createCard = (item) => {
-                const categorySlug = slugify(item.Category);
+                const isSkipResponse = item.Instructions === 'Skip Response';
                 const automationSlug = slugify(item.Automation);
-                
                 let pageUrl = `${automationSlug}.html`;
                 if (item.Automation.includes('Initial Greeting')) pageUrl = 'initial-greeting-v2.html';
-                if (item.Automation.includes('SOP')) pageUrl = 'sop.html';
-
+                
                 const card = document.createElement('div');
-                card.className = 'automation-card';
+                card.className = 'automation-card' + (isSkipResponse ? ' is-clickable' : '');
+                if (isSkipResponse) {
+                    card.addEventListener('click', () => modal.classList.add('active'));
+                }
+
                 card.innerHTML = `
                     <div class="p-6 card-content">
-                        <span class="category-badge category-${categorySlug}">
-                            ${categoryIcons[item.Category] || ''}
-                            ${item.Category}
-                        </span>
+                        <span class="category-badge category-${slugify(item.Category)}">${item.Category}</span>
                         <h3 class="mt-4 text-lg font-semibold text-gray-800">
-                            <a href="${pageUrl}" class="hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-sm">${item.Automation}</a>
+                            ${isSkipResponse ? item.Automation : `<a href="${pageUrl}" class="hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-sm">${item.Automation}</a>`}
                         </h3>
                     </div>
                     <div class="bg-gray-50 p-4 mt-auto">
-                        <a href="${pageUrl}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">View Details &rarr;</a>
+                        ${isSkipResponse 
+                            ? `<span class="text-sm font-semibold text-gray-500">Training Only &rarr;</span>`
+                            : `<a href="${pageUrl}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">View Details &rarr;</a>`
+                        }
                     </div>
                 `;
                 return card;
@@ -346,20 +209,25 @@
 
                 listContainer.innerHTML = '';
                 featuredContainer.innerHTML = '';
+                internalContainer.innerHTML = '';
                 
-                let displayedCount = 0;
                 allFilteredData.forEach(item => {
                     const card = createCard(item);
+                    const isSkip = item.Instructions === 'Skip Response';
+                    
                     if (featuredAutomations.includes(item.Automation) && filter === 'all' && searchTerm === '') {
                         featuredContainer.appendChild(card);
+                    } else if (isSkip) {
+                        internalContainer.appendChild(card);
                     } else {
                         listContainer.appendChild(card);
-                        displayedCount++;
                     }
                 });
 
                 noResultsMsg.style.display = (allFilteredData.length === 0) ? 'block' : 'none';
-                document.getElementById('all-automations').style.display = (displayedCount > 0) ? 'block' : 'none';
+                document.getElementById('all-automations').style.display = (listContainer.children.length > 0) ? 'block' : 'none';
+                document.getElementById('internal-automations').style.display = (internalContainer.children.length > 0) ? 'block' : 'none';
+
             };
 
             filterContainer.addEventListener('click', (e) => {
@@ -374,6 +242,13 @@
             searchInput.addEventListener('input', () => {
                 const activeFilter = document.querySelector('.filter-btn.active').dataset.category;
                 renderLists(activeFilter, searchInput.value);
+            });
+            
+            closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
             });
 
             renderLists();
