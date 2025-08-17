@@ -1,193 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Siena Automation Library - H2Tab</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <!-- Global library styles -->
-  <link rel="stylesheet" href="css/global_styles.css" />
-  <style>
-    /* Keep only component-specific styles not already handled by global_styles.css */
-    body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
-    .automation-card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; display: flex; flex-direction: column; height: 100%; overflow: hidden; }
-    .automation-card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px -4px rgba(0,0,0,0.12); }
-    .automation-card .card-content { flex-grow: 1; padding: 1.5rem; }
-    .automation-card .card-footer { background: #f9fafb; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Siena Automation Library - H2Tab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Global library styles -->
+    <link rel="stylesheet" href="css/global_styles.css" />
+    <style>
+        /* Component-specific styles */
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
+        .automation-card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+        .automation-card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px -4px rgba(0,0,0,0.12); }
+        .automation-card .card-content { flex-grow: 1; padding: 1.5rem; }
+        .automation-card .card-footer { background: #f9fafb; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .automation-card.is-clickable { cursor: pointer; }
 
-    /* Featured badge (not in global yet) */
-    .featured-badge { background-color: #fef3c7; color: #92400e; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 9999px; }
+        .featured-badge { background-color: #fef3c7; color: #92400e; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 9999px; }
+        .filter-btn.active { color: white; background: #4f46e5; border-color: #4338ca; }
 
-    /* Optional: active filter chip state (uses brand Indigo) */
-    .filter-btn.active { color: white; background: #4f46e5; border-color: #4338ca; }
-  </style>
+        /* Insights Summary Section Styles */
+        .insights-container {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+            padding: 2rem 2.5rem;
+            border: 1px solid #e5e7eb;
+            margin-top: 4rem;
+        }
+        .insights-container h2 { color: #1f2937; font-size: 1.5rem; font-weight: 600; }
+        .insights-container h3 {
+            color: #374151; border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem; margin-bottom: 1rem;
+            font-size: 1.125rem; font-weight: 600;
+        }
+        .insights-container ul { list-style-position: inside; }
+        .insights-container li { margin-bottom: 0.5rem; padding-left: 0.5rem; }
+        .highlight-text { background-color: #eff6ff; color: #1e40af; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-weight: 500; }
+        .recommendation-list li::marker { color: #3b82f6; font-weight: bold; }
+        .improvement-list strong { color: #111827; }
+    </style>
 </head>
 <body>
-  <div class="main-content-area p-6 max-w-7xl mx-auto"> 
-    <header class="text-center mb-12"> 
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Siena Automation Library</h1>
-      <p class="text-lg text-gray-600 mt-3 max-w-2xl mx-auto">A comprehensive directory of all configured automations for the Elisha persona.</p>
-    </header>
+    <div class="main-content-area p-6 max-w-7xl mx-auto"> 
+        <header class="text-center mb-12"> 
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Siena Automation Library</h1>
+            <p class="text-lg text-gray-600 mt-3 max-w-2xl mx-auto">A comprehensive directory of all configured automations for the Elisha persona.</p>
+        </header>
 
-    <!-- Search and Filter -->
-    <section class="mb-10 p-4 bg-white rounded-xl shadow-sm border border-gray-200">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-center">
-        <div>
-          <input type="text" id="searchInput" placeholder="Search automations..." class="w-full pl-3 pr-4 py-2 border border-gray-300 rounded-md" />
-        </div>
-        <div class="lg:col-span-2 flex flex-wrap gap-2 justify-end" id="filter-container"></div>
-      </div>
-    </section>
-
-    <!-- All Automations (Featured inline) -->
-    <section id="all-automations">
-      <h2 class="text-2xl font-bold text-gray-700 mb-6 pb-2 border-b border-gray-300">All Automations</h2>
-      <div id="automation-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-    </section>
-
-    <!-- Internal (Skip Response) -->
-    <section id="internal-automations" class="mt-12">
-      <h2 class="text-2xl font-bold text-gray-700 mb-6 pb-2 border-b border-gray-300">"Skip Response" Automations (Training Only)</h2>
-      <div id="internal-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-    </section>
-
-    <p id="no-results" class="text-center py-10 text-gray-500 hidden">No automations found.</p>
-
-    <div class="mt-16 text-center">
-      <a href="sop.html" class="inline-block bg-slate-600 hover:bg-slate-700 text-white font-medium py-3 px-8 rounded-lg">View Automation Design SOP</a>
-    </div>
-  </div>
-
-  <div id="skip-response-modal" class="modal-overlay hidden fixed inset-0 bg-black/60 flex items-center justify-center">
-    <div class="modal-content bg-white p-6 rounded-lg max-w-md w-full">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-semibold text-gray-800">"Skip Response" Automation</h3>
-        <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
-      </div>
-      <p class="text-sm text-gray-600">This automation is designated as <strong>"Skip Response."</strong></p>
-      <p class="text-sm text-gray-600 mt-2">If a customer's message matches this intent, the automation takes <strong>no action</strong>.</p>
-    </div>
-  </div>
-
-  <button id="scrollToTopBtn" title="Go to top">▲</button>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const automationsData = [
-        { Automation: 'Initial Greeting & Query Clarification v2', Category: 'Other', Instructions: '...' },
-        { Automation: 'Where is my order?', Category: 'Order Management', Instructions: '...' },
-        { Automation: 'Cancel My Order', Category: 'Order Management', Instructions: '...' },
-        { Automation: 'Do you have a military discount?', Category: 'Promotions & Discounts', Instructions: '...' },
-        { Automation: 'H2Tab Ingredients & Reactions Inquiry', Category: 'Product Information', Instructions: '...' },
-        { Automation: 'International Shipping Inquiry', Category: 'Shipping & Delivery', Instructions: '...' },
-        { Automation: 'Business Proposal Inquiry', Category: 'Business Inquiries', Instructions: '...' },
-        { Automation: 'Metallic Taste or Sensation Inquiry', Category: 'Product Information', Instructions: '...' },
-        { Automation: 'Hydrogen Tabs Usage Inquiry', Category: 'Product Information', Instructions: 'Skip Response' },
-        { Automation: 'Job Application Inquiry', Category: 'Other', Instructions: 'Skip Response' }
-      ];
-
-      const featuredAutomations = ['Initial Greeting & Query Clarification v2','Where is my order?','Cancel My Order'];
-
-      const listContainer = document.getElementById('automation-list');
-      const internalContainer = document.getElementById('internal-list');
-      const searchInput = document.getElementById('searchInput');
-      const noResultsMsg = document.getElementById('no-results');
-      const filterContainer = document.getElementById('filter-container');
-
-      const slugify = (t) => t.toLowerCase().replace(/\s+/g,'-').replace(/[^\w-]/g,'');
-
-      const categoryClass = (category) => {
-        switch(category){
-          case 'Promotions & Discounts': return 'category-promotions-discounts';
-          case 'Order Management': return 'category-order-management';
-          case 'Product Information': return 'category-product-information';
-          case 'Shipping & Delivery': return 'category-shipping-delivery';
-          case 'Business Inquiries': return 'category-business-inquiries';
-          default: return 'category-other';
-        }
-      };
-
-      // Mapping automation names to their respective detail pages
-      const pageMapping = {
-        'Initial Greeting & Query Clarification v2': 'initial-greeting-v2.html',
-        'Where is my order?': 'where-is-my-order.html',
-        'Cancel My Order': 'cancel-my-order.html',
-        'Do you have a military discount?': 'military-discount.html',
-        'H2Tab Ingredients & Reactions Inquiry': 'h2tab-ingredients.html',
-        'International Shipping Inquiry': 'international-shipping.html',
-        'Business Proposal Inquiry': 'business-proposal.html',
-        'Metallic Taste or Sensation Inquiry': 'metallic-taste.html'
-        // Add more mappings as needed
-      };
-
-      const createCard = (item) => {
-        const isSkip = item.Instructions==='Skip Response';
-        const pageUrl = pageMapping[item.Automation] || slugify(item.Automation)+'.html';
-        const isFeatured = featuredAutomations.includes(item.Automation);
-        const card = document.createElement('div');
-        card.className='automation-card';
-        card.innerHTML=`
-          <div class="card-content">
-            <div class="flex justify-between items-start">
-              <span class="category-badge ${categoryClass(item.Category)}">${item.Category}</span>
-              ${isFeatured ? '<span class="featured-badge">⭐ Featured</span>' : ''}
+        <!-- Search and Filter -->
+        <section class="mb-10 p-4 bg-white rounded-xl shadow-sm border border-gray-200">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-center">
+                <div>
+                    <input type="text" id="searchInput" placeholder="Search automations..." class="w-full pl-3 pr-4 py-2 border border-gray-300 rounded-md" />
+                </div>
+                <div class="lg:col-span-2 flex flex-wrap gap-2 justify-end" id="filter-container"></div>
             </div>
-            <h3 class="mt-4 text-lg font-semibold text-gray-800">${isSkip ? item.Automation : `<a href="${pageUrl}" class="hover:text-indigo-600">${item.Automation}</a>`}</h3>
-          </div>
-          <div class="card-footer">
-            ${isSkip ? '<span class="text-sm text-gray-500">Training Only</span>' : `<a href="${pageUrl}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">View Details →</a>`}
-          </div>
-        `;
-        return card;
-      };
+        </section>
 
-      const categories = [...new Set(automationsData.map(i=>i.Category))];
-      const allBtn = document.createElement('button');
-      allBtn.textContent='All';
-      allBtn.className='filter-btn active px-3 py-1 border rounded-full';
-      allBtn.dataset.category='all';
-      filterContainer.appendChild(allBtn);
-      categories.forEach(c=>{
-        const btn=document.createElement('button');
-        btn.textContent=c;
-        btn.className='filter-btn px-3 py-1 border rounded-full';
-        btn.dataset.category=c;
-        filterContainer.appendChild(btn);
-      });
+        <!-- All Automations (Featured inline) -->
+        <section id="all-automations">
+            <h2 class="text-2xl font-bold text-gray-700 mb-6 pb-2 border-b border-gray-300">All Automations</h2>
+            <div id="automation-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </section>
 
-      const renderLists = (filter='all', searchTerm='') => {
-        const q = searchTerm.toLowerCase();
-        const filtered = automationsData.filter(i=>(filter==='all'||i.Category===filter)&&i.Automation.toLowerCase().includes(q));
-        listContainer.innerHTML='';
-        internalContainer.innerHTML='';
-        filtered.forEach(item=>{
-          const card=createCard(item);
-          if(item.Instructions==='Skip Response') internalContainer.appendChild(card);
-          else listContainer.appendChild(card);
+        <!-- Internal (Skip Response) -->
+        <section id="internal-automations" class="mt-12">
+            <h2 class="text-2xl font-bold text-gray-700 mb-6 pb-2 border-b border-gray-300">"Skip Response" Automations (Training Only)</h2>
+            <div id="internal-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        </section>
+
+        <p id="no-results" class="text-center py-10 text-gray-500 hidden">No automations found.</p>
+
+        <div class="mt-16 text-center">
+            <a href="sop.html" class="inline-block bg-slate-600 hover:bg-slate-700 text-white font-medium py-3 px-8 rounded-lg">View Automation Design SOP</a>
+        </div>
+
+        <!-- Key Customer Insights Section -->
+        <section class="insights-container">
+            <header class="text-center mb-8">
+                <h2 class="tracking-tight">Key Customer Insights & Recommendations Summary</h2>
+                <p class="text-sm text-gray-500 mt-1">Derived from the Siena Memory Insights Report (May 17 - May 20, 2025)</p>
+            </header>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+                <div>
+                    <h3 class="font-semibold">Overall Customer Sentiment</h3>
+                    <p class="text-gray-600 text-sm mb-4">
+                        Analysis of 146 customer interactions reveals strong product enthusiasm for H2Tab products. However, this positive sentiment is often tempered by significant operational challenges. Addressing these friction points in <span class="highlight-text">ordering</span>, <span class="highlight-text">subscription management</span>, <span class="highlight-text">delivery</span>, and <span class="highlight-text">customer service responsiveness</span> is a substantial opportunity to improve retention and capitalize on the product's positive reception.
+                    </p>
+                    <h3 class="font-semibold mt-6">Key Recommendations</h3>
+                    <ul class="list-disc text-gray-600 space-y-2 recommendation-list text-sm">
+                        <li>Overhaul the shipping and delivery system to address widespread delays and tracking issues.</li>
+                        <li>Fix technical issues with the subscription service, particularly focusing on discount application at checkout and account management functionality.</li>
+                        <li>Develop a dextrose-free formula option to address health-conscious customers' concerns about sweeteners.</li>
+                        <li>Implement a more responsive customer service protocol with clear SLAs for email response times and order issue resolution.</li>
+                        <li>Expand international shipping capabilities with transparent delivery timeframes to capitalize on global demand.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold">Primary Areas for Improvement Identified</h3>
+                    <ul class="list-none text-gray-600 space-y-3 improvement-list text-sm">
+                        <li><strong>Shipping and Delivery System:</strong><p class="pl-4">Extended delivery times, tracking issues, partial orders.</p></li>
+                        <li><strong>Subscription Service Technical Issues:</strong><p class="pl-4">Discount failures, account management difficulties, login problems.</p></li>
+                        <li><strong>Product Formulation (Dextrose):</strong><p class="pl-4">Concerns from health-conscious customers.</p></li>
+                        <li><strong>Customer Service Responsiveness:</strong><p class="pl-4">Unanswered emails, inconsistent resolution.</p></li>
+                        <li><strong>International Market Expansion:</strong><p class="pl-4">Clear demand, limited current capabilities.</p></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-8 pt-4 border-t border-gray-200">
+                <p class="text-xs italic text-gray-500">Prioritizing automations that address these specific pain points can significantly enhance customer satisfaction and operational efficiency.</p>
+            </div>
+        </section>
+    </div>
+
+    <div id="skip-response-modal" class="modal-overlay hidden fixed inset-0 bg-black/60 flex items-center justify-center">
+        <div class="modal-content bg-white p-6 rounded-lg max-w-md w-full">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">"Skip Response" Automation</h3>
+                <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+            </div>
+            <p class="text-sm text-gray-600">This automation is designated as <strong>"Skip Response."</strong></p>
+            <p class="text-sm text-gray-600 mt-2">If a customer's message matches this intent, the automation takes <strong>no action</strong>. It does not send a reply, tag the ticket, or route it.</p>
+            <p class="text-sm text-gray-600 mt-2">The system simply logs that the match occurred, which helps to train and improve the AI's learning and accuracy over time.</p>
+        </div>
+    </div>
+
+    <button id="scrollToTopBtn" title="Go to top" class="hidden fixed bottom-8 right-8 z-50 p-3 rounded-full shadow-lg bg-slate-700 text-white focus:outline-none">▲</button>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const automationsData = [
+            {"Automation":"Business Proposal Inquiry","Category":"Business Inquiries","Instructions":"..."},
+            {"Automation":"Cancel My Order","Category":"Order Management","Instructions":"..."},
+            {"Automation":"Cancel Subscription","Category":"Order Management","Instructions":"..."},
+            {"Automation":"Do you have a military discount?","Category":"Promotions & Discounts","Instructions":"..."},
+            {"Automation":"H2Tab Ingredients & Reactions Inquiry","Category":"Product Information","Instructions":"..."},
+            {"Automation":"Initial Greeting & Query Clarification v2","Category":"Other","Instructions":"..."},
+            {"Automation":"International Shipping Inquiry","Category":"Shipping & Delivery","Instructions":"..."},
+            {"Automation":"Metallic Taste or Sensation Inquiry","Category":"Product Information","Instructions":"..."},
+            {"Automation":"Pause Subscription","Category":"Order Management","Instructions":"..."},
+            {"Automation":"Reactivate Subscription","Category":"Order Management","Instructions":"..."},
+            {"Automation":"Skip Subscription Shipment","Category":"Order Management","Instructions":"..."},
+            {"Automation":"Subscription Management - General Inquiry","Category":"Order Management","Instructions":"..."},
+            {"Automation":"Update Shipping Address","Category":"Order Management","Instructions":"..."},
+            {"Automation":"Update Subscription Payment Method","Category":"Order Management","Instructions":"..."},
+            {"Automation":"Update Subscription Shipping Address","Category":"Order Management","Instructions":"..."},
+            {"Automation":"Where is my order?","Category":"Order Management","Instructions":"..."},
+            {"Automation":"Hydrogen Tabs Usage Inquiry","Category":"Product Information","Instructions":"Skip Response"},
+            {"Automation":"Job Application Inquiry","Category":"Other","Instructions":"Skip Response"}
+        ];
+
+        const featuredAutomations = ['Initial Greeting & Query Clarification v2','Where is my order?','Cancel My Order'];
+
+        const listContainer = document.getElementById('automation-list');
+        const internalContainer = document.getElementById('internal-list');
+        const searchInput = document.getElementById('searchInput');
+        const noResultsMsg = document.getElementById('no-results');
+        const filterContainer = document.getElementById('filter-container');
+        const modal = document.getElementById('skip-response-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+
+        const slugify = (t) => t.toLowerCase().replace(/\s+/g,'-').replace(/[^\w-]/g,'');
+
+        const categoryClass = (category) => {
+            switch(category){
+                case 'Promotions & Discounts': return 'bg-blue-100 text-blue-800';
+                case 'Order Management': return 'bg-purple-100 text-purple-800';
+                case 'Product Information': return 'bg-green-100 text-green-800';
+                case 'Shipping & Delivery': return 'bg-yellow-100 text-yellow-800';
+                case 'Business Inquiries': return 'bg-red-100 text-red-800';
+                default: return 'bg-gray-200 text-gray-800';
+            }
+        };
+
+        // UPDATED pageMapping constant
+        const pageMapping = {
+            'Business Proposal Inquiry': 'business-proposal-inquiry.html',
+            'Cancel My Order': 'cancel-my-order.html',
+            'Cancel Subscription': 'cancel-subscription.html',
+            'Do you have a military discount?': 'do-you-have-a-military-discount.html',
+            'H2Tab Ingredients & Reactions Inquiry': 'h2tab-ingredients-reactions-inquiry.html',
+            'Initial Greeting & Query Clarification v2': 'initial-greeting-v2.html',
+            'International Shipping Inquiry': 'international-shipping-inquiry.html',
+            'Metallic Taste or Sensation Inquiry': 'metallic-taste-or-sensation-inquiry.html',
+            'Pause Subscription': 'pause-subscription.html',
+            'Reactivate Subscription': 'reactivate-subscription.html',
+            'Skip Subscription Shipment': 'skip-subscription-shipment.html',
+            'Subscription Management - General Inquiry': 'subscription-management-general-inquiry.html',
+            'Update Shipping Address': 'update-shipping-address.html',
+            'Update Subscription Payment Method': 'update-subscription-payment-method.html',
+            'Update Subscription Shipping Address': 'update-subscription-shipping-address.html',
+            'Where is my order?': 'where-is-my-order.html'
+        };
+
+        const createCard = (item) => {
+            const isSkip = item.Instructions==='Skip Response';
+            const pageUrl = pageMapping[item.Automation] || slugify(item.Automation)+'.html';
+            const isFeatured = featuredAutomations.includes(item.Automation);
+            const card = document.createElement('div');
+            card.className='automation-card' + (isSkip ? ' is-clickable' : '');
+            if (isSkip) {
+                card.addEventListener('click', () => modal.classList.remove('hidden'));
+            }
+
+            card.innerHTML=`
+                <div class="card-content">
+                    <div class="flex justify-between items-start">
+                        <span class="category-badge ${categoryClass(item.Category)}">${item.Category}</span>
+                        ${isFeatured ? '<span class="featured-badge">⭐ Featured</span>' : ''}
+                    </div>
+                    <h3 class="mt-4 text-lg font-semibold text-gray-800">${isSkip ? item.Automation : `<a href="${pageUrl}" class="hover:text-indigo-600">${item.Automation}</a>`}</h3>
+                </div>
+                <div class="card-footer">
+                    ${isSkip ? '<span class="text-sm text-gray-500">Training Only</span>' : `<a href="${pageUrl}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">View Details →</a>`}
+                </div>
+            `;
+            return card;
+        };
+
+        const categories = ['All', ...new Set(automationsData.map(i=>i.Category))];
+        categories.forEach(c=>{
+            const btn=document.createElement('button');
+            btn.textContent=c;
+            btn.className='filter-btn px-3 py-1 border rounded-full text-sm';
+            btn.dataset.category=c.toLowerCase().replace(' & ', '-and-');
+            if (c === 'All') btn.classList.add('active');
+            filterContainer.appendChild(btn);
         });
-        noResultsMsg.style.display=filtered.length? 'none':'block';
-      };
 
-      filterContainer.addEventListener('click', e=>{
-        if(e.target.tagName==='BUTTON'){
-          document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-          e.target.classList.add('active');
-          renderLists(e.target.dataset.category, searchInput.value);
-        }
-      });
-      searchInput.addEventListener('input', ()=>{
-        const active=document.querySelector('.filter-btn.active').dataset.category;
-        renderLists(active, searchInput.value);
-      });
+        const renderLists = (filter='all', searchTerm='') => {
+            const q = searchTerm.toLowerCase();
+            const filtered = automationsData.filter(i=>(filter==='all'||i.Category.toLowerCase().replace(' & ', '-and-')===filter)&&i.Automation.toLowerCase().includes(q));
+            
+            listContainer.innerHTML='';
+            internalContainer.innerHTML='';
+            
+            filtered.forEach(item=>{
+                const card=createCard(item);
+                if(item.Instructions==='Skip Response') internalContainer.appendChild(card);
+                else listContainer.appendChild(card);
+            });
+            noResultsMsg.style.display=filtered.length? 'none':'block';
+            document.getElementById('all-automations').style.display = listContainer.children.length > 0 ? 'block' : 'none';
+            document.getElementById('internal-automations').style.display = internalContainer.children.length > 0 ? 'block' : 'none';
+        };
 
-      renderLists();
+        filterContainer.addEventListener('click', e=>{
+            if(e.target.tagName==='BUTTON'){
+                document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+                e.target.classList.add('active');
+                renderLists(e.target.dataset.category, searchInput.value);
+            }
+        });
+        searchInput.addEventListener('input', ()=>{
+            const active=document.querySelector('.filter-btn.active').dataset.category;
+            renderLists(active, searchInput.value);
+        });
 
-      const scrollBtn=document.getElementById('scrollToTopBtn');
-      window.addEventListener('scroll',()=>{scrollBtn.style.display=(window.scrollY>100)?'block':'none';});
-      scrollBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+        closeModalBtn.addEventListener('click', () => modal.classList.add('hidden'));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.add('hidden');
+        });
+
+        renderLists();
+
+        const scrollBtn=document.getElementById('scrollToTopBtn');
+        window.addEventListener('scroll',()=>{scrollBtn.style.display=(window.scrollY>100)?'block':'none';});
+        scrollBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
     });
-  </script>
+    </script>
 </body>
 </html>
