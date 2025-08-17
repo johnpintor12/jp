@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Shipping Address - H2Tab Automation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global_styles.css">
+    <script src="global_scripts.js"></script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <style>
+        /* Theme-specific styles for this page (Indigo Theme) */
+        :root { 
+            --top-bar-height: 60px;
+            --page-theme-color-main: #4f46e5; /* Indigo-600 */
+            --page-theme-color-darker: #4338ca; /* Indigo-700 */
+            --page-theme-color-lighter: #c7d2fe; /* Indigo-200 */
+            --page-theme-color-lightest: #eef2ff; /* Indigo-50 */
+        }
+
+        .app-top-bar { background-color: var(--page-theme-color-main); }
+        #toc-sidebar h2 { color: var(--page-theme-color-main); }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active {
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
+        }
+        .step-header { background-color: var(--page-theme-color-main); }
+        .escalation-card .step-header { background-color: #8b5cf6 !important; }
+        #scrollToTopBtn { background-color: var(--page-theme-color-main); }
+        #scrollToTopBtn:hover { background-color: var(--page-theme-color-darker); }
+    </style>
+</head>
+<body class="has-toc"> 
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+        </button>
+        <span class="library-title-mobile ml-3 font-semibold text-lg">Update Shipping Address</span>
+    </div>
+    <div id="page-overlay"></div>
+
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#step1">Step 1: Identify Order & Status</a></li>
+            <li><a href="#step2">Step 2: Communicate & Act</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
+            <h1 class="text-3xl font-bold text-gray-800">Update Shipping Address</h1>
+            <p class="text-lg text-gray-600">Category: Order Management</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto"> 
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>A customer wants to change the shipping address for an order they have already placed. Your job is to determine if the address change is possible based on the order's fulfillment status and then either perform the update or clearly explain why it cannot be done.</p>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step1" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 1: Identify Order and Check Fulfillment Status</h3>
+                </div>
+                <div class="step-content">
+                    <p>First, identify the relevant order using the customer's email or order number. Once the order is located, check its fulfillment status.</p>
+                    <div class="decision-card mt-4">
+                        <h4>Decision Logic:</h4>
+                        <ul class="list-disc pl-5 mt-2">
+                            <li><strong>If Fulfillment Status is "Unfulfilled" AND the order does NOT have the "in progress" tag:</strong> The address can be changed. <span class="badge badge-green">PROCEED</span> to Step 2, Path A.</li>
+                            <li><strong>If Fulfillment Status is "Fulfilled," "Shipped," or has the "in progress" tag:</strong> The address cannot be changed by the support team. <span class="badge badge-red">PROCEED</span> to Step 2, Path B.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step2" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 2: Communicate with Customer and Perform Action</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card mb-4">
+                        <h4>Path A: Address Change is Possible</h4>
+                        <ol class="list-decimal pl-5 mt-2">
+                            <li><strong>Action:</strong> Ask the customer for the complete new shipping address.</li>
+                            <li>Once the new address is received, update it in the order details.</li>
+                            <li><strong>Respond to Customer:</strong> <em>"Hi [Customer Name], I was able to update the shipping address for your order #[Order Number]. It will now be sent to: [Paste New Address Here]. You'll receive a shipping confirmation email with tracking once it's on its way. Please let me know if there's anything else I can help with!"</em></li>
+                            <li><strong>Internal Action:</strong> Mark ticket as 'Solved'.</li>
+                        </ol>
+                    </div>
+                    <div class="action-card">
+                        <h4>Path B: Address Change is Not Possible</h4>
+                        <ol class="list-decimal pl-5 mt-2">
+                            <li><strong>Respond to Customer:</strong> <em>"Hi [Customer Name], I've checked on your order #[Order Number], and it has already been processed by our fulfillment team and is being prepared for shipment. Because it's already in the shipping process, I'm unable to change the address in our system. Your best option is to contact the carrier directly with your tracking number once you receive it. They can sometimes reroute a package. I apologize for any inconvenience this may cause."</em></li>
+                            <li><strong>Internal Action:</strong> Mark ticket as 'Solved'.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div> 
+
+    <button id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" /></svg>
+    </button>
+</body>
+</html>
