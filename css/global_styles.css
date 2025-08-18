@@ -125,7 +125,7 @@ h1, h2, h3, h4, h5, h6 {
         box-shadow: none; 
     }
     body.has-toc .main-content-area { 
-        margin-left: 280px; /* Width of sidebar */
+      /*   margin-left: 280px; Width of sidebar */
         padding-top: 1.5rem;
     }
     #menu-toggle, #page-overlay { 
