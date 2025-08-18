@@ -41,6 +41,37 @@
         .highlight-text { background-color: #eff6ff; color: #1e40af; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-weight: 500; }
         .recommendation-list li::marker { color: #3b82f6; font-weight: bold; }
         .improvement-list strong { color: #111827; }
+        
+        /* Pagination Styles */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            background-color: white;
+            color: #374151;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .pagination-btn:hover {
+            background-color: #f3f4f6;
+        }
+        .pagination-btn.active {
+            background-color: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+        .pagination-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
@@ -64,6 +95,7 @@
         <section id="all-automations">
             <h2 class="text-2xl font-bold text-gray-700 mb-6 pb-2 border-b border-gray-300">All Automations</h2>
             <div id="automation-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            <div id="pagination-container" class="pagination-container"></div>
         </section>
 
         <!-- Internal (Skip Response) -->
@@ -133,27 +165,25 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         const automationsData = [
-            {"Automation":"Business Proposal Inquiry","Category":"Business Inquiries","Instructions":"..."},
-            {"Automation":"Cancel My Order","Category":"Order Management","Instructions":"..."},
-            {"Automation":"Cancel Subscription","Category":"Order Management","Instructions":"..."},
-            {"Automation":"Do you have a military discount?","Category":"Promotions & Discounts","Instructions":"..."},
-            {"Automation":"H2Tab Ingredients & Reactions Inquiry","Category":"Product Information","Instructions":"..."},
-            {"Automation":"Initial Greeting & Query Clarification v2","Category":"Other","Instructions":"..."},
-            {"Automation":"International Shipping Inquiry","Category":"Shipping & Delivery","Instructions":"..."},
-            {"Automation":"Metallic Taste or Sensation Inquiry","Category":"Product Information","Instructions":"..."},
-            {"Automation":"Pause Subscription","Category":"Order Management","Instructions":"..."},
-            {"Automation":"Reactivate Subscription","Category":"Order Management","Instructions":"..."},
-            {"Automation":"Skip Subscription Shipment","Category":"Order Management","Instructions":"..."},
-            {"Automation":"Subscription Management - General Inquiry","Category":"Order Management","Instructions":"..."},
-            {"Automation":"Update Shipping Address","Category":"Order Management","Instructions":"..."},
-            {"Automation":"Update Subscription Payment Method","Category":"Order Management","Instructions":"..."},
-            {"Automation":"Update Subscription Shipping Address","Category":"Order Management","Instructions":"..."},
-            {"Automation":"Where is my order?","Category":"Order Management","Instructions":"..."},
-            {"Automation":"Hydrogen Tabs Usage Inquiry","Category":"Product Information","Instructions":"Skip Response"},
-            {"Automation":"Job Application Inquiry","Category":"Other","Instructions":"Skip Response"}
+            { Automation: 'Initial Greeting & Query Clarification v2', Category: 'Other', Instructions: '...' },
+            { Automation: 'Where is my order?', Category: 'Order Management', Instructions: '...' },
+            { Automation: 'Cancel My Order', Category: 'Order Management', Instructions: '...' },
+            { Automation: 'Do you have a military discount?', Category: 'Promotions & Discounts', Instructions: '...' },
+            { Automation: 'H2Tab Ingredients & Reactions Inquiry', Category: 'Product Information', Instructions: '...' },
+            { Automation: 'International Shipping Inquiry', Category: 'Shipping & Delivery', Instructions: '...' },
+            { Automation: 'Business Proposal Inquiry', Category: 'Business Inquiries', Instructions: '...' },
+            { Automation: 'Metallic Taste or Sensation Inquiry', Category: 'Product Information', Instructions: '...' },
+            { Automation: 'Update Shipping Address', Category: 'Order Management', Instructions: '...' },
+            { Automation: 'Cancel Subscription', Category: 'Order Management', Instructions: '...' },
+            { Automation: 'Pause Subscription', Category: 'Order Management', Instructions: '...' },
+            { Automation: 'Reactivate Subscription', Category: 'Order Management', Instructions: '...' },
+            { Automation: 'Skip Subscription Shipment', Category: 'Order Management', Instructions: '...' },
+            { Automation: 'Update Subscription Product (Swap)', Category: 'Order Management', Instructions: '...' },
+            { Automation: 'Update Subscription Payment Method', Category: 'Order Management', Instructions: '...' },
+            { Automation: 'Update Subscription Shipping Address', Category: 'Order Management', Instructions: '...' },
+            { Automation: 'Hydrogen Tabs Usage Inquiry', Category: 'Product Information', Instructions: 'Skip Response' },
+            { Automation: 'Job Application Inquiry', Category: 'Other', Instructions: 'Skip Response' }
         ];
-
-        const featuredAutomations = ['Initial Greeting & Query Clarification v2','Where is my order?','Cancel My Order'];
 
         const listContainer = document.getElementById('automation-list');
         const internalContainer = document.getElementById('internal-list');
@@ -162,6 +192,10 @@
         const filterContainer = document.getElementById('filter-container');
         const modal = document.getElementById('skip-response-modal');
         const closeModalBtn = document.getElementById('close-modal-btn');
+        const paginationContainer = document.getElementById('pagination-container');
+
+        const CARDS_PER_PAGE = 12;
+        let currentPage = 1;
 
         const slugify = (t) => t.toLowerCase().replace(/\s+/g,'-').replace(/[^\w-]/g,'');
 
@@ -176,30 +210,28 @@
             }
         };
 
-        // UPDATED pageMapping constant
         const pageMapping = {
-            'Business Proposal Inquiry': 'business-proposal-inquiry.html',
-            'Cancel My Order': 'cancel-my-order.html',
-            'Cancel Subscription': 'cancel-subscription.html',
-            'Do you have a military discount?': 'do-you-have-a-military-discount.html',
-            'H2Tab Ingredients & Reactions Inquiry': 'h2tab-ingredients-reactions-inquiry.html',
             'Initial Greeting & Query Clarification v2': 'initial-greeting-v2.html',
-            'International Shipping Inquiry': 'international-shipping-inquiry.html',
-            'Metallic Taste or Sensation Inquiry': 'metallic-taste-or-sensation-inquiry.html',
+            'Where is my order?': 'where-is-my-order.html',
+            'Cancel My Order': 'cancel-my-order.html',
+            'Do you have a military discount?': 'do-you-have-a-military-discount.html',
+            'H2Tab Ingredients & Reactions Inquiry': 'h2tab-ingredients.html',
+            'International Shipping Inquiry': 'international-shipping.html',
+            'Business Proposal Inquiry': 'business-proposal.html',
+            'Metallic Taste or Sensation Inquiry': 'metallic-taste.html',
+            'Update Shipping Address': 'update-shipping-address.html',
+            'Cancel Subscription': 'cancel-subscription.html',
             'Pause Subscription': 'pause-subscription.html',
             'Reactivate Subscription': 'reactivate-subscription.html',
             'Skip Subscription Shipment': 'skip-subscription-shipment.html',
-            'Subscription Management - General Inquiry': 'subscription-management-general-inquiry.html',
-            'Update Shipping Address': 'update-shipping-address.html',
+            'Update Subscription Product (Swap)': 'update-subscription-product-swap.html',
             'Update Subscription Payment Method': 'update-subscription-payment-method.html',
-            'Update Subscription Shipping Address': 'update-subscription-shipping-address.html',
-            'Where is my order?': 'where-is-my-order.html'
+            'Update Subscription Shipping Address': 'update-subscription-shipping-address.html'
         };
 
         const createCard = (item) => {
             const isSkip = item.Instructions==='Skip Response';
             const pageUrl = pageMapping[item.Automation] || slugify(item.Automation)+'.html';
-            const isFeatured = featuredAutomations.includes(item.Automation);
             const card = document.createElement('div');
             card.className='automation-card' + (isSkip ? ' is-clickable' : '');
             if (isSkip) {
@@ -210,7 +242,6 @@
                 <div class="card-content">
                     <div class="flex justify-between items-start">
                         <span class="category-badge ${categoryClass(item.Category)}">${item.Category}</span>
-                        ${isFeatured ? '<span class="featured-badge">⭐ Featured</span>' : ''}
                     </div>
                     <h3 class="mt-4 text-lg font-semibold text-gray-800">${isSkip ? item.Automation : `<a href="${pageUrl}" class="hover:text-indigo-600">${item.Automation}</a>`}</h3>
                 </div>
@@ -219,6 +250,76 @@
                 </div>
             `;
             return card;
+        };
+
+        const setupPagination = (items, container) => {
+            paginationContainer.innerHTML = '';
+            const pageCount = Math.ceil(items.length / CARDS_PER_PAGE);
+            if (pageCount <= 1) return;
+
+            const prevButton = document.createElement('button');
+            prevButton.textContent = 'Previous';
+            prevButton.className = 'pagination-btn';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderLists();
+                }
+            });
+            paginationContainer.appendChild(prevButton);
+
+            for (let i = 1; i <= pageCount; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.className = 'pagination-btn' + (i === currentPage ? ' active' : '');
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    renderLists();
+                });
+                paginationContainer.appendChild(pageButton);
+            }
+
+            const nextButton = document.createElement('button');
+            nextButton.textContent = 'Next';
+            nextButton.className = 'pagination-btn';
+            nextButton.disabled = currentPage === pageCount;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    renderLists();
+                }
+            });
+            paginationContainer.appendChild(nextButton);
+        };
+
+        const renderLists = () => {
+            const filter = document.querySelector('.filter-btn.active')?.dataset.category || 'all';
+            const searchTerm = searchInput.value.toLowerCase();
+
+            const filtered = automationsData.filter(i => 
+                (filter === 'all' || i.Category.toLowerCase().replace(' & ', '-and-') === filter) && 
+                i.Automation.toLowerCase().includes(searchTerm)
+            );
+            
+            const normalAutomations = filtered.filter(i => i.Instructions !== 'Skip Response');
+            const skipResponseAutomations = filtered.filter(i => i.Instructions === 'Skip Response');
+
+            listContainer.innerHTML = '';
+            internalContainer.innerHTML = '';
+            
+            const startIndex = (currentPage - 1) * CARDS_PER_PAGE;
+            const endIndex = startIndex + CARDS_PER_PAGE;
+            const paginatedItems = normalAutomations.slice(startIndex, endIndex);
+            paginatedItems.forEach(item => listContainer.appendChild(createCard(item)));
+            
+            skipResponseAutomations.forEach(item => internalContainer.appendChild(createCard(item)));
+
+            setupPagination(normalAutomations, paginationContainer);
+
+            noResultsMsg.style.display = (filtered.length === 0) ? 'block' : 'none';
+            document.getElementById('all-automations').style.display = normalAutomations.length > 0 ? 'block' : 'none';
+            document.getElementById('internal-automations').style.display = skipResponseAutomations.length > 0 ? 'block' : 'none';
         };
 
         const categories = ['All', ...new Set(automationsData.map(i=>i.Category))];
@@ -231,33 +332,17 @@
             filterContainer.appendChild(btn);
         });
 
-        const renderLists = (filter='all', searchTerm='') => {
-            const q = searchTerm.toLowerCase();
-            const filtered = automationsData.filter(i=>(filter==='all'||i.Category.toLowerCase().replace(' & ', '-and-')===filter)&&i.Automation.toLowerCase().includes(q));
-            
-            listContainer.innerHTML='';
-            internalContainer.innerHTML='';
-            
-            filtered.forEach(item=>{
-                const card=createCard(item);
-                if(item.Instructions==='Skip Response') internalContainer.appendChild(card);
-                else listContainer.appendChild(card);
-            });
-            noResultsMsg.style.display=filtered.length? 'none':'block';
-            document.getElementById('all-automations').style.display = listContainer.children.length > 0 ? 'block' : 'none';
-            document.getElementById('internal-automations').style.display = internalContainer.children.length > 0 ? 'block' : 'none';
-        };
-
         filterContainer.addEventListener('click', e=>{
             if(e.target.tagName==='BUTTON'){
                 document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
                 e.target.classList.add('active');
-                renderLists(e.target.dataset.category, searchInput.value);
+                currentPage = 1;
+                renderLists();
             }
         });
         searchInput.addEventListener('input', ()=>{
-            const active=document.querySelector('.filter-btn.active').dataset.category;
-            renderLists(active, searchInput.value);
+            currentPage = 1;
+            renderLists();
         });
 
         closeModalBtn.addEventListener('click', () => modal.classList.add('hidden'));
