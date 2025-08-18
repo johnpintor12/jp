@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do you have a military discount? - H2Tab Automation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global_styles.css">
+    <script src="global_scripts.js"></script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <style>
+        /* Theme-specific styles for this page (Indigo Theme) */
+        :root { 
+            --top-bar-height: 60px;
+            --page-theme-color-main: #4f46e5; /* Indigo-600 */
+            --page-theme-color-darker: #4338ca; /* Indigo-700 */
+            --page-theme-color-lighter: #c7d2fe; /* Indigo-200 */
+            --page-theme-color-lightest: #eef2ff; /* Indigo-50 */
+        }
+
+        .app-top-bar { background-color: var(--page-theme-color-main); }
+        #toc-sidebar h2 { color: var(--page-theme-color-main); }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active {
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
+        }
+        .step-header { background-color: var(--page-theme-color-main); }
+        #scrollToTopBtn { background-color: var(--page-theme-color-main); }
+        #scrollToTopBtn:hover { background-color: var(--page-theme-color-darker); }
+    </style>
+</head>
+<body class="has-toc"> 
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+        </button>
+        <span class="library-title-mobile ml-3 font-semibold text-lg">Military Discount</span>
+    </div>
+    <div id="page-overlay"></div>
+
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#general-guidelines">General Guidelines</a></li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#instructions">Instructions</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
+            <h1 class="text-3xl font-bold text-gray-800">Do you have a military discount?</h1>
+            <p class="text-lg text-gray-600">Category: Promotions & Discounts</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto"> 
+            <div id="general-guidelines" class="content-section flow-element">
+                <h2>General Guidelines</h2>
+                <ul>
+                    <li>Use natural, conversational language in all responses.</li>
+                    <li>Be flexible in interpreting customer inputs, as they may provide information in various formats.</li>
+                    <li>If unsure about any input at any stage, politely ask for clarification.</li>
+                    <li>Always maintain a helpful, empathetic, and friendly tone.</li>
+                    <li>Do not include any signatures (like "Sent by Siena AI") in your messages.</li>
+                    <li>When mentioning order numbers, state them as plain text (e.g., "order number 12345") unless specifically instructed to provide a clickable link, which must then be the customer-facing Shopify order URL.</li>
+                </ul>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>A customer (including active military, veterans, or first responders) is asking about the availability and rules of the H2Tab discount program. Your job is to provide a single, comprehensive email that thanks them for their service and clearly explains the entire policy: what the discount is, how to get it via GovX ID, and all its important conditions and limitations to proactively answer their likely follow-up questions.</p>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="instructions" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Instructions</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card mb-4">
+                        <h4>Step 1: Begin your response with the standard greeting structure.</h4>
+                        <p class="bg-gray-100 p-3 rounded-md text-sm font-mono mt-2">"Hi [Customer name],<br><br>Thank you for reaching out!"</p>
+                    </div>
+                    <div class="action-card mb-4">
+                        <h4>Step 2: Acknowledge their inquiry and immediately thank them for their service.</h4>
+                        <p class="bg-gray-100 p-3 rounded-md text-sm font-mono mt-2">"Thank you so much for asking about our discount program, and more importantly, thank you for your service!"</p>
+                    </div>
+                    <div class="action-card">
+                        <h4>Step 3: Confirm the discount and explain the policy details.</h4>
+                        <p class="bg-gray-100 p-3 rounded-md text-sm font-mono mt-2">"Yes, we are proud to offer a 25% discount for active military, veterans, and first responders through our partnership with GovX ID. This discount applies to all one-time purchases and the initial order of any new subscription. Please note that the discount does not apply to recurring subscription orders after the first one. To get your discount, you can verify your status through the GovX ID link on our cart page during checkout."</p>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div> 
+
+    <button id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" /></svg>
+    </button>
+</body>
+</html>

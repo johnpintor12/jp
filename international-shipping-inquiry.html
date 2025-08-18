@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>International Shipping Inquiry - H2Tab Automation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global_styles.css">
+    <script src="global_scripts.js"></script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <style>
+        /* Theme-specific styles for this page (Indigo Theme) */
+        :root { 
+            --top-bar-height: 60px;
+            --page-theme-color-main: #4f46e5; /* Indigo-600 */
+            --page-theme-color-darker: #4338ca; /* Indigo-700 */
+            --page-theme-color-lighter: #c7d2fe; /* Indigo-200 */
+            --page-theme-color-lightest: #eef2ff; /* Indigo-50 */
+        }
+
+        .app-top-bar { background-color: var(--page-theme-color-main); }
+        #toc-sidebar h2 { color: var(--page-theme-color-main); }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active {
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
+        }
+        .step-header { background-color: var(--page-theme-color-main); }
+        #scrollToTopBtn { background-color: var(--page-theme-color-main); }
+        #scrollToTopBtn:hover { background-color: var(--page-theme-color-darker); }
+    </style>
+</head>
+<body class="has-toc"> 
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+        </button>
+        <span class="library-title-mobile ml-3 font-semibold text-lg">Int'l Shipping Inquiry</span>
+    </div>
+    <div id="page-overlay"></div>
+
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#context">Context</a></li>
+            <li>
+                <a href="#instructions">Instructions</a>
+                <ul>
+                    <li><a href="#step1">Step 1: Identify Country</a></li>
+                    <li><a href="#step2">Step 2: Check Against List</a></li>
+                    <li><a href="#step3">Step 3: Conclude</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
+            <h1 class="text-3xl font-bold text-gray-800">International Shipping Inquiry</h1>
+            <p class="text-lg text-gray-600">Category: Shipping & Delivery</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto"> 
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>A customer is asking if H2Tab ships to their country. Your job is to determine if their country is on the list of supported shipping destinations and provide a clear, helpful response, either confirming that you ship there or politely explaining that you do not and offering to record their interest.</p>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="instructions" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Instructions</h3>
+                </div>
+                <div class="step-content">
+                    <div id="step1" class="action-card mb-4">
+                        <h4>Step 1: Identify the Customer's Country</h4>
+                        <p>If the customer has not already mentioned their country, ask them:</p>
+                        <p class="bg-gray-100 p-3 rounded-md text-sm font-mono mt-2">"I can definitely check that for you! What country are you looking to ship to?"</p>
+                    </div>
+
+                    <div id="step2" class="action-card mb-4">
+                        <h4>Step 2: Check Country Against Supported List and Respond</h4>
+                        <div class="decision-card">
+                            <p>Compare the customer's country to the current list of supported international shipping destinations: <strong>Canada, UK, Australia, New Zealand, Germany, France, Spain, Italy, Netherlands, Japan.</strong></p>
+                            <div class="mt-4">
+                                <h5 class="font-semibold text-gray-700">Path A: If Country IS on the list</h5>
+                                <p class="bg-gray-100 p-3 rounded-md text-sm font-mono mt-2"><em>"Great news! Yes, we do ship to [Customer's Country]. You can proceed with your order directly on our website, and the shipping options and costs will be calculated for you at checkout."</em></p>
+                            </div>
+                            <div class="mt-4">
+                                <h5 class="font-semibold text-gray-700">Path B: If Country is NOT on the list</h5>
+                                <p class="bg-gray-100 p-3 rounded-md text-sm font-mono mt-2"><em>"Thanks for checking! At the moment, we do not currently offer shipping to [Customer's Country]. We are actively working on expanding our international shipping capabilities, and I have added your interest for [Customer's Country] to our expansion list. We truly appreciate you reaching out and hope to be able to serve you in the future!"</em></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="step3" class="action-card">
+                        <h4>Step 3: Conclude the Conversation</h4>
+                        <p>End the interaction with a helpful closing:</p>
+                        <p class="bg-gray-100 p-3 rounded-md text-sm font-mono mt-2">"Let me know if there is anything else I can help you with!"</p>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div> 
+
+    <button id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" /></svg>
+    </button>
+</body>
+</html>

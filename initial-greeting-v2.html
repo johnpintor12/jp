@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Initial Greeting & Query Clarification v2 - H2Tab Automation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global_styles.css">
+    <script src="global_scripts.js"></script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <style>
+        /* Theme-specific styles for this page (Indigo Theme) */
+        :root { 
+            --top-bar-height: 60px;
+            --page-theme-color-main: #4f46e5; /* Indigo-600 */
+            --page-theme-color-darker: #4338ca; /* Indigo-700 */
+            --page-theme-color-lighter: #c7d2fe; /* Indigo-200 */
+            --page-theme-color-lightest: #eef2ff; /* Indigo-50 */
+        }
+
+        .app-top-bar { background-color: var(--page-theme-color-main); }
+        #toc-sidebar h2 { color: var(--page-theme-color-main); }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active {
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
+        }
+        #toc-sidebar ul ul li a:hover,
+        #toc-sidebar ul ul li a.active { 
+           color: var(--page-theme-color-main);
+           background-color: #e0e7ff; /* Indigo-100 */
+        }
+        .step-header { background-color: var(--page-theme-color-main); }
+        #scrollToTopBtn { background-color: var(--page-theme-color-main); }
+        #scrollToTopBtn:hover { background-color: var(--page-theme-color-darker); }
+        .constraints-list strong { color: #dc3545; }
+        .guidance-note {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem; margin-top: 1rem; border-radius: 6px; font-size: 0.95em;
+        }
+    </style>
+</head>
+<body class="has-toc"> 
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+        </button>
+        <span class="library-title-mobile ml-3 font-semibold text-lg">Initial Greeting v2</span>
+    </div>
+    <div id="page-overlay"></div>
+
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#context">Context</a></li>
+            <li>
+                <a href="#instructions">Instructions</a>
+                <ul>
+                    <li><a href="#part1">Part 1: Welcoming Opening</a></li>
+                    <li><a href="#part2">Part 2: Guiding Question</a></li>
+                    <li><a href="#part3">Part 3: Conclude Task</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
+            <h1 class="text-3xl font-bold text-gray-800">Initial Greeting & Query Clarification v2</h1>
+            <p class="text-lg text-gray-600">Category: Other</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto"> 
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>This automation is triggered when a customer initiates a conversation with a general greeting (e.g., "Hi," "Hello") or a vague statement that doesn't immediately indicate a specific need. Elisha's primary objective is to leverage generative AI to craft a unique, warm, and welcoming opening that smoothly transitions towards understanding the customer's needs.</p>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="instructions" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Instructions</h3>
+                </div>
+                <div class="step-content">
+                    <div id="part1" class="action-card mb-4">
+                        <h4>Part 1: Provide a Welcoming Opening (Generative AI Directive)</h4>
+                        <ol class="list-decimal pl-5 mt-2 space-y-2 text-sm">
+                            <li>Generate a warm and welcoming greeting that makes the customer feel acknowledged and at ease.</li>
+                            <li>Fully reflect the defined Elisha persona (unique voice, communication style).</li>
+                            <li>Introduce yourself by name ("Elisha") and mention the company ("H2Tab").</li>
+                            <li>Clearly express your willingness and readiness to help.</li>
+                            <li>Naturally lead into an invitation for the customer to state their inquiry.</li>
+                            <li>If contextual information is available, integrate it naturally (e.g., time of day, returning customer status).</li>
+                            <li>Keep the entire opening message concise (ideally 1-2 short sentences).</li>
+                            <li>
+                                Adhere to the following strict constraints:
+                                <ul class="list-disc pl-5 mt-2 constraints-list">
+                                    <li>Do <strong>NOT</strong> use emojis.</li>
+                                    <li>Do <strong>NOT</strong> use words in ALL CAPS.</li>
+                                    <li>Do <strong>NOT</strong> use multiple consecutive exclamation points.</li>
+                                    <li>Do <strong>NOT</strong> make medical claims or overpromise benefits.</li>
+                                    <li>Do <strong>NOT</strong> include any AI signature.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="guidance-note">
+                                    <strong>System Behavior & Fallback:</strong> If a suitable greeting cannot be generated or fails quality checks (e.g., "Elisha" or "H2Tab" are missing), the system MUST use the standard fallback: <em>"Hello! I'm Elisha from H2Tab. How can I help you today?"</em> All generation attempts and fallbacks should be logged for review.
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div id="part2" class="action-card mb-4">
+                        <h4>Part 2: Ask a Guiding Question to Understand Their Need</h4>
+                        <p class="text-sm">Immediately after the opening greeting, ask one of the following open-ended questions (rotate options for new conversations):</p>
+                        <ol class="list-alpha pl-5 mt-2 space-y-2 text-sm">
+                            <li><em>"I'm here to help! Are you looking for information about our H2Tab molecular hydrogen tablets, have a question about an existing order, or is there another way I can assist you today?"</em></li>
+                            <li><em>"To make sure I get you to the right place, could you let me know if your question is about our products, an order you've placed, or perhaps something else?"</em></li>
+                            <li><em>"I'm happy to share more! Feel free to ask any questions you might have about molecular hydrogen, our H2Tab products, or how they could fit into your wellness routine."</em></li>
+                            <li><em>"I can certainly help with that! To get started, could you give me an idea of what you're looking into? For example, is it about product details, an order query, the science behind H2Tab, or something different?"</em></li>
+                            <li><em>"I'm ready to assist! To best direct your query, are you needing help with information on H2Tab, support for an order you've made, or perhaps assistance with using our website or managing your account details?"</em></li>
+                            <li><em>"I understand you need some assistance. To ensure I provide the right support, could you give me a little more context on what you're hoping to achieve today? For instance, are you trying to learn something new, resolve an issue, or explore different options?"</em></li>
+                        </ol>
+                    </div>
+
+                    <div id="part3" class="action-card">
+                        <h4>Part 3: Conclude Your Current Task</h4>
+                        <p class="text-sm">Once the complete message (greeting + guiding question) is sent, your specific task in this initial interaction is finished. Await the customer's response for the next step.</p>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div> 
+
+    <button id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" /></svg>
+    </button>
+</body>
+</html>

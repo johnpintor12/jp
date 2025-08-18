@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancel Subscription - H2Tab Automation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/global_styles.css">
+    <script src="global_scripts.js"></script>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <style>
+        /* Theme-specific styles for this page (Indigo Theme) */
+        :root { 
+            --top-bar-height: 60px;
+            --page-theme-color-main: #4f46e5; /* Indigo-600 */
+            --page-theme-color-darker: #4338ca; /* Indigo-700 */
+            --page-theme-color-lighter: #c7d2fe; /* Indigo-200 */
+            --page-theme-color-lightest: #eef2ff; /* Indigo-50 */
+        }
+
+        .app-top-bar { background-color: var(--page-theme-color-main); }
+        #toc-sidebar h2 { color: var(--page-theme-color-main); }
+        #toc-sidebar li a:hover,
+        #toc-sidebar li a.active {
+            background-color: var(--page-theme-color-lightest);
+            color: var(--page-theme-color-main);
+        }
+        .step-header { background-color: var(--page-theme-color-main); }
+        .escalation-card .step-header { background-color: #8b5cf6 !important; }
+        #scrollToTopBtn { background-color: var(--page-theme-color-main); }
+        #scrollToTopBtn:hover { background-color: var(--page-theme-color-darker); }
+    </style>
+</head>
+<body class="has-toc"> 
+    <div class="app-top-bar">
+        <button id="menu-toggle" aria-label="Open navigation menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+        </button>
+        <span class="library-title-mobile ml-3 font-semibold text-lg">Cancel Subscription</span>
+    </div>
+    <div id="page-overlay"></div>
+
+    <nav id="toc-sidebar">
+        <h2>Workflow Navigation</h2>
+        <ul>
+            <li>
+                <a href="index.html" class="back-link">
+                    <svg class="inline-block mr-1 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    Back to Library
+                </a>
+            </li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#step1">Step 1: Acknowledge & Guide</a></li>
+            <li><a href="#step2">Step 2: Provide Self-Service Info</a></li>
+            <li><a href="#step3">Step 3: Offer Assistance</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content-area"> 
+        <header class="text-center mb-10 pt-4 md:pt-0"> 
+            <h1 class="text-3xl font-bold text-gray-800">Cancel Subscription</h1>
+            <p class="text-lg text-gray-600">Category: Order Management</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto"> 
+            <div id="context" class="content-section flow-element">
+                <h2>Context</h2>
+                <p>A customer has explicitly stated they want to cancel their subscription. Your primary job is to guide them on how to do this themselves through the customer portal, while also offering to do it for them if they prefer, to ensure a smooth and positive experience.</p>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step1" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 1: Acknowledge and Guide to Self-Service</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Response to Customer:</h4>
+                        <p><em>"Hi [Customer Name], I'm sorry to see you go, but I can certainly help you with canceling your subscription. The easiest way to manage your subscription, including cancellation, is through your customer account portal."</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step2" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 2: Provide Portal Link and Instructions</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Continue Response:</h4>
+                        <p><em>"You can log in here: [Link to Customer Portal Login]. Once you're in, just navigate to the 'Subscriptions' tab, and you'll see an option to cancel."</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector">▼</div>
+
+            <div id="step3" class="step-card flow-element">
+                <div class="step-header">
+                    <h3>Step 3: Offer Direct Assistance as an Alternative</h3>
+                </div>
+                <div class="step-content">
+                    <div class="action-card">
+                        <h4>Conclude Response:</h4>
+                        <p><em>"If you'd prefer, I can also process the cancellation for you right now. Just let me know, and I'll take care of it immediately. Thank you for being an H2Tab customer!"</em></p>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div> 
+
+    <button id="scrollToTopBtn" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" /></svg>
+    </button>
+</body>
+</html>
