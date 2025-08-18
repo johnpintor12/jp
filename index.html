@@ -193,6 +193,7 @@
         const modal = document.getElementById('skip-response-modal');
         const closeModalBtn = document.getElementById('close-modal-btn');
         const paginationContainer = document.getElementById('pagination-container');
+        const allAutomationsSection = document.getElementById('all-automations');
 
         const CARDS_PER_PAGE = 12;
         let currentPage = 1;
@@ -265,6 +266,7 @@
                 if (currentPage > 1) {
                     currentPage--;
                     renderLists();
+                    allAutomationsSection.scrollIntoView({ behavior: 'smooth' });
                 }
             });
             paginationContainer.appendChild(prevButton);
@@ -276,6 +278,7 @@
                 pageButton.addEventListener('click', () => {
                     currentPage = i;
                     renderLists();
+                    allAutomationsSection.scrollIntoView({ behavior: 'smooth' });
                 });
                 paginationContainer.appendChild(pageButton);
             }
@@ -288,6 +291,7 @@
                 if (currentPage < pageCount) {
                     currentPage++;
                     renderLists();
+                    allAutomationsSection.scrollIntoView({ behavior: 'smooth' });
                 }
             });
             paginationContainer.appendChild(nextButton);
