@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale-1.0">
-    <title>Update Subscription Shipping Address - H2Tab Automation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Subscription Shipping Address</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/global_styles.css">
-    <a href="/index.html" class="back-link">
+    <link rel="stylesheet" href="css/global_styles.css">
     <script src="global_scripts.js"></script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <style>
@@ -16,7 +15,6 @@
             --top-bar-height: 60px;
             --page-theme-color-main: #4f46e5; /* Indigo-600 */
             --page-theme-color-darker: #4338ca; /* Indigo-700 */
-            --page-theme-color-lighter: #c7d2fe; /* Indigo-200 */
             --page-theme-color-lightest: #eef2ff; /* Indigo-50 */
         }
 
@@ -27,8 +25,6 @@
             background-color: var(--page-theme-color-lightest);
             color: var(--page-theme-color-main);
         }
-        .step-header { background-color: var(--page-theme-color-main); }
-        .escalation-card .step-header { background-color: #8b5cf6 !important; }
         #scrollToTopBtn { background-color: var(--page-theme-color-main); }
         #scrollToTopBtn:hover { background-color: var(--page-theme-color-darker); }
     </style>
@@ -52,70 +48,72 @@
                 </a>
             </li>
             <li><a href="#context">Context</a></li>
-            <li><a href="#step1">Step 1: Acknowledge & Guide</a></li>
-            <li><a href="#step2">Step 2: Provide Direct Link</a></li>
-            <li><a href="#step3">Step 3: Offer Further Help</a></li>
+            <li><a href="#instructions">Instructions</a>
+                <ul>
+                    <li><a href="#step1">Step 1</a></li>
+                    <li><a href="#step2">Step 2</a></li>
+                    <li><a href="#step3">Step 3</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
 
     <div class="main-content-area"> 
-        <header class="text-center mb-10 pt-4 md:pt-0"> 
-            <h1 class="text-3xl font-bold text-gray-800">Update Subscription Shipping Address</h1>
-            <p class="text-lg text-gray-600">Category: Order Management</p>
-        </header>
+        <div class="max-w-4xl mx-auto">
+            <header class="page-header text-center mb-10"> 
+                <h1>Update Subscription Shipping Address</h1>
+                <div class="category-tag">Order Management</div>
+            </header>
 
-        <div class="max-w-4xl mx-auto"> 
-            <div id="context" class="content-section flow-element">
-                <h2>Context</h2>
-                <p>A customer wants to change the shipping address for their subscription's future orders. Your job is to guide them to the customer portal where they can manage this themselves.</p>
+            <div id="context" class="workflow-card">
+                <div class="workflow-card-header">
+                    <h2>Context</h2>
+                </div>
+                <div class="workflow-card-content">
+                    <p>A customer wants to change the shipping address for their subscription's future orders. Your job is to guide them to the customer portal where they can manage this themselves.</p>
+                </div>
             </div>
 
-            <div class="connector">▼</div>
-
-            <div id="step1" class="step-card flow-element">
-                <div class="step-header">
-                    <h3>Step 1: Acknowledge and Guide</h3>
+            <div id="instructions" class="workflow-card">
+                <div class="workflow-card-header">
+                    <h2>Instructions</h2>
                 </div>
-                <div class="step-content">
-                    <div class="action-card">
-                        <h4>Response to Customer:</h4>
-                        <p><em>"Hi [Customer Name], I can certainly help with that. You can update the shipping address for your subscription at any time through your secure customer portal."</em></p>
+                <div class="workflow-card-content">
+                    <div id="step1" class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Acknowledge and Guide to Self-Service
+                        </div>
+                        <div class="instruction-card">
+                            <h4>Response to Customer:</h4>
+                            <p><em>"Hi [Customer Name], I can certainly help with that. You can update the shipping address for your subscription at any time through your secure customer portal."</em></p>
+                        </div>
+                    </div>
+
+                    <div id="step2" class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Provide Portal Link and Instructions
+                        </div>
+                        <div class="instruction-card">
+                            <h4>Continue Response:</h4>
+                            <p><em>"Once you log in, just navigate to the <strong>'Subscriptions'</strong> section and you'll find the option to edit your shipping details for all upcoming orders. Here is the direct link to your account portal: <strong>[Link to Customer Portal Login]</strong>."</em></p>
+                        </div>
+                    </div>
+
+                    <div id="step3" class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Offer Further Assistance and Conclude
+                        </div>
+                        <div class="instruction-card">
+                            <h4>Conclude Response:</h4>
+                            <p><em>"If you have any trouble finding it, please let me know!"</em></p>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="connector">▼</div>
-
-            <div id="step2" class="step-card flow-element">
-                <div class="step-header">
-                    <h3>Step 2: Provide Direct Link and Instructions</h3>
-                </div>
-                <div class="step-content">
-                    <div class="action-card">
-                        <h4>Continue Response:</h4>
-                        <p><em>"Once you log in, just navigate to the 'Subscriptions' section and you'll find the option to edit your shipping details for all upcoming orders. Here is the direct link to your account portal: [Link to Customer Portal Login]."</em></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="connector">▼</div>
-
-            <div id="step3" class="step-card flow-element">
-                <div class="step-header">
-                    <h3>Step 3: Offer Further Assistance and Conclude</h3>
-                </div>
-                <div class="step-content">
-                    <div class="action-card">
-                        <h4>Conclude Response:</h4>
-                        <p><em>"If you have any trouble finding it, please let me know!"</em></p>
-                    </div>
-                </div>
-            </div>
-        </div> 
+        </div>
     </div> 
-
-    <button id="scrollToTopBtn" title="Go to top">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.56l-2.47 2.47a.75.75 0 01-1.06-1.06l3.75-3.75a.75.75 0 011.06 0l3.75 3.75a.75.75 0 11-1.06 1.06L10.75 5.56v10.69A.75.75 0 0110 17z" clip-rule="evenodd" /></svg>
-    </button>
 </body>
 </html>
